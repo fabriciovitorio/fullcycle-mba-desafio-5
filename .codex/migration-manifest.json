@@ -1,0 +1,1089 @@
+{
+  "format_version": 2,
+  "strategy": "Codex-only project configuration",
+  "skills": 23,
+  "rules": 17,
+  "agents": 6,
+  "files": [
+    {
+      "destination": ".agents/skills/decide/SKILL.md",
+      "destination_sha256": "224f3e0f36542b124234a376eef8ba433db8025d768f22228b35c6a9f31ef9d7"
+    },
+    {
+      "destination": ".agents/skills/figma-apply-tokens-tailwind-v4/SKILL.md",
+      "destination_sha256": "99ce972d37b6f334fc48b8838680bc50493487be8d5615cbd318ff67e22e9783"
+    },
+    {
+      "destination": ".agents/skills/figma-apply-tokens-tailwind-v4/scripts/.gitignore",
+      "destination_sha256": "4440594dd2ccd60d1d2e74505171e65ddcf3e2e98a8131c0ac67b539dd713f6c"
+    },
+    {
+      "destination": ".agents/skills/figma-apply-tokens-tailwind-v4/scripts/apply.py",
+      "destination_sha256": "ac944c747abb757aa8458699f491f2d0cdb9e92dff1482e770fb6ddd89f8dca2"
+    },
+    {
+      "destination": ".agents/skills/figma-audit-tokens/SKILL.md",
+      "destination_sha256": "f060fc4d6590b54b322b6dee6537b3b85885029887637aef765ae2c80637a225"
+    },
+    {
+      "destination": ".agents/skills/generate-test-guide/SKILL.md",
+      "destination_sha256": "c45dbb7852966625c12bfd8271daf6cdc50887deee15cc8107430a18f5e9b6de"
+    },
+    {
+      "destination": ".agents/skills/generate-test-guide/testing-fundamentals.md",
+      "destination_sha256": "54fa94921c1bedc9df85209c601aa1e3660e00d21530f0920c8b8a8e9c0e3aef"
+    },
+    {
+      "destination": ".agents/skills/implement/SKILL.md",
+      "destination_sha256": "64df9566d207fa7d2973cf648c3476055dc7e62f24193adb5e86efbd695a5fbc"
+    },
+    {
+      "destination": ".agents/skills/implement-phase/SKILL.md",
+      "destination_sha256": "9b92c6bce58fd506475cbed9ff6143e0668d55c1b31d0fd927e321ca6855163b"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/SKILL.md",
+      "destination_sha256": "b321c727bf852ed82f1ad48322e5fac1b66a8575e498eccf30158b72d49440e4"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/_sections.md",
+      "destination_sha256": "b0ce3647f56728f94bc78e466d4c48fd4952590fc2cc1eaba9613cc0c1c23e1c"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/_template.md",
+      "destination_sha256": "99df2a3ea088c6c22de2484ddc7e964d0e9923846f44c63380343ecc64455442"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/api-use-dto-serialization.md",
+      "destination_sha256": "4279db36cab002ec525b1ed99e11b10506dee45b396feffb3569e164916465f9"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/api-use-interceptors.md",
+      "destination_sha256": "61d2a31067becca20236822389c1b086d157156f5ab7279c40b94c74b81a9016"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/api-use-pipes.md",
+      "destination_sha256": "42c48d2d321afd67acfd8ccccf554df7711058c942098fa42689fe8347aea372"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/api-versioning.md",
+      "destination_sha256": "efe9241b688f118d9550d0ff42a19aab54eafd55f38c4a3184c8e29e4e463226"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-avoid-circular-deps.md",
+      "destination_sha256": "b74da7754d695a35375acab013ecb79cb35d199c2a4ec57bd2c0083e3d222c22"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-feature-modules.md",
+      "destination_sha256": "672ef1a9b10230c3437f5c1ec27ff78a8a49263667f6240e300adf474ff0ec6a"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-module-sharing.md",
+      "destination_sha256": "dd25df677a7af6b37d5311342da8019e6e2d389ce97310eb2602f34912eab82d"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-single-responsibility.md",
+      "destination_sha256": "7bc9ea48776db5368908d06a8e65c617fa96035fe853da7fa73c3351ca81df18"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-use-events.md",
+      "destination_sha256": "9a0626942e70989d29485c5db7657bf77ac4728d24585b38badda8ebfddfe8d6"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/arch-use-repository-pattern.md",
+      "destination_sha256": "84afbcff191a79d4ea80b67e91936878748616a2fdc30c581067e00ad9750c26"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/db-avoid-n-plus-one.md",
+      "destination_sha256": "1bd61b7502c9b35fd62fcb1c5292805a4f449888fe99666ff004edd11cabf67c"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/db-use-migrations.md",
+      "destination_sha256": "7297818a30f903079b1d0fc51de8520e616bc696c3168bad9bf9f23a896cca45"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/db-use-transactions.md",
+      "destination_sha256": "9c3d8c4e2f85e99a11e87a5160a6024216f287d1dfc3ce1e6f593d2beb7a26d4"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/devops-graceful-shutdown.md",
+      "destination_sha256": "ed3bd5be2fd4a66b7b126e0562b7abfc09740ee1dc53d185038b9c97bc2aeddb"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/devops-use-config-module.md",
+      "destination_sha256": "2aeff867082a807aa7247f0629ece8d0e6045bf563db013a53ffd64879011979"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/devops-use-logging.md",
+      "destination_sha256": "890c8f7aafe3e04e1107adbcdede5ef48b04977c302eb58a342f1ad0c5308a9f"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-avoid-service-locator.md",
+      "destination_sha256": "c8c2358cf5c65117c829bb223a28cab598fa95aacd052519323e9f114536bd50"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-interface-segregation.md",
+      "destination_sha256": "05c02b87f76df2372b237a097c364dc502faf158b64582f3b6740de4d1da8d8f"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-liskov-substitution.md",
+      "destination_sha256": "658178d263af65eb96656f2af4b66382c8139f09a3c352a9ce25b5bd671b46b2"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-prefer-constructor-injection.md",
+      "destination_sha256": "8b990dc7c913fd65ed1afb5125ffccb8c92929499ab05e6f3f7d8c0161078362"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-scope-awareness.md",
+      "destination_sha256": "9948e533005b098e9adfd8c9fd21b576bc67b222811e49abe512b9a0c610f205"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/di-use-interfaces-tokens.md",
+      "destination_sha256": "5080cf42104af01844e7fc70f46e0753934fd110fec1a10def7622753493d318"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/error-handle-async-errors.md",
+      "destination_sha256": "9eb6feaa977710875edeabc282eba0b151199ac21bec55a54b890718b424b4d5"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/error-throw-http-exceptions.md",
+      "destination_sha256": "2bcee70ae331cfd1094fbad42ce8a0a7b07f037efc13a689c5a991160065d1f5"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/error-use-exception-filters.md",
+      "destination_sha256": "7921971bd4ed356952f2bc0e50c57c0269976aeec22207d8806403341f052711"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/micro-use-health-checks.md",
+      "destination_sha256": "a8fdb7f5b1410ed8a2f6b3e0148d910dde5518905f4bdc856d9434faf20e9774"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/micro-use-patterns.md",
+      "destination_sha256": "3b4d8309e09a395e636c45978c94cf20d0785aeff430a054d016dd7645dcc14c"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/micro-use-queues.md",
+      "destination_sha256": "eec777ed1f9970a5650d85868fff585d02bed9a2e7c06165c98d64b82753d920"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/perf-async-hooks.md",
+      "destination_sha256": "b6e38415f872d6018f64f4f8e3242c25748df6b41e09f04609bd50201b4a08b0"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/perf-lazy-loading.md",
+      "destination_sha256": "02ac0de2bfdc96fbc09feaee6792ca13930e75137d7cc90bf25bfe7d1b62e4b4"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/perf-optimize-database.md",
+      "destination_sha256": "07176139c7a3c3d6298e64e184d9d6329c96367aa1cafab8ccab2b3f27564869"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/perf-use-caching.md",
+      "destination_sha256": "be16b266eaa8c7e04cd96c2b32d65c49ac35f0f1e363960cb1c4e77ed5bd72dd"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/security-auth-jwt.md",
+      "destination_sha256": "dfb8d6cab734831c4fb5504052d93e30440d397dd7af3a60c2b3132fd260af90"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/security-rate-limiting.md",
+      "destination_sha256": "b4f8f99b0591043e7b7d191f3312e04f4455441721031a8535a458ea4177ab20"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/security-sanitize-output.md",
+      "destination_sha256": "fa270c76d9a8ef5fb80ff005f005f9b713e7ebfdec9edbd998390917a515f1a4"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/security-use-guards.md",
+      "destination_sha256": "1ae2bfde0e84264a7656951161e4cd2d1c4388b5baba9ec8c9f15baf34c4c5f9"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/security-validate-all-input.md",
+      "destination_sha256": "801ac35f2273286be1b92bce0ddb440d12af25330b6b9c0f36f8971c96680997"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/test-e2e-supertest.md",
+      "destination_sha256": "cacf92d8b874e48c4fe6380d977bcbb441b40d8d785497ebd055db035aa21bb8"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/test-mock-external-services.md",
+      "destination_sha256": "905ee22160ebfb58c6ee46e73138c11d3fd46bcb5cb07307434677be02d29673"
+    },
+    {
+      "destination": ".agents/skills/nestjs-best-practices/rules/test-use-testing-module.md",
+      "destination_sha256": "4e1714d62ec5d17077b0cbc835dcf04f2d08f78e95f7f71cccd3f219e537e8e9"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/SKILL.md",
+      "destination_sha256": "b53969c440e59a22538fe803d447a21d7fc9af9cb4d1d40af29f885e51a43730"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/async-patterns.md",
+      "destination_sha256": "3a5e4a91d8399f0922c4a3b15b3490fbeb7396f976139a92311ea34cfa300584"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/bundling.md",
+      "destination_sha256": "5496b337073985068c61527e0a89fbf7088faa47b9f92d2dd09a7d070cb48a7c"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/data-patterns.md",
+      "destination_sha256": "538c8e24cd60eded9825a9461f2c644f5e6e5203d95aa4bf7c9486412bcc7aa1"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/debug-tricks.md",
+      "destination_sha256": "62617a7cb131a2111f9f033617404fadb3458d56aeb0643f75aa5b2e43abf192"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/directives.md",
+      "destination_sha256": "60b82ee24a8d43631da59beeec11f46ab25ce83c8000578f2222ecb6b6cadf4d"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/error-handling.md",
+      "destination_sha256": "30b4e825b625df01d4a7c441591ac46782aab4f913432e96f408153d5fa62098"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/file-conventions.md",
+      "destination_sha256": "0fed8bd429983c930c95eab3ab0254d4f2c128068fa290d758a057e3467252c3"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/font.md",
+      "destination_sha256": "cb1f8d43e8fbca39839056b4621724837858bdace13e73bf3faf69abca318a21"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/functions.md",
+      "destination_sha256": "39a8a418af501d7132d289f4b5dd6cae59d1bfa6fda941d502fc29bb0204e079"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/hydration-error.md",
+      "destination_sha256": "d4baec07ab818045e284c45dd24422685ac934a38ea325139651f664a94eff57"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/image.md",
+      "destination_sha256": "231a15ddea67fe0b965762cc89993ca5aaeb0c35c0e67767bd53ca138ec04c05"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/metadata.md",
+      "destination_sha256": "19b00274877056f222f2284be5ade2479690e79e86af9a0466bc9d209506a95d"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/parallel-routes.md",
+      "destination_sha256": "d8a1c2546d90af2b37e22a4a56a1978555af0d62a7683e349ce3e3287ab8a4af"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/route-handlers.md",
+      "destination_sha256": "976a17de8024b3a65063350ae0fb6b9b617293f06358305800c858f58b015680"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/rsc-boundaries.md",
+      "destination_sha256": "2b50b0310884609efc9f2620fbb81ef83a30a810544e449ff669c55935d5b920"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/runtime-selection.md",
+      "destination_sha256": "7abb95f9af0f4769e7e9e91aba94a5787ed16e2c4009a140c8577a3a49828060"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/scripts.md",
+      "destination_sha256": "fff3bc7530d5af472e2825fde69a26218c9e58acba74d60913f403baab4628a3"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/self-hosting.md",
+      "destination_sha256": "f59e9afa0ff4dcbe20374dff13517ccec3ac6a239ef6d02e0ee8863cf9fc7082"
+    },
+    {
+      "destination": ".agents/skills/next-best-practices/suspense-boundaries.md",
+      "destination_sha256": "63e2e7125b1a1a9d652dd301814ad7140f8ab3ad6726b2b53df76a89d9bc262a"
+    },
+    {
+      "destination": ".agents/skills/plan-build/SKILL.md",
+      "destination_sha256": "0bfcbb5bcd709749e6fd0d0bd3544199bacac5a3544e69bd938494d243a34e27"
+    },
+    {
+      "destination": ".agents/skills/plan-build/phase-a.md",
+      "destination_sha256": "4ba86d0f96379e53f964ef40cfe8577827bd317b103f7317b2c6c3eef69f99ed"
+    },
+    {
+      "destination": ".agents/skills/plan-build/phase-b.md",
+      "destination_sha256": "e18f4125b6351b580eab99a5803731a8c230cd99117b0ead59ab58b0e4d7fef6"
+    },
+    {
+      "destination": ".agents/skills/plan-build/phase-c.md",
+      "destination_sha256": "0482dffa6e786db8f2872130f1ca9796984db5892d6d2c3ac407441a83f39a61"
+    },
+    {
+      "destination": ".agents/skills/plan-build/references/frontend-drift-report-schema.md",
+      "destination_sha256": "8b563b6ac711e78f8dd0c0b326c452e13c0a521f28b72d03367cd43e2c661d7c"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/frontend-runtime-si.md",
+      "destination_sha256": "a0d5452ce5dcb7447ce69ce60c648ad8b14f6bf387740c56d1e9aabca9cb9fb7"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/screen-si.md",
+      "destination_sha256": "46441bf4d0c029d583e5daab0dca68ea3d0d03a1d9ccf77dda81b0c4d698b4a8"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/api-contracts.md",
+      "destination_sha256": "a828aa0621908e7203fb087d6aca5d47f37c4c770b740a8cc2e1dfe744a353dc"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/auth-matrix.md",
+      "destination_sha256": "0dd224c106e08170a2bff131ac3cdd8f8af9803d23109f66a6b7485833b02618"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/data-model.md",
+      "destination_sha256": "8c97d78bfb740d44a853c3c6c40e370c4a4a87aca3317c85b9353b2e984e6ef5"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/error-catalog.md",
+      "destination_sha256": "e3513ae8aa4ad9f240fe81faa10a21b5cc7e5982108963ce42369799fcc8b4c4"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/events-messages.md",
+      "destination_sha256": "ae0dc3fc00e6ba7b428f921950bf6d4e99a3c1238a86a910c8254fe8fdcc2087"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/frontend-runtime.md",
+      "destination_sha256": "7aa9fe21ce976d9466aeca551a008d9b2a9c5cfd1829402e35b632579dba89eb"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/traceability-matrix.md",
+      "destination_sha256": "4cba1215804d03673b603d138e0239ae59b77e63e4030b7e21dc0c268b790e91"
+    },
+    {
+      "destination": ".agents/skills/plan-build/templates/tech-specs/ui-contracts.md",
+      "destination_sha256": "d43a7e534f3569494445c7868b83d3c416d888174387aed45117a30d23c41589"
+    },
+    {
+      "destination": ".agents/skills/plan-context/SKILL.md",
+      "destination_sha256": "b766c7cc09ae9c7aa11ea18639a14f52bc42eb71527611601ea3053d5a6d9f4f"
+    },
+    {
+      "destination": ".agents/skills/plan-phase/SKILL.md",
+      "destination_sha256": "5a9feda4a8fe7a880d274d97a88c89742a84c169c7e8f9f5d84373f4ebd4299b"
+    },
+    {
+      "destination": ".agents/skills/plan-pipeline/SKILL.md",
+      "destination_sha256": "74a6a28c1df63ac558823d839e2dbad4e85febb964ffba7134a0db4f1c384b19"
+    },
+    {
+      "destination": ".agents/skills/plan-pipeline/slicing-implementation-plan.md",
+      "destination_sha256": "892d410453ca7275cc1cc01c805f7ff65072271e5971ed093502643c973cbed1"
+    },
+    {
+      "destination": ".agents/skills/plan-resolve/SKILL.md",
+      "destination_sha256": "69c4a0f3eb404fc39ae8f9bbb06b692c18f2d387a7effedee47549513cb2106c"
+    },
+    {
+      "destination": ".agents/skills/plan-rule-author/SKILL.md",
+      "destination_sha256": "bc2670b14649e2052ab75aba30bc142b7e1510f1ef0a70eda3b8991760d66ea4"
+    },
+    {
+      "destination": ".agents/skills/plan-test-specs/SKILL.md",
+      "destination_sha256": "63ac1cf2eb4a1fc0d47b6625c208dcfc3c8e17b5d7feaf501bbd587c1a859814"
+    },
+    {
+      "destination": ".agents/skills/plan-validate/SKILL.md",
+      "destination_sha256": "d655c9156e1267ab8d7ac9c2d84b0286cefeed8bfb8b2e863289ecde371fc288"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/SKILL.md",
+      "destination_sha256": "3ab54516a363ffeb98f38e1d6bc6e5a747446fdf6fbdbf7568ee871fa16d2eac"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/element-attributes.md",
+      "destination_sha256": "bf19aa4671e0a50a0fefa9c790f39124e803060eefe395042b723c29fcb7faa2"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/playwright-tests.md",
+      "destination_sha256": "c5b0719fef2cfdff50bd744051b2f9afc119775db4b48e9b2882c1cf3886797c"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/request-mocking.md",
+      "destination_sha256": "54e801c9663fc2b6d68ceb058cb1c360724c2499f42acc7852a68e83e5b5f37c"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/running-code.md",
+      "destination_sha256": "d95c539a5990b71d02d8bdf1d9414df16191eb6cff95b0063820518b7a13dcb2"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/session-management.md",
+      "destination_sha256": "cd3e261b8763bf952f1e371b876cb78d054379afec85482f9250633e1b7e6c44"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/spec-driven-testing.md",
+      "destination_sha256": "48cfac3c178c24c75c19f0c59bab8ee05fd50c110b9916446992ffd4b17a7d1e"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/storage-state.md",
+      "destination_sha256": "1122778c9b13b44bddebb4476a7f99d918afd31757be8b4fade3cb09c3d48c99"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/test-generation.md",
+      "destination_sha256": "2a9c4d94effa31b05cf367dfa8bbace8874a3bc9799987ad2b03269af224d299"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/tracing.md",
+      "destination_sha256": "792e0ac7705e56ac48df84c0f5400221ce86107897c671590a64a4ea6a82508e"
+    },
+    {
+      "destination": ".agents/skills/playwright-cli/references/video-recording.md",
+      "destination_sha256": "0cea7708999aa663701917615889a84cbc05200718bb161de9a5366a826c2b4d"
+    },
+    {
+      "destination": ".agents/skills/research/SKILL.md",
+      "destination_sha256": "57987dfc7e47a546e8d542e0461eed39b6c769fcdaff0b2f0b2abf38adba253c"
+    },
+    {
+      "destination": ".agents/skills/screen-inventory/SKILL.md",
+      "destination_sha256": "7b111fc401b4bfd4589725f5ff5e2c31028c931ec620949bb44b532611119485"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/SKILL.md",
+      "destination_sha256": "6ff91bb514aff1da8dd0d6857060fac1be8c39dd36b74a269f5a7b3dbb5b92d5"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/controllers.md",
+      "destination_sha256": "58c12c708b5b203bed6629de8f5b82dbbfd8f987f70458f387cd75cf053bc85a"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/dtos.md",
+      "destination_sha256": "0a5ac340e4c22d8c81e5fca60cb12fb43dbb3d37573de89e2f89482a710c12bb"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/entities.md",
+      "destination_sha256": "e46166877a829df3c414d1deecb6ce0e3d8c54f86a2316351329ea4a409302b6"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/filters.md",
+      "destination_sha256": "05a387f47548adbf570707aeb3c98d8d193b33e2e2c7e681978da5e520ebe9e2"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/future-types.md",
+      "destination_sha256": "f63a61306567fc1f8c134d8efb9a623e66bbb2b7d5e51ca1f68b7b413f06666e"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/guards.md",
+      "destination_sha256": "64676a372d26bffa9f514ae4eb64c369895de630a87aeac3aa2c18de3d45ef0d"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/interceptors.md",
+      "destination_sha256": "a2c4a2b5ea8a5d619edf910ea91a172185649cef41ada0592fd322a1e16e44a0"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/middleware.md",
+      "destination_sha256": "a3e2abe402b2ac8f8adc574efca5c19d99064aec1a82b9db60597d25dda8bb72"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/modules.md",
+      "destination_sha256": "c601c13ad2f84a17ad93503ef4827a6b226875b8c7c3b2c7ac36d6f50db25e7a"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/pipes.md",
+      "destination_sha256": "1d3009af7c8fd17f5518fd7171840603e43fc144539cd8357d07b7b2608aca5c"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/services.md",
+      "destination_sha256": "b5aac7713cec0ea902bdba11330ff3ddfccafd690e77dffb596beeaf1c4c4c66"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/artifacts/strategies.md",
+      "destination_sha256": "9b2773fdbd9c533ddd8fc3d38d4356074f4bda66c6977f382e8a4c4155d1eb39"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/references/external-systems.md",
+      "destination_sha256": "6a12d61dda39f57b6f2887359a901754eecbd10242a2a1c2cb90f88d47d290fe"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/references/file-conventions.md",
+      "destination_sha256": "4a8c88ce7c61e53b826079686f2d80f26ad39d720f62a4ce5a09cf76f4aefe86"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/references/gotchas.md",
+      "destination_sha256": "b7dbce8f5f99627b57e2118d558af364557c822f96d216aa6e079bf89b0aa4d3"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-nestjs-project/references/mock-health-rules.md",
+      "destination_sha256": "85e844c8a1a0c0a06e73e011e2848e90b41853da15937a15e30672d0f133fbd3"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/SKILL.md",
+      "destination_sha256": "54f11307952abe2e9802cb4dafe4df48028cda414f1b4b30301863c97529987b"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/client-components.md",
+      "destination_sha256": "8cff4ec73e499f56d75fe37d7fce1a6ba4dc67f25464ca34605b1a102f4ced09"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/feature-components.md",
+      "destination_sha256": "3286ab321eeb586ae5551dcb91a0ace754ebe62426f30984758c12b18d20b0fc"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/future-types.md",
+      "destination_sha256": "52cfadddf157cb271a8deaabca08c6eb807df5898564690b84b8727aecee0fb5"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/hooks.md",
+      "destination_sha256": "c4df440bf462c77b836afe66965022f8de1fe2ddd7b02af27923c0a0ce62f89e"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/icons.md",
+      "destination_sha256": "a91f09d9c6f2e48821b630a30d54e1004e4b6b62773c03022f257796dd600797"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/layouts.md",
+      "destination_sha256": "d93776b7009c11d7d882d1e1fac31e1c87f0ec298ece63f3686c4add09ff8165"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/pages.md",
+      "destination_sha256": "3cf0fab3122bcc87b34912202f872264e4f7d1b00408c0dd40bb1b2b92e8cbc4"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/route-handlers.md",
+      "destination_sha256": "6aa136063f85dd25658418dc7b54d7002a8c4b5012e9b171c42e078be04feafe"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/ui-primitives.md",
+      "destination_sha256": "899f3d169f888d995a5c5044012d4b9d50ae46d3335e88dfa52db23c436198f8"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/artifacts/utilities.md",
+      "destination_sha256": "417c39ccd59d88f84d25a5305e64dd102a71036e7ea049e8d94631102dfad002"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/references/external-systems.md",
+      "destination_sha256": "6a8137033f89da19831de17df4aefa9f4a406bcc8f93ab2c5d08255ae250ea45"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/references/file-conventions.md",
+      "destination_sha256": "9b372352e6635aba232222a2e7960064b9e1a08dbed311651fdb00cd70123b3f"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/references/gotchas.md",
+      "destination_sha256": "7695953806d92cee01dca742e1570adeba72f4cf6c3a57fab34e62d7cc64e1b3"
+    },
+    {
+      "destination": ".agents/skills/testing-guide-next-frontend/references/mock-health-rules.md",
+      "destination_sha256": "bb55d13a6f5a6a705fe3184df18ad8eebf12b200c94b6de35ea68fb9fe18b02f"
+    },
+    {
+      "destination": ".agents/skills/typeorm/SKILL.md",
+      "destination_sha256": "70b1aae48da7d46b75d397b889c483a64d75cc4f71be4380f1f30d7c81c2f36f"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/_sections.md",
+      "destination_sha256": "1c49d06d3f5ab1b7dca89221236fc4e73b61db540e6af0ae47bd0ba7809040c2"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/_template.md",
+      "destination_sha256": "8f753962ff51ec8db95d2315689c91c1aadd40d0e574d49eb8917f8983029d1a"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/config-datasource-setup.md",
+      "destination_sha256": "3dc651778afadc133ef0438f8edce2b0926bd68e9560db57f8d128d9b3f22998"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/config-typescript-settings.md",
+      "destination_sha256": "12d7ac266970107f117302cc99f6da68a78aad3ff41452cc9a6bdf5b8203b564"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/conv-eager-lazy-loading.md",
+      "destination_sha256": "34917734e48c27d42efecf7714c48b1a2d082aa567c0d25e7c2a6c720c15862d"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/conv-indexes-naming-cascades.md",
+      "destination_sha256": "40c0533e4586daedcad5514d255ef203dbb356fa6046f2b4e3e753fc66d76753"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/entity-column-types.md",
+      "destination_sha256": "4d1836dd0af8c0aeb01708340814e649587142c67ae7be387a18e627d6841a3a"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/entity-define-proper-structure.md",
+      "destination_sha256": "b74c1a7b973fc93e7d1098196c33a7d2c4d68e067aa8e0da7c8173dfe68bd7cb"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/entity-primary-key-strategy.md",
+      "destination_sha256": "3659a661ca133d965cef30181b02d43ddcf3ab7e80fc928f848e251b82c23c5b"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/integ-nestjs-setup.md",
+      "destination_sha256": "2fa4080dcbeaa13502b0fac405063eb803920f1f85c952a061ddb19741b12f5e"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/migration-file-structure.md",
+      "destination_sha256": "28a71989882643374bfcce3d0fdbe4326271ba7353c7585e691205eccd7674af"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/migration-workflow.md",
+      "destination_sha256": "045bf99b9184af9356bd215478e5553994d79c92d50c5a764f78b509ddc21d25"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/query-builder-and-n-plus-one.md",
+      "destination_sha256": "abaf25b79c1a52b61586575c64398650de07ed895c93910a6bd5f22d839c9eca"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/query-custom-repository.md",
+      "destination_sha256": "79801ef6368cad50fc976e4983058da913862faca9592d853d41150409a3f02b"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/query-repository-basics.md",
+      "destination_sha256": "2dcc4d2f434c3e33aed062c2ef65450ec945e436656a08746216f27c9f7d1314"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/rel-many-to-many.md",
+      "destination_sha256": "a829ca98c84c5f3cae1f5c9e3bc4b2a8bc0bc57946eddd6e8621c499d2e6e6e9"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/rel-one-to-one-and-many.md",
+      "destination_sha256": "f1a5fe625083d03b060998d0d75e303d9e3daa6b320117d2ec2a645113339aef"
+    },
+    {
+      "destination": ".agents/skills/typeorm/rules/tx-use-transactions.md",
+      "destination_sha256": "8405aaccf0dda7eb4078079a640f701e7e563c152424dfbc2ccc3f972cfc358b"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/SKILL.md",
+      "destination_sha256": "90d3224c988ccca92936d0494af4bc022bfd8dd050b058fed428036acdf91c71"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/_sections.md",
+      "destination_sha256": "01c59969e4e867f0708c8f8ef9c6d87fab9a07d0586244f429ff84013db8a115"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/_template.md",
+      "destination_sha256": "99df2a3ea088c6c22de2484ddc7e964d0e9923846f44c63380343ecc64455442"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/advanced-effect-event-deps.md",
+      "destination_sha256": "55ed8f9f27a1bff803d6fa55828176207714b02123cbb97ddb8a90d88024a723"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/advanced-event-handler-refs.md",
+      "destination_sha256": "a3097edeecfb2ff6851cd66ed8cdf0617c3c88180504bee824aa6e75a215bbbc"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/advanced-init-once.md",
+      "destination_sha256": "3e4dc22173eb0e2b6dcf583e3babd862b8696328f8f59aee7c4d746c5bc05f6c"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/advanced-use-latest.md",
+      "destination_sha256": "8a3f64dfe5a77d1564248faf17fe662ae75b55d497a243cb30b38eb07ccbbf9a"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-api-routes.md",
+      "destination_sha256": "523338540d73427dc14c0cbb19f2741ebccdf8b105a7b2c1b33d2905cf237a42"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-cheap-condition-before-await.md",
+      "destination_sha256": "03107c1f70a293cd58a8abc5474c5548e20ea4efdf01b6d45aae7ad0ac1cb32c"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-defer-await.md",
+      "destination_sha256": "f3c142d090615abdcc99d31c123be37b31f0f1ed8d9ec9f7789a3bc6883ae0fb"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-dependencies.md",
+      "destination_sha256": "16ef469f877e30c6b8e1e1b4bc3e527312fa3c6318cb785a4eca186ea236131a"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-parallel.md",
+      "destination_sha256": "6d2f841896279e976dfcdc1ac89e70771ac188baadfd43c096b5706cb838b961"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/async-suspense-boundaries.md",
+      "destination_sha256": "de05fedac2eb7ae563b887b5a424464ec3dfaf84e5b7797467ebe2a796ac8afc"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-analyzable-paths.md",
+      "destination_sha256": "62090b5c815fd71bf1133dce754f51abc16a9456d0ccd025fd627de27726e92a"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-barrel-imports.md",
+      "destination_sha256": "e648f6d54525f07a691357040ca5bff6ea3424788a91ff63812adb29622a671b"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-conditional.md",
+      "destination_sha256": "09c8259c3efb04fc0abb8e412ccbda217c222ae8118516283e571c995fe3a7d4"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-defer-third-party.md",
+      "destination_sha256": "3719fb47b191e8db4fe22686ec88448ad5af9e6838585425abbe103d0b642e37"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-dynamic-imports.md",
+      "destination_sha256": "401817a7369f315fc5a68a1095742ff7d53d0461906880dc9d64a41495ee1986"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/bundle-preload.md",
+      "destination_sha256": "d1f7cc28da7cd5ab249acd287edc5b761afcfb194e9cb62cd44c5f3543db2de2"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/client-event-listeners.md",
+      "destination_sha256": "242a873349febc1ce685e85617994784dbab92c2eaa68aed7fed5a83e7680e93"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/client-localstorage-schema.md",
+      "destination_sha256": "0fb7cdf9dc93fdf22f87e3669f953fb9d4ac9b0be42eec4a29fe9a2560610b88"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/client-passive-event-listeners.md",
+      "destination_sha256": "1f35016f9053de69e884ee9be00654e37979c2ca85f5e57764dc2626ff7acb4b"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/client-swr-dedup.md",
+      "destination_sha256": "644652c39c6cc00de8d1c77a7273612e868dc3f7edda30764164c12ec0f764a3"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-batch-dom-css.md",
+      "destination_sha256": "480b891b9eaf96e929dc1e964274a4828e3a78009b7d00ccd965a0d425215959"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-cache-function-results.md",
+      "destination_sha256": "3daaa11d24f4295cb6be8bc6f407f2ce83cc7b5bd1f0e68891ea8ab835721dc7"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-cache-property-access.md",
+      "destination_sha256": "73e47431e74878a927061bf0ddc7cd91a7556cb35d2573f3421e82300d9ae311"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-cache-storage.md",
+      "destination_sha256": "11b826b0433898c1ece2d3547010d8e77db9fb240185748c45db91493de9b6cc"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-combine-iterations.md",
+      "destination_sha256": "71add08aeeb43091d4ff4c0b2842cce8b4bdef8ad3e732cc034bb5a84827e746"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-early-exit.md",
+      "destination_sha256": "925ce5ce87f3347186ca62212f29cc6baa2b8c85a96d2720ad07c3d0abf781c0"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-flatmap-filter.md",
+      "destination_sha256": "9e5b166a41914d975bef7635467f8fb32cd98b5c3126c0bc6f163490812fb5f0"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-hoist-regexp.md",
+      "destination_sha256": "f9e9aef2f7c2307dd7310f283df85dcada45fc43e9bb941b0c3aa414dec21ec4"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-index-maps.md",
+      "destination_sha256": "5df1bdc2cfabb2c98abd55d26762e5c18189535c2e686184f426082e62920391"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-length-check-first.md",
+      "destination_sha256": "8b54a311c826b299272f29187fc58bc55772a04c4a72eeb29456ee96dc9fc624"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-min-max-loop.md",
+      "destination_sha256": "87dfb67e2f39df6ad8bcfb5b78c5fb364d3c07554ad188a202408d99f3763421"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-request-idle-callback.md",
+      "destination_sha256": "ee08f83905b4011abbc33d594033157d77561b5bbd9b36b04f0f409581ffec32"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-set-map-lookups.md",
+      "destination_sha256": "a7fd781a6ba9ad49065961b6f9a90ef486bf6b648390e1a08704025f98e1642b"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/js-tosorted-immutable.md",
+      "destination_sha256": "d0a5e1b0fec48a0a81397957e2f068e224329f7c42cb5feeed8aae6fa64025e8"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-activity.md",
+      "destination_sha256": "1e5e7eaf3555e61d6a2e900089c676527d26259501db5594f59544b6c664f85a"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-animate-svg-wrapper.md",
+      "destination_sha256": "9c6ae0ca7a51434e803887c64cded760956579a1452ccb80a461a03f9c937c77"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-conditional-render.md",
+      "destination_sha256": "2ec2fa23c4148285144687050c52369adba3da2fbe3d486f8d3e0aad8f06f2bc"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-content-visibility.md",
+      "destination_sha256": "64eee6d5b916fe74df33363994b27fc7f71bea3bcedc7ee04bda23107ca3e6e4"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-hoist-jsx.md",
+      "destination_sha256": "93b229560fae92005ed9a2a829064607b39b2e984e92d221d05b2d41df2b7c0e"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-hydration-no-flicker.md",
+      "destination_sha256": "dc7ab358c67c177bca6e6f360fbc935ebe4efa928c0ba3ebd3f9f3d9e2000ca3"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-hydration-suppress-warning.md",
+      "destination_sha256": "915bacb934e2927d84b37a3f3d225a47b309ac8f9e494ed2bcb66ce07c5676a2"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-resource-hints.md",
+      "destination_sha256": "351b1095d641717b930f1b2253282b7120af3023bc74e06c17675168d4286864"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-script-defer-async.md",
+      "destination_sha256": "4cea07b7875ba7fc2c7465ff23b63a2bb334f90aaf2d9293d38d67b05fdb32ab"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-svg-precision.md",
+      "destination_sha256": "ed468533f6e95f622859c884b122cf21f9f593ed6bb3d500a54de4b9f9bcb9fb"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rendering-usetransition-loading.md",
+      "destination_sha256": "3a1249c3f13026b6f54ab5712c388df219d6af01b12aa542749acd99a46f4bc1"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-defer-reads.md",
+      "destination_sha256": "234050a77faf50cb306be10a9e15bd4421134ab5907e75f13e6d78e2bd262dc9"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-dependencies.md",
+      "destination_sha256": "17eb5830956fb56486fd3cfc7431f5849d39751730c05ad9e77dd4f0c27169c5"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-derived-state-no-effect.md",
+      "destination_sha256": "cb11ec76f50aa7b6847269f02d79b120c889a30d9ecd2c1d578f75144419c77a"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-derived-state.md",
+      "destination_sha256": "1c326bb67b01fb084eb00c8911b0a7cff54681c2315b629f88e49b64eaa6481d"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-functional-setstate.md",
+      "destination_sha256": "5e68df6b2ae8058e67f476ff1ac67bde159f5a9d18df439e46eabcdeb7b52e58"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-lazy-state-init.md",
+      "destination_sha256": "4ae844740f266fc8cbf050701230286624a2440ec5be67b9a63d9edc3c580573"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-memo-with-default-value.md",
+      "destination_sha256": "81c47476564ad8a79fc68fc442734255ca7d6829424359464503fda0a9f9a0dd"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-memo.md",
+      "destination_sha256": "1f258990c2f27ff6256b3cc5c43300631bb3f0d81f749aed08d07fcdcc131dd1"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-move-effect-to-event.md",
+      "destination_sha256": "abc2cbf167bee056743023351e96806a411d3398da8802093620aecf0721f029"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-no-inline-components.md",
+      "destination_sha256": "1cc32907a770272524ba682eef9e7efdd8ad4533b6f89b718a1fcd7d1d0eb6a3"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-simple-expression-in-memo.md",
+      "destination_sha256": "5bdcf2d1558ba5204e643c887b7b4060f89630969425651eb68e96427d97f800"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-split-combined-hooks.md",
+      "destination_sha256": "6f45d703343484ef9acef9388397f3642966ae6a5a258899a0cf1f9977cfbf6c"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-transitions.md",
+      "destination_sha256": "60f4033909a62df5e5b8c601494f9e50a562e2f8c1c2d81eac24f38142265f1c"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-use-deferred-value.md",
+      "destination_sha256": "8c3579576a61a949884167745dcfaf1d5426ba305cc61fd0a79602d70fda4909"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/rerender-use-ref-transient-values.md",
+      "destination_sha256": "f1a649af9d1d0b5c762f6c9c4c1c70c90d7df82aa10296ee87aadb78c1b76c54"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-after-nonblocking.md",
+      "destination_sha256": "d0b8d24a3db9f0f65f9e2bddbf230b0e03a5f60e1229d93a4a18f5e7a991c7c2"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-auth-actions.md",
+      "destination_sha256": "a2ca8aa102839251c7971ec784560fab943c20b36fe6f80365d4110c13260c23"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-cache-lru.md",
+      "destination_sha256": "1924b64561841923b88a657085097a0aeba3e0ba2d5470b9f5c15cc10d6ae70f"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-cache-react.md",
+      "destination_sha256": "fddeea6c870bb3da4134b61d54b7d09b83d2603f929b7547cd3dc1dc269edd5c"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-dedup-props.md",
+      "destination_sha256": "c2747424cdac46be62f835f245a0aa887b0090b416d28e2ac8676702645eeb37"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-hoist-static-io.md",
+      "destination_sha256": "5abea4dd882b13661bd5f7dfb93f9e547d5f08176c61c448ade91b210ed5d49f"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-no-shared-module-state.md",
+      "destination_sha256": "4d869bf1cd2f1632e5ca4c0e64b1cf0e71c5f5a0f940bc8a22174d205e735ed7"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-parallel-fetching.md",
+      "destination_sha256": "569a2e9fc04f9606686cd75c5894ef8781b502786a7fffe241396846c7733472"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
+      "destination_sha256": "ad5d9656984d4a959997a2367bf59cc6632297b4634a1dd13a087939d83f30b3"
+    },
+    {
+      "destination": ".agents/skills/vercel-react-best-practices/rules/server-serialization.md",
+      "destination_sha256": "f4c7d68b29c82381baad059c4a7f09e868e71ec9c3115a26ad3ae7d24c0dfe1f"
+    },
+    {
+      "destination": ".codex/rule-docs/auth-jwt.md",
+      "destination_sha256": "90a1c4cedcbd3006010b25d1003c2d0ad470be538267bd515e2c0183f9230fc7"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-common-conventions.md",
+      "destination_sha256": "9b5cb326deec40a29b322b1c736bd301901a73a32906752c90b8b1b6d9135c1d"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-controllers.md",
+      "destination_sha256": "5dfc0bd89ba0baf7daed7978da2fc6d31bf4e496a916241b1e50faaa9f2232b8"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-dtos.md",
+      "destination_sha256": "531004b26d552c0c6d6fb9b95d84535a150114615ebca36b5335b63a5d2f1888"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-entities.md",
+      "destination_sha256": "4e4dafa3c23cae444a3eccfadfc92062f9fc7468fc179bcec3744e633346acc0"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-layer-separation.md",
+      "destination_sha256": "bb9525002d5cb70156307762d15c3513f7a45e19a468f5893565977a6c15c05d"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-modules.md",
+      "destination_sha256": "141be000a4f0d770c33d5204882c0c55ecc1dbf9ce555b669338fb458b773492"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-services.md",
+      "destination_sha256": "af7334cf60d189a2c7815617745a094ad4b0e240b0868640358b270c4aad5594"
+    },
+    {
+      "destination": ".codex/rule-docs/nestjs-testing.md",
+      "destination_sha256": "32cb9ae2a4ccf63dc64027a177306fddd994b02b3eaed7effa8897e7b7d97df7"
+    },
+    {
+      "destination": ".codex/rule-docs/next-frontend-bff-api.md",
+      "destination_sha256": "2686ef0a5a32f525c02a1061e0870bda41cc6585edc8ec9804a8f7a49fbb0b1b"
+    },
+    {
+      "destination": ".codex/rule-docs/next-frontend-code-quality.md",
+      "destination_sha256": "5c48ac21edf3ec5e4cce2da2357c47d6013b339105ac7bca379457cd3d3207f1"
+    },
+    {
+      "destination": ".codex/rule-docs/next-frontend-msw-mocks.md",
+      "destination_sha256": "eac2d32ee383c457c78766b0bc97a3103533631061098bb753884ce118d266f0"
+    },
+    {
+      "destination": ".codex/rule-docs/next-frontend-testing.md",
+      "destination_sha256": "b2609a13952c3522deb86e584a789b0680f2f52fc2be6cc76261b8e7769b638b"
+    },
+    {
+      "destination": ".codex/rule-docs/next-frontend-ui.md",
+      "destination_sha256": "2bd8e8071c491c5dcde951063e40af68690f230efd14f2cbcceaf6dbbbd23975"
+    },
+    {
+      "destination": ".codex/rule-docs/typeorm-migrations.md",
+      "destination_sha256": "12cf0b18cf68170ff0f4e0535677d5b6fd8b970c87fbbf92074c77a948ebcaa2"
+    },
+    {
+      "destination": ".codex/rule-docs/typeorm-queries.md",
+      "destination_sha256": "76b93e13295d4d9bea49f0e0de397e36648cacf2bf4f35e6c73ee7e93badae69"
+    },
+    {
+      "destination": ".codex/rule-docs/typescript-strict.md",
+      "destination_sha256": "887dbe0694c5bddc431448d7ee3811a085e8676842705b49f021b1eecc42d57e"
+    },
+    {
+      "destination": ".codex/agents/decisions-correlator.toml",
+      "destination_sha256": "8acaebd3965cd544588e234b522cc7f72163f3c178b6734630da3df085911c34"
+    },
+    {
+      "destination": ".codex/agent-instructions/decisions-correlator.md",
+      "destination_sha256": "9092ceb9e2ecb2423374b1c51a33207e609f9f70b47fc7fbcd662b8038a7228d"
+    },
+    {
+      "destination": ".codex/agents/decisions-detail-reader.toml",
+      "destination_sha256": "e4acba6fc5f7420098e161f43a13393c356309d7d9ff7baca1dd90b3f229e153"
+    },
+    {
+      "destination": ".codex/agent-instructions/decisions-detail-reader.md",
+      "destination_sha256": "676396a41c3f0ccdfbad47475bb276fd3b11406b1d41e5ea2291bdebb041b1fa"
+    },
+    {
+      "destination": ".codex/agents/decisions-reader.toml",
+      "destination_sha256": "2eb380a7cc66169941010879a0934c5f2302e30b74231938681ad3dc4bd902b1"
+    },
+    {
+      "destination": ".codex/agent-instructions/decisions-reader.md",
+      "destination_sha256": "7c4ccb6f9c8fd2fc2db73ce01c0c91bef123639720a1e7793ae63e9a8d1f6c38"
+    },
+    {
+      "destination": ".codex/agents/inventory-digest-reader.toml",
+      "destination_sha256": "4145b1ffe808d704fcc472303d92b463a70eaa36c6fb7ed6ce40c4b062e526f7"
+    },
+    {
+      "destination": ".codex/agent-instructions/inventory-digest-reader.md",
+      "destination_sha256": "ce1eb31ff2275512fdd55be6606eb644952dc620a7ff3be914688037b180e00d"
+    },
+    {
+      "destination": ".codex/agents/phases-reader.toml",
+      "destination_sha256": "b432a27f6721b9ff9e938f402d1261c817c6426fdeb6960ecd83ab05c22cbb75"
+    },
+    {
+      "destination": ".codex/agent-instructions/phases-reader.md",
+      "destination_sha256": "786bb8aa539b3f267deacb1ea9416c3ffd8fa7357f2d7322d4ff02e08af93893"
+    },
+    {
+      "destination": ".codex/agents/plan-reader.toml",
+      "destination_sha256": "5424ccfcb7f91f9d6037ae7d366a0446f7f7ad550798bd23a131748f8f88621e"
+    },
+    {
+      "destination": ".codex/agent-instructions/plan-reader.md",
+      "destination_sha256": "7f2a9a43aefb6b40bed22407524ec2d84f32f5c395388d412f83699b3b49e6b6"
+    },
+    {
+      "destination": "AGENTS.md",
+      "destination_sha256": "56fba995b1ca4680b40298d981af3ac4edb494b8c4516e847fcf51749c5e6c56"
+    },
+    {
+      "destination": "nestjs-project/AGENTS.md",
+      "destination_sha256": "dc313ddc29287d689f23059c04565d6addeb90f61a7f40bb8dfc122fb724c915"
+    },
+    {
+      "destination": "next-frontend/AGENTS.md",
+      "destination_sha256": "a8d9ae07068e237456d1e7aa004919e4bd5365c305e1b14d880f0a0bb571d631"
+    },
+    {
+      "destination": ".codex/diagrams/skill-implement-phase.mermaid",
+      "destination_sha256": "69afe0573db6f884c217e8fe42236dbc3e90b72c9e79571951bf2c23a32f98b9"
+    },
+    {
+      "destination": ".codex/diagrams/skill-plan-phase.mermaid",
+      "destination_sha256": "a4bc2e8efb86e86849db2fb79328c0459244629055be5c3f70586ecf4ab60eda"
+    },
+    {
+      "destination": ".codex/diagrams/skill-research.mermaid",
+      "destination_sha256": "9c79f07b57a9e3cfdb758c0c0d5cffad2eb9ebcc135017d7b3f786d3f7407443"
+    },
+    {
+      "destination": ".codex/diagrams/skills-workflow.mermaid",
+      "destination_sha256": "e361d2f7dee495e4c9b2bc309d53cd5b79bef543f07a60ca9c545fd358ba33a8"
+    },
+    {
+      "destination": ".codex/config.toml",
+      "destination_sha256": "de74421f91a2afab9c0d34c4e6798138cafd37404b0439cecb22abc7051f06d7"
+    },
+    {
+      "destination": ".codex/skills-lock.json",
+      "destination_sha256": "791a541abc6a3d50f57598b830169d28870bc4169793cd1642b9c31a5f3b781f"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+[
+  {
+    "file": ".codex/rule-docs/auth-jwt.md",
+    "paths": [
+      "nestjs-project/src/auth/**"
+    ],
+    "description": "JWT and refresh-token rotation rules"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-common-conventions.md",
+    "paths": [
+      "nestjs-project/src/**/*.ts"
+    ],
+    "description": "NestJS common conventions"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-controllers.md",
+    "paths": [
+      "nestjs-project/**/*.controller.ts"
+    ],
+    "description": "Controller conventions — REST compliance, no silent errors, prefer exception filters over try/catch"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-dtos.md",
+    "paths": [
+      "nestjs-project/**/*.dto.ts"
+    ],
+    "description": "DTO conventions for input validation and data transfer"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-entities.md",
+    "paths": [
+      "nestjs-project/**/*.entity.ts"
+    ],
+    "description": "TypeORM entity conventions for database models"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-layer-separation.md",
+    "paths": [
+      "nestjs-project/**/*.controller.ts",
+      "nestjs-project/**/*.guard.ts",
+      "nestjs-project/**/*.interceptor.ts",
+      "nestjs-project/**/*.pipe.ts",
+      "nestjs-project/**/*.filter.ts"
+    ],
+    "description": "Layer separation — business logic belongs exclusively in services; controllers, guards, interceptors, pipes, and filters must delegate to services"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-modules.md",
+    "paths": [
+      "nestjs-project/src/**/*.module.ts"
+    ],
+    "description": "NestJS module structure conventions"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-services.md",
+    "paths": [
+      "nestjs-project/**/*.service.ts"
+    ],
+    "description": "Service layer error handling — errors must always propagate to upper layers"
+  },
+  {
+    "file": ".codex/rule-docs/nestjs-testing.md",
+    "paths": [
+      "nestjs-project/**/*.spec.ts",
+      "nestjs-project/**/*.integration-spec.ts",
+      "nestjs-project/**/*.e2e-spec.ts",
+      "nestjs-project/test/**"
+    ],
+    "description": "Testing conventions for NestJS unit, integration, and e2e tests"
+  },
+  {
+    "file": ".codex/rule-docs/next-frontend-bff-api.md",
+    "paths": [
+      "next-frontend/app/api/**/route.ts",
+      "next-frontend/lib/api/**/*.ts"
+    ],
+    "description": "BFF Route Handlers and the typed upstream client — OpenAPI-anchored wire-shape pipeline"
+  },
+  {
+    "file": ".codex/rule-docs/next-frontend-code-quality.md",
+    "paths": [
+      "next-frontend/**/*.ts",
+      "next-frontend/**/*.tsx"
+    ],
+    "description": "TypeScript strict, imports, RSC/client boundary, file naming, cn(), Next.js primitives, env access"
+  },
+  {
+    "file": ".codex/rule-docs/next-frontend-msw-mocks.md",
+    "paths": [
+      "next-frontend/mocks/**",
+      "next-frontend/**/*.integration.test.ts",
+      "next-frontend/**/*.integration.test.tsx"
+    ],
+    "description": "MSW handler typing convention + Route Handler integration test pattern (paths-anchored fixtures)"
+  },
+  {
+    "file": ".codex/rule-docs/next-frontend-testing.md",
+    "paths": [
+      "next-frontend/**/__tests__/**",
+      "next-frontend/tests/**",
+      "next-frontend/**/*.test.ts",
+      "next-frontend/**/*.test.tsx",
+      "next-frontend/**/*.integration.test.ts",
+      "next-frontend/**/*.integration.test.tsx",
+      "next-frontend/**/*.e2e-spec.ts"
+    ],
+    "description": "Test type routing, file placement, forbidden patterns (no real-network Vitest tests)"
+  },
+  {
+    "file": ".codex/rule-docs/next-frontend-ui.md",
+    "paths": [
+      "next-frontend/components/**/*.tsx",
+      "next-frontend/app/**/*.tsx",
+      "next-frontend/app/**/*.css"
+    ],
+    "description": "UI rules: design tokens (no hardcoding), shadcn primitive pattern, custom icon components"
+  },
+  {
+    "file": ".codex/rule-docs/typeorm-migrations.md",
+    "paths": [
+      "nestjs-project/**/migrations/**",
+      "nestjs-project/**/*data-source.ts"
+    ],
+    "description": "Database migration safety rules"
+  },
+  {
+    "file": ".codex/rule-docs/typeorm-queries.md",
+    "paths": [
+      "nestjs-project/src/**/*.service.ts",
+      "nestjs-project/src/**/*.repository.ts"
+    ],
+    "description": "TypeORM query pitfalls — silent footguns when reading/writing through repositories"
+  },
+  {
+    "file": ".codex/rule-docs/typescript-strict.md",
+    "paths": [
+      "nestjs-project/src/**/*.ts",
+      "nestjs-project/test/**/*.ts"
+    ],
+    "description": "TypeScript strictness rules — keep tsc --noEmit clean at all times"
+  }
+]

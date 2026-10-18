@@ -1,0 +1,31 @@
+# Project configuration for Codex.
+# Project-local config and hooks require trust in the local Codex client.
+project_doc_max_bytes = 65536
+
+[agents]
+enabled = true
+
+# Preserved UserPromptSubmit reminder; no permissions are granted by this hook.
+[[hooks.UserPromptSubmit]]
+[[hooks.UserPromptSubmit.hooks]]
+type = "command"
+command = "echo 'Identify and activate relevant skills for this task.'"
+
+# Same PostgreSQL stdio configuration as the existing .mcp.json. The MCP launcher
+# runs on the host, so localhost refers to the published PostgreSQL port.
+[mcp_servers.postgres]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-postgres", "postgresql://streamtube:streamtube@localhost/streamtube"]
+
+# Existing instructions require Context7. Enable after configuring access.
+# With an API key exported in the environment, add:
+# bearer_token_env_var = "CONTEXT7_API_KEY"
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+enabled = false
+
+# Desktop endpoint preserved from .mcp.json.example; enable when Figma Desktop
+# is running with its MCP server enabled. This endpoint does not guarantee use_figma.
+[mcp_servers.figma]
+url = "http://127.0.0.1:3845/mcp"
+enabled = false
