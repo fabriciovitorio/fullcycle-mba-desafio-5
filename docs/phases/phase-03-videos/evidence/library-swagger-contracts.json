@@ -1,0 +1,28 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: Nest Swagger\n- Context7-compatible library ID: /nestjs/swagger\n- Description: NestJS Swagger is a module for NestJS that integrates OpenAPI (Swagger) for API documentation and generation.\n- Code Snippets: 425\n- Source Reputation: High\n- Benchmark Score: 86.03\n- Versions: 11.4.7\n----------\n- Title: NestJS Swagger (DeepWiki)\n- Context7-compatible library ID: /websites/deepwiki_nestjs_swagger\n- Description: NestJS Swagger is an official module that enables OpenAPI specification generation and Swagger UI integration for NestJS applications.\n- Code Snippets: 616\n- Source Reputation: High\n- Benchmark Score: 77\n----------\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/docs.nestjs.com\n- Description: NestJS is a progressive Node.js framework for building efficient and scalable server-side applications, utilizing Angular CLI and Dgeni for documentation generation.\n- Code Snippets: 4608\n- Source Reputation: High\n- Benchmark Score: 77\n----------\n- Title: NestJS\n- Context7-compatible library ID: /websites/nestjs\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 5318\n- Source Reputation: High\n- Benchmark Score: 83.46\n----------\n- Title: Swagger\n- Context7-compatible library ID: /websites/swagger_io\n- Description: Swagger is a comprehensive suite of tools for designing, building, documenting, and testing APIs using the OpenAPI and AsyncAPI specifications.\n- Code Snippets: 923\n- Source Reputation: High\n- Benchmark Score: 82.66"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "libraryId": "/nestjs/swagger",
+  "query": "NestJS Swagger 11 explicit ApiResponse ApiProperty response DTO redirect 307 headers createDocument export JSON",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Importing ApiResponse decorators\n\nSource: https://github.com/nestjs/swagger/blob/master/_autodocs/api-reference/api-responses.md\n\nRequired imports for using response decorators in a NestJS application.\n\n```typescript\nimport { ApiResponse, ApiOkResponse, ApiDefaultResponse } from '@nestjs/swagger';\n```\n\n--------------------------------\n\n### Import ApiProperty decorators from @nestjs/swagger\n\nSource: https://github.com/nestjs/swagger/blob/master/_autodocs/api-reference/api-property.md\n\nImport the three public decorators from the package root. This is the standard way to use them in a NestJS DTO class.\n\n```typescript\nimport { ApiProperty, ApiPropertyOptional, ApiResponseProperty } from '@nestjs/swagger';\n```\n\n--------------------------------\n\n### Using ApiResponse with DTOs and status codes\n\nSource: https://github.com/nestjs/swagger/blob/master/_autodocs/api-reference/api-responses.md\n\nExample of applying multiple ApiResponse decorators to a route handler to define different status responses.\n\n```typescript\n@Get(':id')\n@ApiResponse({ status: 200, type: CatDto, description: 'The cat' })\n@ApiResponse({ status: 404, description: 'Cat not found' })\n@ApiResponse({ status: '5XX', description: 'Server error' })\ngetCat(@Param('id') id: string) {\n  // ...\n}\n```\n\n--------------------------------\n\n### SwaggerModule.createDocument Method Signature\n\nSource: https://github.com/nestjs/swagger/blob/master/_autodocs/api-reference/swagger-module.md\n\nThe static method signature for creating an OpenAPI document from an initialized NestJS application.\n\n```typescript\npublic static createDocument(\n    app: INestApplication,\n    config: Omit<OpenAPIObject, 'paths'>,\n    options: SwaggerDocumentOptions = {}\n): OpenAPIObject\n```\n\n--------------------------------\n\n### Disabling the UI and restricting raw definitions to JSON only\n\nSource: https://github.com/nestjs/swagger/blob/master/_autodocs/api-reference/swagger-module.md\n\nExample of setting up Swagger with the UI disabled and raw definitions restricted to JSON only, using the 'ui' and 'raw' options.\n\n```typescript\nSwaggerModule.setup('/api-docs', app, document, {\n  ui: false,\n  raw: ['json']\n});\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

@@ -1,29 +1,40 @@
-import { DataSource, EntitySchema, MigrationInterface } from 'typeorm';
+import { DataSource } from 'typeorm';
+import type { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { CreateUsersAndChannels1775687773260 } from '../database/migrations/1775687773260-CreateUsersAndChannels';
+import { CreateAuthTokens1777579850478 } from '../database/migrations/1777579850478-CreateAuthTokens';
+import { CreateVideos1792367555018 } from '../database/migrations/1792367555018-CreateVideos';
+import { assertTestDatabase, testDatabaseOptions } from './test-database';
 
 interface TestDataSourceOptions {
-  synchronize?: boolean;
-  migrations?: (new () => MigrationInterface)[];
+  database?: string;
+  migrationsRun?: boolean;
 }
 
 export function createTestDataSource(
-  entities: (Function | string | EntitySchema<any>)[],
+  entities: NonNullable<PostgresConnectionOptions['entities']>,
   options: TestDataSourceOptions = {},
 ): DataSource {
-  const { synchronize = true, migrations } = options;
+  const connection = testDatabaseOptions();
+  const database = options.database ?? connection.database;
+  assertTestDatabase(database);
   return new DataSource({
-    type: 'postgres',
-    host: process.env.DB_HOST ?? 'db',
-    port: Number(process.env.DB_PORT ?? 5432),
-    username: process.env.DB_USERNAME ?? 'streamtube',
-    password: process.env.DB_PASSWORD ?? 'streamtube',
-    database: process.env.DB_DATABASE ?? 'streamtube',
+    ...connection,
+    database,
     entities,
-    synchronize,
-    ...(migrations !== undefined && { migrations, migrationsRun: false }),
+    synchronize: false,
+    migrations: [
+      CreateUsersAndChannels1775687773260,
+      CreateAuthTokens1777579850478,
+      CreateVideos1792367555018,
+    ],
+    migrationsRun: options.migrationsRun ?? false,
   });
 }
 
 export async function cleanAllTables(dataSource: DataSource): Promise<void> {
+  assertTestDatabase(dataSource.options.database);
+  await dataSource.query('DELETE FROM "video_processing_outbox"');
+  await dataSource.query('DELETE FROM "videos"');
   await dataSource.query('DELETE FROM "refresh_tokens"');
   await dataSource.query('DELETE FROM "verification_tokens"');
   await dataSource.query('DELETE FROM "channels"');

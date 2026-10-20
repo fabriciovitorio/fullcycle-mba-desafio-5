@@ -1,0 +1,126 @@
+{
+  "si": "SI-03.4.2",
+  "status": "passed",
+  "recorded_at": "2026-10-20T01:56:35.137149+00:00",
+  "scope": "S3 signing and bounded file transfers only; no upload domain orchestration, HTTP endpoints, queue publishing, worker activation or schema changes.",
+  "installed_versions": {
+    "node": "v25.6.0",
+    "@aws-sdk/client-s3": "3.1152.0",
+    "@aws-sdk/s3-request-presigner": "3.1152.0"
+  },
+  "created_files": [
+    "src/storage/storage-signing.port.ts",
+    "src/storage/storage-signing.service.ts",
+    "src/storage/storage-file-transfer.port.ts",
+    "src/storage/storage-file-transfer.service.ts",
+    "src/storage/storage-operation.ts",
+    "src/storage/storage-signing.integration-spec.ts",
+    "src/storage/storage-file-transfer.integration-spec.ts",
+    "src/storage/storage.module.integration-spec.ts",
+    "src/test/storage.fixture.ts"
+  ],
+  "modified_files": [
+    "src/storage/storage.module.ts",
+    "src/storage/storage.constants.ts",
+    "src/storage/storage.error.ts",
+    "src/storage/storage.port.ts",
+    "src/storage/s3-storage.service.ts"
+  ],
+  "implementation": {
+    "boundaries": "StorageModule exports STORAGE, STORAGE_SIGNING and STORAGE_FILES symbols with useExisting aliases. Control, signing and file transfers have focused services; SDK types remain outside ports.",
+    "clients": "Internal S3 client is used for all actual worker/control I/O. A distinct client uses configured publicEndpoint only for signatures. Each owner closes its client once on module shutdown.",
+    "part_signing": "UploadPart includes expected ContentLength and signableHeaders content-length. Effective TTL is min(configured TTL, 900, floored remaining session seconds). Returned expiry is calculated from the actual second-aligned signingDate; expired/invalid requests are rejected.",
+    "get_signing": "GetObject signs ResponseContentType and safe inline/attachment disposition. Attachment removes path components and controls, uses ASCII fallback plus UTF-8 filename*. Range is never bound by the signature.",
+    "download": "Exclusive wx destination creation; real GetObject body piped to disk with pipeline and cancellation. Bounded stream buffers, authoritative content length checked against disk. Partial file removed on failure; existing files preserved.",
+    "upload": "Every file, including small JPEG, uses multipart. Sequential file ranges with explicit ContentLength, 64MiB default parts, 64KiB file read buffers, at most 10000 parts and no single PutObject path. File metadata checked before completion and final object length compared to file size.",
+    "cancellation": "AbortSignal propagates to SDK requests and pipeline. Each part reader and file descriptor is closed before returning; multipart abort uses an independent deadline rather than the cancelled caller signal.",
+    "recovery": "Failed abort throws sanitized StorageCleanupError with internal key/uploadId and original error kind. An uncertain CreateMultipartUpload exposes the key for later orphan reconciliation; local cleanup failure exposes the controlled path. Recovery details must not be serialized into HTTP responses.",
+    "shared_operations": "Existing typed SDK error/deadline handling extracted into storage-operation.ts and reused. Optional cancellation added to control create/complete; all previous control tests pass in the full suite.",
+    "deadlines": "Control/request deadline 30s; transfer budget follows configured processingTimeoutMs (default 1h). Operational options overridden to shorter bounds in tests.",
+    "new_dependencies": false,
+    "schema_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/storage/storage-signing.integration-spec.ts src/storage/storage-file-transfer.integration-spec.ts src/storage/storage.module.integration-spec.ts",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 3,
+      "tests_passed": 16,
+      "log": "focused-tests.raw.log"
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 35,
+      "tests_passed": 304,
+      "log": "full-tests.raw.log"
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 3,
+      "tests_passed": 52,
+      "log": "e2e.raw.log"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run build",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "build.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "lint_integrity": {
+    "files_checked": 117,
+    "changed_files": []
+  },
+  "real_storage_acceptance_proofs": [
+    "Correct signed UploadPart PUT succeeds and matches authoritative ListParts bytes/ETag; changing Content-Length/body size returns 403 and leaves the original valid part intact. The same URL returns 404 after completion.",
+    "Session-bound expiry <= session deadline; maximum 900s; expired/invalid requests rejected. Real short-lived URL returns 403 after expiry and writes no part.",
+    "Signed GET serves 200 full body, 206 ordinary/suffix ranges with exact Content-Range and bytes, and 416 beyond the object. Inline MP4 and JPEG disposition/type verified.",
+    "Unicode attachment basename is preserved with filename* while path components, CR/LF and quotes are sanitized; unsigned bucket access returns 403.",
+    "Real multipart upload and download of 5MiB+97-byte fixture have identical SHA256; two sequential file streams use 64KiB highWaterMark and are closed. No PutObject used by transfer service.",
+    "Sparse source larger than 5GiB selects multipart; cancellation after first real uploaded part closes reader and leaves no active session or object.",
+    "Cancellation during a real download closes the response stream and removes its partial destination. Existing destination survives refusal; missing remote object removes newly created destination.",
+    "Injected failure after actual UploadPart response triggers real abort. Simulated abort unavailability exposes recovery key/uploadId; test retries real abort successfully and confirms no active session remains.",
+    "Consumer module injects exported ports and aliases correctly. Real signed PUT/GET uses http://streamtube-test-minio-1:9000 while listing/control uses http://minio:9000; signed hosts are never rewritten. Both clients are destroyed once."
+  ],
+  "documentation": {
+    "aws_context7": "context7-aws.json",
+    "aws_library_id": "/aws/aws-sdk-js-v3",
+    "node_context7": "context7-node.json",
+    "node_library_id": "/nodejs/node",
+    "resolve_before_query": true,
+    "version_note": "Context7 returned branch/main snippets, not exact-version snapshots. Used APIs were cross-checked with installed SDK 3.1152.0 types, Node v25.6.0 stream behavior and real MinIO tests. Preview transfer-manager/lib-storage examples were not adopted; no dependency added."
+  },
+  "development_database": {
+    "normalized_dump_sha256_before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "normalized_dump_sha256_after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true,
+    "state": "Existing container started for read-only hash comparison and stopped again to restore its prior state; no migrations or writes applied."
+  },
+  "limitations": [
+    "Large sparse fixture verifies multipart selection and cancellation after the first part. It is not a completed >5GiB transfer or the later 10GB end-to-end/memory proof.",
+    "Fixtures test transport integrity, not valid MP4/JPEG media processing; codec/faststart validation belongs to later media SIs.",
+    "Crash recovery/orphan sweeping and ownership/state validation remain in their planned domain/reconciler SIs.",
+    "No development HTTP server or video worker started. No commit or push performed."
+  ]
+}

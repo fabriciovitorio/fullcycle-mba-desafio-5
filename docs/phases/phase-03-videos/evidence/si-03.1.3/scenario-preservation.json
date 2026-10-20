@@ -1,0 +1,32 @@
+{
+  "src/common/filters/domain-exception.filter.spec.ts": {
+    "scenarios": 6,
+    "titles_preserved": true,
+    "assertions_before": 12,
+    "assertions_after": 12
+  },
+  "src/common/filters/validation-exception.filter.spec.ts": {
+    "scenarios": 2,
+    "titles_preserved": true,
+    "assertions_before": 4,
+    "assertions_after": 4
+  },
+  "src/config/env.validation.integration-spec.ts": {
+    "scenarios": 4,
+    "titles_preserved": true,
+    "assertions_before": 6,
+    "assertions_after": 6
+  },
+  "src/channels/channels.service.spec.ts": {
+    "scenarios": 5,
+    "titles_preserved": true,
+    "assertions_before": 11,
+    "assertions_after": 11
+  },
+  "test/auth.e2e-spec.ts": {
+    "scenarios": 45,
+    "titles_preserved": true,
+    "assertions_before": 92,
+    "assertions_after": 92
+  }
+}

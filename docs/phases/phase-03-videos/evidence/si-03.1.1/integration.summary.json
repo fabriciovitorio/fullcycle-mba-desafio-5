@@ -1,0 +1,23 @@
+{
+  "command": "docker compose exec -T nestjs-api npm test -- --runInBand --runTestsByPath src/database/migrations.integration-spec.ts src/auth/auth.module.integration-spec.ts src/channels/channels.module.integration-spec.ts src/users/users.module.integration-spec.ts",
+  "working_directory": "nestjs-project",
+  "exit_code": 0,
+  "test_suites": {
+    "passed": 4,
+    "total": 4
+  },
+  "tests": {
+    "passed": 10,
+    "total": 10
+  },
+  "raw_log": "integration.raw.log",
+  "warnings": [
+    "Node warning: --localstorage-file was provided without a valid path"
+  ],
+  "passed_files": [
+    "src/database/migrations.integration-spec.ts",
+    "src/auth/auth.module.integration-spec.ts",
+    "src/channels/channels.module.integration-spec.ts",
+    "src/users/users.module.integration-spec.ts"
+  ]
+}

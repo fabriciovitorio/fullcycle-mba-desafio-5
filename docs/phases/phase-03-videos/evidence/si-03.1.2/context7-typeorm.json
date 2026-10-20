@@ -1,0 +1,28 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: TypeORM\n- Context7-compatible library ID: /typeorm/typeorm\n- Description: ORM for TypeScript and JavaScript. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL databases. Works in NodeJS, Browser, Ionic, Cordova and Electron platforms.\n- Code Snippets: 2031\n- Source Reputation: Medium\n- Benchmark Score: 82.03\n- Versions: 0.2.45, 1.1.1, 0.3.27\n----------\n- Title: TypeORM\n- Context7-compatible library ID: /llmstxt/typeorm_io_llms_txt\n- Description: TypeORM is an ORM that can run in Node.js and browser environments, supporting TypeScript and JavaScript with multiple database platforms including PostgreSQL, MySQL, MongoDB, SQLite, and more.\n- Code Snippets: 2022\n- Source Reputation: High\n- Benchmark Score: 76.72\n----------\n- Title: TypeORM\n- Context7-compatible library ID: /n8n-io/typeorm\n- Description: TypeORM is an Object-Relational Mapping (ORM) library that supports TypeScript and JavaScript, running on NodeJS, Browser, and other platforms, offering Active Record and Data Mapper patterns for database interactions.\n- Code Snippets: 1394\n- Source Reputation: High\n- Benchmark Score: 77.04\n----------\n- Title: TypeORM Fixtures CLI\n- Context7-compatible library ID: /robinck/typeorm-fixtures\n- Description: TypeORM Fixtures CLI is a tool that uses Faker.js to generate complex, readable, and easy-to-edit fixtures/fake data for TypeORM projects during development and testing.\n- Code Snippets: 74\n- Source Reputation: High\n- Benchmark Score: 35.5\n----------\n- Title: Mock TypeORM\n- Context7-compatible library ID: /jazimabbas/mock-typeorm\n- Description: Mock TypeORM is a package designed for mocking TypeORM interactions in Node.js applications, enabling database-free testing with various testing libraries like Jest, Mocha, and Vitest.\n- Code Snippets: 419\n- Source Reputation: High\n- Benchmark Score: 51"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "libraryId": "/typeorm/typeorm",
+  "query": "TypeORM 0.3.28 IsNull findBy null undefined ignored predicates Repository.create entity fixtures typed DeepPartial",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### IsNull operator with findBy\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/working-with-entity-manager/3-find-options.md\n\nFilters posts where the title is null. The TypeScript example uses the IsNull operator and the SQL query uses the IS NULL condition.\n\n```typescript\nimport { IsNull } from \"typeorm\"\n\nconst loadedPosts = await dataSource.getRepository(Post).findBy({\n    title: IsNull(),\n})\n```\n\n```sql\nSELECT * FROM \"post\" WHERE \"title\" IS NULL\n```\n\n--------------------------------\n\n### QueryBuilder .where() with IsNull() operator\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/data-source/5-null-and-undefined-handling.md\n\nUse the IsNull() operator to correctly match NULL values in QueryBuilder. This generates 'WHERE post.text IS NULL' and returns matching rows.\n\n```typescript\nimport { IsNull } from \"typeorm\"\n\nawait dataSource\n    .createQueryBuilder(Post, \"post\")\n    .where({ text: IsNull() })\n    .getMany()\n// Generates: WHERE post.text IS NULL\n```\n\n--------------------------------\n\n### Null Behavior: 'throw' (default)\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/data-source/5-null-and-undefined-handling.md\n\nConfigures the null behavior to 'throw' (the default), causing a TypeORMError to be thrown when a null value is encountered in a where condition. The example shows the error message and suggests setting 'invalidWhereValuesBehavior.null' to 'ignore' or 'sql-null' to handle null values.\n\n```typescript\nconst dataSource = new DataSource({\n    // ... other options\n    invalidWhereValuesBehavior: {\n        null: \"throw\",\n    },\n})\n\n// This will throw an error\nconst posts = await repository.find({\n    where: {\n        text: null,\n    },\n})\n// Error: Null value encountered in property 'text' of a where condition.\n// To match with SQL NULL, the IsNull() operator must be used.\n// Set 'invalidWhereValuesBehavior.null' to 'ignore' or 'sql-null' in data source options to skip or handle null values.\n```\n\n--------------------------------\n\n### Configure invalidWhereValuesBehavior with null and undefined\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/data-source/5-null-and-undefined-handling.md\n\nSets invalidWhereValuesBehavior to transform null to SQL NULL and throw on undefined in where conditions. This combination allows explicit NULL searches while catching undefined programming errors.\n\n```typescript\nconst dataSource = new DataSource({\n    // ... other options\n    invalidWhereValuesBehavior: {\n        null: \"sql-null\",\n        undefined: \"throw\",\n    },\n})\n```\n\n--------------------------------\n\n### Using IsNull operator to match null values\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/data-source/5-null-and-undefined-handling.md\n\nTo match null values in where conditions, use the IsNull operator. This is the recommended approach for explicit null handling.\n\n```typescript\nconst posts = await repository.find({\n    where: {\n        text: IsNull(),\n    },\n})\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

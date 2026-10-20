@@ -1,0 +1,26 @@
+{
+  "auth/auth.service.spec.ts": {
+    "scenarios": 27,
+    "titles_preserved": true,
+    "assertions_before": 62,
+    "assertions_after": 62
+  },
+  "auth/auth.service.integration-spec.ts": {
+    "scenarios": 25,
+    "titles_preserved": true,
+    "assertions_before": 59,
+    "assertions_after": 60
+  },
+  "users/users.service.integration-spec.ts": {
+    "scenarios": 7,
+    "titles_preserved": true,
+    "assertions_before": 16,
+    "assertions_after": 16
+  },
+  "mail/mail.service.integration-spec.ts": {
+    "scenarios": 5,
+    "titles_preserved": true,
+    "assertions_before": 14,
+    "assertions_after": 14
+  }
+}

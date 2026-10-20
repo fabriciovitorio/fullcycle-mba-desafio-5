@@ -1,0 +1,125 @@
+{
+  "si": "SI-03.1.3",
+  "status": "completed",
+  "phase_status": "in_progress",
+  "baseline_quality_gate": "passed",
+  "affected_files": [
+    "src/channels/channels.service.ts",
+    "src/channels/channels.service.spec.ts",
+    "src/common/filters/domain-exception.filter.spec.ts",
+    "src/common/filters/validation-exception.filter.spec.ts",
+    "src/config/env.validation.integration-spec.ts",
+    "test/auth.e2e-spec.ts"
+  ],
+  "changes": [
+    "Typed filter-response mocks use installed Nest ExecutionContextHost instead of incomplete ArgumentsHost casts.",
+    "Joi validation test keeps the value as unknown across the library's any-valued failure branch; Swagger default assertion preserved using toHaveProperty.",
+    "ChannelsService narrows QueryFailedError code/detail structurally; transaction, retry limit and domain behavior unchanged.",
+    "Channels unit tests use typed manager doubles and Nest testing-module DI with a mocked DataSource transaction.",
+    "Auth E2E reads typed register/me/token/error bodies; MailService is resolved directly from the container; token-capture callbacks return Promise<void> and spies are restored.",
+    "Preexisting concurrent-nickname transaction retry risk recorded separately in docs/tasks/channel-nickname-transaction-retry.md."
+  ],
+  "preservation": {
+    "scenarios_before": 62,
+    "scenarios_after": 62,
+    "assertions_before": 125,
+    "assertions_after": 125,
+    "titles_preserved": true,
+    "skips_added": false,
+    "rules_disabled": false,
+    "report": "scenario-preservation.json",
+    "error_envelope": "{ statusCode, error, message }; domain and validation mappings unchanged"
+  },
+  "checks": {
+    "focused_unit_integration": {
+      "exit_code": 0,
+      "suites": 4,
+      "tests": 17,
+      "log": "focused-unit.raw.log"
+    },
+    "focused_e2e": {
+      "exit_code": 0,
+      "suites": 1,
+      "tests": 45,
+      "log": "focused-e2e.raw.log"
+    },
+    "full_tests": {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand",
+      "exit_code": 0,
+      "suites": 23,
+      "tests": 149,
+      "log": "full-tests.raw.log"
+    },
+    "e2e": {
+      "command": "docker compose exec -T nestjs-api npm run test:e2e -- --runInBand",
+      "exit_code": 0,
+      "suites": 3,
+      "tests": 52,
+      "log": "e2e.raw.log"
+    },
+    "typescript": {
+      "command": "docker compose exec -T nestjs-api npx tsc --noEmit",
+      "exit_code": 0
+    },
+    "scoped_lint": {
+      "exit_code": 0,
+      "files": 6,
+      "errors": 0,
+      "warnings": 0,
+      "max_warnings": 0
+    },
+    "global_lint": {
+      "command": "docker compose exec -T nestjs-api npm run lint",
+      "exit_code": 0,
+      "errors": 0,
+      "warnings": 0,
+      "previous_errors": 80,
+      "previous_warnings": 5,
+      "log": "global-lint.raw.log",
+      "source_files_modified": [],
+      "source_files_hash_compared": 79
+    },
+    "diff_check": {
+      "exit_code": 0
+    }
+  },
+  "documentation": {
+    "provider": "Context7 MCP: resolve-library-id before query-docs",
+    "libraries": [
+      "/nestjs/docs.nestjs.com",
+      "/typeorm/typeorm",
+      "/hapijs/joi"
+    ],
+    "installed": {
+      "jest": "30.3.0",
+      "typeorm": "0.3.28",
+      "nestjs_core": "11.1.16",
+      "joi": "18.1.2",
+      "supertest": "7.2.2"
+    },
+    "version_note": "Context7 returned master/main references rather than exact installed snapshots. Discrepancy flagged before editing. Installed QueryFailedError constructor/property copying, ArgumentsHost/ExecutionContextHost signatures, Joi ValidationResult union and superagent Response.body verified locally.",
+    "files": [
+      "context7-nestjs.json",
+      "context7-typeorm.json",
+      "context7-joi.json"
+    ]
+  },
+  "environment": {
+    "services": "Compose db, mailpit, nestjs-api; services restarted after finding stopped infrastructure",
+    "application_dev_server_started": false,
+    "suite_database": "streamtube_test",
+    "all_npm_commands_in_docker": true,
+    "test_suites_serial": true
+  },
+  "database": {
+    "development_dump_sha256_before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "development_dump_sha256_after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "development_unchanged": true,
+    "normalization": "pg_dump --no-owner --no-privileges; comment/backslash-directive lines removed; hashes only"
+  },
+  "limitations": [
+    "Base quality gate is closed; video infrastructure/feature SIs remain pending.",
+    "Preexisting PostgreSQL retry without SAVEPOINT in ChannelsService is recorded as separate backlog; this SI only changes error typing.",
+    "Node 25 emits preexisting --localstorage-file warning in tests; test commands exit 0."
+  ]
+}

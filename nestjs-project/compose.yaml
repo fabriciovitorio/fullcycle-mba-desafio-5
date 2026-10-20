@@ -7,14 +7,20 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
       mailpit:
-        condition: service_started
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
 
   db:
-    image: postgres:17
+    image: postgres:17@sha256:d74eeac9a635390a49bc21bd49fccd973de707e2a53a76ac49b552b8712ec46f
     ports:
       - "5432:5432"
     environment:
@@ -28,9 +34,73 @@ services:
       retries: 5
 
   mailpit:
-    image: axllent/mailpit
+    image: axllent/mailpit@sha256:ed9b00c609e77e99c79b93f1178255ebc271868920f2c69a8d166bd5634ed10d
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  minio:
+    image: streamtube-minio:7aac2a2c5b7c
+    build:
+      context: .
+      dockerfile: Dockerfile.minio
+      target: minio
+    environment:
+      MINIO_ROOT_USER: ${STORAGE_ACCESS_KEY:?Set STORAGE_ACCESS_KEY in the local env file}
+      MINIO_ROOT_PASSWORD: ${STORAGE_SECRET_KEY:?Set STORAGE_SECRET_KEY in the local env file}
+      MINIO_API_CORS_ALLOW_ORIGIN: ${STORAGE_CORS_ORIGIN:-http://streamtube.local:3000}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://minio:9000/minio/health/ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  minio-init:
+    image: streamtube-mc:77f82e18b540
+    build:
+      context: .
+      dockerfile: Dockerfile.minio
+      target: mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      STORAGE_BUCKET: ${STORAGE_BUCKET:?Set STORAGE_BUCKET in the local env file}
+      STORAGE_ACCESS_KEY: ${STORAGE_ACCESS_KEY:?Set STORAGE_ACCESS_KEY in the local env file}
+      STORAGE_SECRET_KEY: ${STORAGE_SECRET_KEY:?Set STORAGE_SECRET_KEY in the local env file}
+    volumes:
+      - ./docker/minio-init.sh:/init.sh:ro
+    entrypoint: ["/bin/sh", "/init.sh"]
+    restart: "no"
+
+  redis:
+    image: redis:7.4.8-alpine@sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      REDISCLI_AUTH: ${REDIS_PASSWORD:-}
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        set -- redis-server --appendonly yes --appendfsync everysec --maxmemory-policy noeviction
+        if [ -n "$$REDIS_PASSWORD" ]; then set -- "$$@" --requirepass "$$REDIS_PASSWORD"; fi
+        exec /usr/local/bin/docker-entrypoint.sh "$$@"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(redis-cli -h redis ping)\" = PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  minio-data:
+  redis-data:
 
 

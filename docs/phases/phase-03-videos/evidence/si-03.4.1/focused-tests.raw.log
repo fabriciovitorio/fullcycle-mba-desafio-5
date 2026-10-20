@@ -1,0 +1,14 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/storage/s3-storage.service.spec.ts src/storage/s3-storage.service.integration-spec.ts
+
+(node:569) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/storage/s3-storage.service.integration-spec.ts
+PASS src/storage/s3-storage.service.spec.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       30 passed, 30 total
+Snapshots:   0 total
+Time:        2.048 s
+Ran all test suites within paths "src/storage/s3-storage.service.spec.ts", "src/storage/s3-storage.service.integration-spec.ts".

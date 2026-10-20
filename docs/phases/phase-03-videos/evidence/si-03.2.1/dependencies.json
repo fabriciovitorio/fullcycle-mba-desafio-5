@@ -1,0 +1,176 @@
+{
+  "version": "0.0.1",
+  "name": "nestjs-project",
+  "dependencies": {
+    "@aws-sdk/client-s3": {
+      "version": "3.1152.0",
+      "resolved": "https://registry.npmjs.org/@aws-sdk/client-s3/-/client-s3-3.1152.0.tgz",
+      "overridden": false
+    },
+    "@aws-sdk/s3-request-presigner": {
+      "version": "3.1152.0",
+      "resolved": "https://registry.npmjs.org/@aws-sdk/s3-request-presigner/-/s3-request-presigner-3.1152.0.tgz",
+      "overridden": false
+    },
+    "@nestjs-modules/mailer": {
+      "version": "2.3.4",
+      "resolved": "https://registry.npmjs.org/@nestjs-modules/mailer/-/mailer-2.3.4.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        },
+        "bullmq": {
+          "version": "5.81.5"
+        }
+      }
+    },
+    "@nestjs/bullmq": {
+      "version": "11.0.5",
+      "resolved": "https://registry.npmjs.org/@nestjs/bullmq/-/bullmq-11.0.5.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/bull-shared": {
+          "version": "11.0.5",
+          "resolved": "https://registry.npmjs.org/@nestjs/bull-shared/-/bull-shared-11.0.5.tgz",
+          "overridden": false,
+          "dependencies": {
+            "@nestjs/common": {
+              "version": "11.1.16"
+            },
+            "@nestjs/core": {
+              "version": "11.1.16"
+            }
+          }
+        },
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        },
+        "bullmq": {
+          "version": "5.81.5"
+        }
+      }
+    },
+    "@nestjs/common": {
+      "version": "11.1.16",
+      "resolved": "https://registry.npmjs.org/@nestjs/common/-/common-11.1.16.tgz",
+      "overridden": false
+    },
+    "@nestjs/config": {
+      "version": "4.0.3",
+      "resolved": "https://registry.npmjs.org/@nestjs/config/-/config-4.0.3.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/core": {
+      "version": "11.1.16",
+      "resolved": "https://registry.npmjs.org/@nestjs/core/-/core-11.1.16.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/jwt": {
+      "version": "11.0.2",
+      "resolved": "https://registry.npmjs.org/@nestjs/jwt/-/jwt-11.0.2.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/platform-express": {
+      "version": "11.1.16",
+      "resolved": "https://registry.npmjs.org/@nestjs/platform-express/-/platform-express-11.1.16.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/swagger": {
+      "version": "11.4.2",
+      "resolved": "https://registry.npmjs.org/@nestjs/swagger/-/swagger-11.4.2.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        },
+        "@nestjs/mapped-types": {
+          "version": "2.1.1",
+          "resolved": "https://registry.npmjs.org/@nestjs/mapped-types/-/mapped-types-2.1.1.tgz",
+          "overridden": false,
+          "dependencies": {
+            "@nestjs/common": {
+              "version": "11.1.16"
+            }
+          }
+        }
+      }
+    },
+    "@nestjs/testing": {
+      "version": "11.1.16",
+      "resolved": "https://registry.npmjs.org/@nestjs/testing/-/testing-11.1.16.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/throttler": {
+      "version": "6.5.0",
+      "resolved": "https://registry.npmjs.org/@nestjs/throttler/-/throttler-6.5.0.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "@nestjs/typeorm": {
+      "version": "11.0.1",
+      "resolved": "https://registry.npmjs.org/@nestjs/typeorm/-/typeorm-11.0.1.tgz",
+      "overridden": false,
+      "dependencies": {
+        "@nestjs/common": {
+          "version": "11.1.16"
+        },
+        "@nestjs/core": {
+          "version": "11.1.16"
+        }
+      }
+    },
+    "bullmq": {
+      "version": "5.81.5",
+      "resolved": "https://registry.npmjs.org/bullmq/-/bullmq-5.81.5.tgz",
+      "overridden": false
+    }
+  }
+}

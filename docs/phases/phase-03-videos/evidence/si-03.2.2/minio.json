@@ -1,0 +1,28 @@
+{
+  "libraryId": "/minio/mc",
+  "query": "MinIO Docker mc mb --ignore-existing anonymous set none CORS AllowedOrigins AllowedMethods AllowedHeaders ExposeHeaders MINIO_API_CORS_ALLOW_ORIGIN readiness",
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: MinIO Client\n- Context7-compatible library ID: /minio/mc\n- Description: MinIO Client (mc) is a modern alternative to UNIX commands that provides a command-line interface for managing files, buckets, and objects on local filesystems and Amazon S3 compatible cloud storage services.\n- Code Snippets: 417\n- Source Reputation: High\n- Benchmark Score: 68.85\n----------\n- Title: MinIO\n- Context7-compatible library ID: /minio/docs\n- Description: MinIO is a high-performance, S3-compatible object storage server designed for cloud-native applications.\n- Code Snippets: 5910\n- Source Reputation: High\n- Benchmark Score: 73.82\n----------\n- Title: MinIO\n- Context7-compatible library ID: /minio/minio\n- Description: MinIO is a high-performance, S3-compatible object storage solution designed for speed and scalability, powering AI/ML, analytics, and data-intensive workloads.\n- Code Snippets: 3116\n- Source Reputation: High\n- Benchmark Score: 78.7\n----------\n- Title: MinIO AIStor\n- Context7-compatible library ID: /websites/min_io_aistor\n- Description: MinIO AIStor is an enterprise-grade object storage platform that implements S3 API compatibility with advanced features like Iceberg table support, multi-site replication, and comprehensive identity and access management.\n- Code Snippets: 10704\n- Source Reputation: High\n- Benchmark Score: 78.34\n----------\n- Title: MinIO Enterprise\n- Context7-compatible library ID: /websites/min_io_enterprise\n- Description: MinIO Enterprise is an exascale object storage platform that natively supports S3 API, Iceberg tables, and SFTP, designed for high-performance AI workloads with advanced features like encryption, replication, and lifecycle management.\n- Code Snippets: 14841\n- Source Reputation: High\n- Benchmark Score: 64"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Docker: Pull and run stable mc image\n\nSource: https://github.com/minio/mc/blob/master/README.md\n\nPulls the stable MinIO Client Docker image and runs it against the MinIO play environment by default. Use this to quickly test mc without installation.\n\n```bash\ndocker pull minio/mc\ndocker run minio/mc ls play\n```\n\n--------------------------------\n\n### Make a bucket with mc mb\n\nSource: https://github.com/minio/mc/blob/master/README.md\n\nCreates a new bucket using the 'mb' command. The output confirms the bucket was created successfully.\n\n```text\nmc mb play/mybucket\nBucket created successfully `play/mybucket`.\n```\n\n--------------------------------\n\n### mc mb --ignore-existing ignores BucketAlreadyExists\n\nSource: https://github.com/minio/mc/blob/master/cmd/client-s3.go\n\nWhen --ignore-existing/-p is passed, MakeBucket silently returns nil on BucketAlreadyOwnedByYou or BucketAlreadyExists errors instead of propagating them.\n\n```go\n\tif e = c.api.MakeBucket(ctx, bucket, opts); e != nil {\n\t\t// Ignore bucket already existing error when ignoreExisting flag is enabled\n\t\tif ignoreExisting {\n\t\t\tswitch minio.ToErrorResponse(e).Code {\n\t\t\tcase \"BucketAlreadyOwnedByYou\":\n\t\t\t\tfallthrough\n\t\t\tcase \"BucketAlreadyExists\":\n\t\t\t\treturn nil\n\t\t\t}\n\t\t}\n\t\treturn probe.NewError(e)\n\t}\n```\n\n--------------------------------\n\n### Example - MinIO Cloud Storage alias\n\nSource: https://github.com/minio/mc/blob/master/README.md\n\nAdds a MinIO server alias using the URL and credentials shown in the MinIO startup banner.\n\n```text\nmc alias set minio http://192.168.1.51 BKIKJAA5BMMU2RHO6IBB V7f1CwQqAcwo80UEIJEjc5gVQUSSx5ohQ9GSrr12\n```\n\n--------------------------------\n\n### Docker: Run mc container with shell entrypoint\n\nSource: https://github.com/minio/mc/blob/master/README.md\n\nStarts an interactive shell inside the mc container to run mc against other S3-compatible servers. After starting, use the mc alias command to configure a connection.\n\n```bash\ndocker run -it --entrypoint=/bin/sh minio/mc\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

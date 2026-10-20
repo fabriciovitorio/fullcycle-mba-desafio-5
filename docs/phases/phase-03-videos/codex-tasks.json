@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "tasks": [
+    {
+      "id": "SI-03.1.1",
+      "subject": "SI-03.1.1 — Consolidar Jest e isolar o banco de testes",
+      "description": "Remover os bloqueios de descoberta e migrations sem perder cobertura da base.",
+      "activeForm": "Implementando Consolidar Jest e isolar o banco de testes",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.1.2",
+      "subject": "SI-03.1.2 — Corrigir tipagem dos testes de autenticação e serviços",
+      "description": "Eliminar erros de qualidade do primeiro grupo preservando o comportamento já coberto.",
+      "activeForm": "Implementando Corrigir tipagem dos testes de autenticação e serviços",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.1.3",
+      "subject": "SI-03.1.3 — Fechar o gate de qualidade da base",
+      "description": "Concluir o pré-requisito obrigatório antes de começar storage, fila ou vídeos.",
+      "activeForm": "Implementando Fechar o gate de qualidade da base",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.2.1",
+      "subject": "SI-03.2.1 — Infra: fixar bibliotecas e configuração de vídeos",
+      "description": "Preparar dependências e factories tipadas com os alvos documentados.",
+      "activeForm": "Implementando Infra: fixar bibliotecas e configuração de vídeos",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.2.2",
+      "subject": "SI-03.2.2 — Infra: disponibilizar MinIO, Redis e ferramentas de mídia",
+      "description": "Subir dependências reais e preparar a imagem do worker sem ligar o servidor HTTP.",
+      "activeForm": "Implementando Infra: disponibilizar MinIO, Redis e ferramentas de mídia",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.3.1",
+      "subject": "SI-03.3.1 — Persistir vídeos, outbox e relações com canais",
+      "description": "Criar o schema migrado que sustenta rascunhos, estados e intenção de processamento.",
+      "activeForm": "Implementando Persistir vídeos, outbox e relações com canais",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.3.2",
+      "subject": "SI-03.3.2 — Implementar repositórios e transições condicionais",
+      "description": "Encapsular consultas, autorização de propriedade e transações recuperáveis.",
+      "activeForm": "Implementando Implementar repositórios e transições condicionais",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.4.1",
+      "subject": "SI-03.4.1 — Implementar controle multipart no adaptador S3",
+      "description": "Oferecer operações reais de sessão sem fazer o binário atravessar a API.",
+      "activeForm": "Implementando Implementar controle multipart no adaptador S3",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.4.2",
+      "subject": "SI-03.4.2 — Assinar acesso e transferir arquivos com memória limitada",
+      "description": "Completar a fronteira S3 para partes do cliente e derivados grandes do worker.",
+      "activeForm": "Implementando Assinar acesso e transferir arquivos com memória limitada",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.5.1",
+      "subject": "SI-03.5.1 — Criar rascunhos e preparar a retomada",
+      "description": "Implementar o domínio de inicialização, consulta da sessão e permissão de partes.",
+      "activeForm": "Implementando Criar rascunhos e preparar a retomada",
+      "status": "completed"
+    },
+    {
+      "id": "SI-03.5.2",
+      "subject": "SI-03.5.2 — Concluir ou abortar uploads sem perder processamento",
+      "description": "Fechar a fronteira S3/banco e expor consulta privada de estado.",
+      "activeForm": "Implementando Concluir ou abortar uploads sem perder processamento",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.3",
+      "subject": "SI-03.5.3 — Iniciar upload por HTTP",
+      "description": "Criar a fronteira de entrada para rascunho e sessão direta.",
+      "activeForm": "Implementando Iniciar upload por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.4",
+      "subject": "SI-03.5.4 — Retomar upload por HTTP",
+      "description": "Disponibilizar as partes reais da sessão ao seu dono.",
+      "activeForm": "Implementando Retomar upload por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.5",
+      "subject": "SI-03.5.5 — Emitir permissões de partes por HTTP",
+      "description": "Permitir upload direto com validação de sessão e limites.",
+      "activeForm": "Implementando Emitir permissões de partes por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.6",
+      "subject": "SI-03.5.6 — Confirmar conclusão por HTTP",
+      "description": "Expor conclusão idempotente e aceitação assíncrona.",
+      "activeForm": "Implementando Confirmar conclusão por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.7",
+      "subject": "SI-03.5.7 — Abortar sessão por HTTP",
+      "description": "Permitir cancelar upload sem implementar exclusão de vídeo da Fase 04.",
+      "activeForm": "Implementando Abortar sessão por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.5.8",
+      "subject": "SI-03.5.8 — Consultar estado privado por HTTP",
+      "description": "Dar ao dono acompanhamento de processamento e erro seguro.",
+      "activeForm": "Implementando Consultar estado privado por HTTP",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.6.1",
+      "subject": "SI-03.6.1 — Despachar a outbox para BullMQ",
+      "description": "Ligar a intenção transacional à fila real de forma reexecutável.",
+      "activeForm": "Implementando Despachar a outbox para BullMQ",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.6.2",
+      "subject": "SI-03.6.2 — Reconciliar jobs ausentes e falhas terminais",
+      "description": "Fechar as janelas de perda do Redis e de persistência do resultado.",
+      "activeForm": "Implementando Reconciliar jobs ausentes e falhas terminais",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.7.1",
+      "subject": "SI-03.7.1 — Extrair metadados e preparar mídia progressiva",
+      "description": "Isolar ffprobe/FFmpeg em serviço de arquivos com limites explícitos.",
+      "activeForm": "Implementando Extrair metadados e preparar mídia progressiva",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.7.2",
+      "subject": "SI-03.7.2 — Processar vídeos com lease e finalização protegida",
+      "description": "Coordenar storage, mídia e banco sem carregar arquivo integral na memória.",
+      "activeForm": "Implementando Processar vídeos com lease e finalização protegida",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.7.3",
+      "subject": "SI-03.7.3 — Ativar o consumidor em container separado",
+      "description": "Executar a fila por contexto Nest standalone com shutdown verificável.",
+      "activeForm": "Implementando Ativar o consumidor em container separado",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.7.4",
+      "subject": "SI-03.7.4 — Recuperar sessões e limpar artefatos abandonados",
+      "description": "Evitar acúmulo de partes/derivados sem apagar objetos publicados.",
+      "activeForm": "Implementando Recuperar sessões e limpar artefatos abandonados",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.8.1",
+      "subject": "SI-03.8.1 — Resolver acesso público apenas para vídeos prontos",
+      "description": "Construir a projeção pública e as permissões temporárias de leitura.",
+      "activeForm": "Implementando Resolver acesso público apenas para vídeos prontos",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.8.2",
+      "subject": "SI-03.8.2 — Expor metadados por URL única",
+      "description": "Disponibilizar a rota pública preservando bucket privado e verificação de estado.",
+      "activeForm": "Implementando Expor metadados por URL única",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.8.3",
+      "subject": "SI-03.8.3 — Redirecionar reprodução progressiva",
+      "description": "Disponibilizar a rota pública preservando bucket privado e verificação de estado.",
+      "activeForm": "Implementando Redirecionar reprodução progressiva",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.8.4",
+      "subject": "SI-03.8.4 — Redirecionar download do original",
+      "description": "Disponibilizar a rota pública preservando bucket privado e verificação de estado.",
+      "activeForm": "Implementando Redirecionar download do original",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.8.5",
+      "subject": "SI-03.8.5 — Disponibilizar thumbnail de vídeo pronto",
+      "description": "Disponibilizar a rota pública preservando bucket privado e verificação de estado.",
+      "activeForm": "Implementando Disponibilizar thumbnail de vídeo pronto",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.9.1",
+      "subject": "SI-03.9.1 — Comprovar recuperação do fluxo com serviços reais",
+      "description": "Exercitar a coordenação completa e falhas entre processos além dos contratos HTTP individuais.",
+      "activeForm": "Implementando Comprovar recuperação do fluxo com serviços reais",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.9.2",
+      "subject": "SI-03.9.2 — Comprovar upload integral de 10GB e responsividade",
+      "description": "Produzir evidência integral, reproduzível e mensurada do requisito de maior volume.",
+      "activeForm": "Implementando Comprovar upload integral de 10GB e responsividade",
+      "status": "pending"
+    },
+    {
+      "id": "SI-03.10",
+      "subject": "SI-03.10 — Documentar a entrega e fechar a Definition of Done",
+      "description": "Atualizar a documentação de IA e conferir a fase inteira com evidências reais.",
+      "activeForm": "Implementando Documentar a entrega e fechar a Definition of Done",
+      "status": "pending"
+    }
+  ]
+}

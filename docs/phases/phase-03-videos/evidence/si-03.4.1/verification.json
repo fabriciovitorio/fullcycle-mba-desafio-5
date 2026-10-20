@@ -1,0 +1,118 @@
+{
+  "si": "SI-03.4.1",
+  "status": "passed",
+  "recorded_at": "2026-10-20T01:38:42.899039+00:00",
+  "scope": "Multipart session controls only; no presigned URLs, binary proxy, queue publisher, worker or HTTP endpoints.",
+  "installed_versions": {
+    "@aws-sdk/client-s3": "3.1152.0",
+    "@nestjs/core": "11.1.16"
+  },
+  "implementation": {
+    "module": "StorageModule exports STORAGE symbol using useExisting S3StorageService. StoragePort and StorageError contain no SDK/HTTP types. Client is destroyed on module shutdown. Consumer imports will be introduced by their own SIs.",
+    "operations": [
+      "createMultipartUpload",
+      "listParts",
+      "completeMultipartUpload",
+      "abortMultipartUpload",
+      "headObject"
+    ],
+    "pagination": "ListParts follows authoritative NextPartNumberMarker, limits pages to 1000 and part numbers to 10000; rejects missing/nonadvancing markers and invalid size/ETag/order. Integration overrides page size to 1 and uploads two real parts.",
+    "metadata": "Server part sizes/ETags preserved; completion sends exact part ETags and reads authoritative object ContentLength/ETag using HeadObject in the same bounded operation.",
+    "configuration": "Internal configured endpoint, region, credentials, forcePathStyle and explicit WHEN_REQUIRED request/response checksums; maxAttempts=2; one AbortController deadline of 30000ms per operation including all pages/head.",
+    "errors": "Typed upload_not_found, object_not_found, invalid_multipart, unavailable, operation_failed and invalid_response. Missing bucket/access denied are not mistaken for missing object. Errors propagate with fixed sanitized messages; no credential or SDK diagnostic logging.",
+    "transport": "Native and foreign-realm name/code guards plus exact Smithy error-wrapper prefix with known transport codes. Installed @smithy/core/dist-cjs/submodules/retry/index.js asSdkError was inspected: stringified foreign-realm native errors lose cause/code. Unknown wrapper stays operation_failed.",
+    "repeated_completion": "Real MinIO replay is recoverable by successful repeat or typed missing session followed by HeadObject of server-owned immutable key; adapter never treats arbitrary existing objects as proof of this session.",
+    "schema_changed": false,
+    "dependencies_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/storage/s3-storage.service.spec.ts src/storage/s3-storage.service.integration-spec.ts",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 2,
+      "tests_passed": 30,
+      "log": "focused-tests.raw.log"
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 32,
+      "tests_passed": 288,
+      "log": "full-tests.raw.log"
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 3,
+      "tests_passed": 52,
+      "log": "e2e.raw.log"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run build",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "build.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "lint_integrity": {
+    "files_checked": 108,
+    "changed_files": []
+  },
+  "acceptance_proofs": [
+    "Real two-part multipart upload (5242880 + 20 bytes), ListParts with page size 1, complete and GetObject. Actual received length and SHA-256 match concatenated original bytes.",
+    "Real completion repetition and authoritative object reconciliation.",
+    "Real abort makes ListParts return upload_not_found and further UploadPart with same id return NoSuchUpload; no completed object exists.",
+    "Real invalid ETag rejects completion as invalid_multipart and leaves object absent.",
+    "Real connection refusal to Docker service minio port 1 is unavailable, while actual absent key is object_not_found.",
+    "Unit request deadline aborts a pending SDK operation; failures, malformed pagination and cross-realm errors are propagated and sanitized."
+  ],
+  "test_fix_history": [
+    {
+      "attempt": 1,
+      "diagnosis": "Recursive Jest comparison of 5 MiB exceeded per-test deadline; replaced with exact length + SHA256. Added structural native error guards, but SDK had already stringified that foreign-realm error.",
+      "log": "focused-tests.fix-1.raw.log"
+    },
+    {
+      "attempt": 2,
+      "diagnosis": "Inspected Smithy asSdkError and matched its precise wrapper + known transport codes. Added positive/negative unit coverage. All 30 focused tests then passed. Temporary diagnostic logging removed.",
+      "diagnostic_log": "focused-tests.diagnostic.raw.log"
+    }
+  ],
+  "documentation": {
+    "context7": "context7-aws.json",
+    "library_id": "/aws/aws-sdk-js-v3",
+    "resolve_before_query": true,
+    "version_note": "Context7 branch/main snippets were cross-checked against installed SDK 3.1152.0 types and real MinIO execution."
+  },
+  "development_database": {
+    "normalized_dump_sha256_before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "normalized_dump_sha256_after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true,
+    "state": "Existing development DB container started temporarily for read-only pg_dump hash, then stopped to restore prior state. No migrations or writes applied."
+  },
+  "limitations": [
+    "5 MiB multipart fixture proves session controls and byte integrity; it is not the later 10 GB/memory acceptance proof.",
+    "Signing, bounded file transfers and user-facing recovery orchestration remain in their planned SIs.",
+    "Development HTTP server and video worker were not started.",
+    "No commit or push performed."
+  ]
+}

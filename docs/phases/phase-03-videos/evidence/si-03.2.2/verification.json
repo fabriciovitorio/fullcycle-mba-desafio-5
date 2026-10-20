@@ -1,0 +1,197 @@
+{
+  "si": "SI-03.2.2",
+  "status": "passed",
+  "scope": "Real MinIO/Redis infrastructure, isolated test stack, FFmpeg/ffprobe runtime image. No HTTP server or queue consumer started.",
+  "runtime": {
+    "node": "25.6.0",
+    "postgres": "17.11",
+    "mailpit": "1.31.3",
+    "redis": "7.4.8",
+    "ffmpeg": "5.1.9-0+deb12u1",
+    "ffprobe": "5.1.9-0+deb12u1",
+    "go": "1.24.9",
+    "compose": "5.3.1",
+    "minio": "DEVELOPMENT.2026-02-12T20-18-48Z",
+    "mc": "DEVELOPMENT.2025-11-06T16-25-29Z"
+  },
+  "upstream_source": {
+    "minio": {
+      "repository": "https://github.com/minio/minio",
+      "commit": "7aac2a2c5b7c882e68c1ce017d8256be2feea27f",
+      "image_id": "sha256:86e208e69119978895ddac38bbae27c7001207a76778a9992711710baa400b4d"
+    },
+    "mc": {
+      "repository": "https://github.com/minio/mc",
+      "commit": "77f82e18b5401a65958f1619df6ebb994634bd88",
+      "image_id": "sha256:414eb3913ac7d8203b1630abd0074d10de579a47d4918e86f882625230d978e0"
+    },
+    "distribution_adjustment": "Official Docker Hub pulls denied and Quay server reference returned HTTP 401. Built unmodified official source pinned by commit, using upstream gen-ldflags.go, retaining source/license in runtime images. No third-party mirror or technology substitution.",
+    "follow_up": "docs/tasks/minio-distribution-lifecycle-review.md"
+  },
+  "image_digests": {
+    "node:25.6.0-slim": "sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730",
+    "redis:7.4.8-alpine": "sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6",
+    "postgres:17": "sha256:d74eeac9a635390a49bc21bd49fccd973de707e2a53a76ac49b552b8712ec46f",
+    "axllent/mailpit": "sha256:ed9b00c609e77e99c79b93f1178255ebc271868920f2c69a8d166bd5634ed10d",
+    "golang:1.24.9-bookworm": "sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b",
+    "debian:bookworm-slim": "sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587"
+  },
+  "worker_image": {
+    "id": "sha256:c0077fa930c430c1a53fabcaffb308044aaf3aa1cb9dfd8d05c1258d99d637ac",
+    "build_exit_code": 0,
+    "uid": 1000,
+    "temporary_directory": "/tmp/streamtube-videos",
+    "temporary_directory_writable": true,
+    "probe_available_kib": 986545888,
+    "probe_memory_limit": "2g",
+    "probe_cpu_limit": 1,
+    "entry_activation": "SI-03.7.3; no active video-worker-test service yet"
+  },
+  "infrastructure_checks": {
+    "development_and_test_services_ready": true,
+    "minio_init_repeated_exit_code": 0,
+    "known_object_unsigned_get_status": 403,
+    "signed_get_status": 200,
+    "cors_allowed_origin": "http://streamtube.test:3000",
+    "cors_rejected_other_origin": true,
+    "cors_methods_verified": [
+      "GET",
+      "HEAD",
+      "PUT"
+    ],
+    "cors_exposed_headers_verified": [
+      "ETag",
+      "Content-Range",
+      "Accept-Ranges",
+      "Content-Length"
+    ],
+    "cors_signed_header_preflight": "x-amz-checksum-crc32",
+    "cors_configuration": "MINIO_API_CORS_ALLOW_ORIGIN on server; real requests verified. No unsupported per-bucket CORS write assumed.",
+    "redis_appendonly": true,
+    "redis_appendfsync": "everysec",
+    "redis_policy": "noeviction",
+    "restart_object_and_bullmq_job_survived": true,
+    "minio_container_recreation_object_survived": true,
+    "bullmq_job_state": "waiting",
+    "probe_object_and_job_removed": true,
+    "http_listener_check": "ECONNREFUSED at nestjs-api:3000"
+  },
+  "test_isolation": {
+    "compose_project": "streamtube-test",
+    "dedicated_network": true,
+    "published_ports": [],
+    "database": "streamtube_test",
+    "protected_database": "streamtube",
+    "bucket": "streamtube-test-videos",
+    "queue_prefix": "streamtube-test",
+    "named_volumes": [
+      "test-db-data",
+      "test-minio-data",
+      "test-redis-data"
+    ],
+    "migrations_applied": 2,
+    "synchronize": false,
+    "guard_adjustment": "globalSetup preserves an explicitly provided TEST_PROTECTED_DB_NAME; the dedicated *_test guard and protected-name rejection are unchanged.",
+    "env_files_git_ignored": true,
+    "env_files_excluded_from_build_context": true,
+    "credentials_in_evidence": false
+  },
+  "checks": [
+    {
+      "command": "docker compose config --quiet (development and test override)",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose build minio minio-init nestjs-api",
+      "exit_code": 0,
+      "logs": [
+        "images-build.raw.log",
+        "pinned-images-build.raw.log",
+        "versioned-build.raw.log"
+      ]
+    },
+    {
+      "command": "docker compose -f compose.yaml -f compose.worker-tools.yaml --profile tools build worker-tools",
+      "exit_code": 0,
+      "log": "worker-build.raw.log"
+    },
+    {
+      "command": "npm run migration:run (isolated test container)",
+      "exit_code": 0
+    },
+    {
+      "command": "node scripts/verify-video-infra.cjs seed / verify / cleanup (isolated test container)",
+      "exit_code": 0,
+      "evidence": "infra-after-recreate.json"
+    },
+    {
+      "command": "npm test -- --runInBand (isolated test container)",
+      "exit_code": 0,
+      "tests_passed": 188,
+      "suites_passed": 25,
+      "log": "full-tests.raw.log"
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand (isolated test container)",
+      "exit_code": 0,
+      "tests_passed": 52,
+      "suites_passed": 3,
+      "log": "e2e.raw.log"
+    },
+    {
+      "command": "npx tsc --noEmit (isolated test container)",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run lint (isolated test container)",
+      "exit_code": 0,
+      "log": "global-lint.raw.log",
+      "source_files_hash_checked": 87,
+      "source_files_modified": 0
+    },
+    {
+      "command": "npx eslint --config scripts/eslint.config.mjs scripts/verify-video-infra.cjs --max-warnings 0",
+      "exit_code": 0
+    },
+    {
+      "command": "npx eslint src/test/global-setup.ts --max-warnings 0",
+      "exit_code": 0
+    },
+    {
+      "command": "node --check scripts/verify-video-infra.cjs",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "lint_adjustment": "An initial supplemental ESLint invocation used the TypeScript project service for the standalone CommonJS probe and could not parse that file outside tsconfig. Added a JavaScript recommended config scoped to infrastructure CJS scripts; dedicated probe lint and existing TypeScript/global lint pass. No existing rules disabled.",
+  "development_database": {
+    "name": "streamtube",
+    "comparison": "SHA-256 of normalized pg_dump excluding comments and backslash directives",
+    "before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true
+  },
+  "documentation": {
+    "provider": "Context7 MCP",
+    "evidence": [
+      "docker.json",
+      "minio.json",
+      "redis.json",
+      "ffmpeg.json"
+    ],
+    "official_sources": [
+      "https://github.com/minio/minio",
+      "https://github.com/minio/minio/blob/7aac2a2c5b7c882e68c1ce017d8256be2feea27f/cmd/api-router.go"
+    ],
+    "stale_testing_reference": "The external-systems guide describes localhost/synchronize/filesystem storage; the explicit phase contract takes precedence: Compose DNS, migrations and real MinIO/Redis."
+  },
+  "limits": [
+    "Full video upload/processing/10GB proof remains in later SIs.",
+    "Source-built image IDs are recorded locally; no registry digest is claimed for unpublished images.",
+    "No container vulnerability scan performed; upstream maintenance/distribution follow-up recorded.",
+    "No Git commit or push performed."
+  ]
+}

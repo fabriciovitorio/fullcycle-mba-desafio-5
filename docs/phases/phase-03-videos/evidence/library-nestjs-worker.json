@@ -1,0 +1,28 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: NestJS\n- Context7-compatible library ID: /websites/nestjs\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 5318\n- Source Reputation: High\n- Benchmark Score: 83.59\n----------\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/nest\n- Description: A progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications with TypeScript/JavaScript 🚀\n- Code Snippets: 2133\n- Source Reputation: High\n- Benchmark Score: 63.81\n- Versions: v11_1_6, v10_4_15, v10_4_6, v11.1.16, v12.0.1, v12.1.2\n----------\n- Title: NestJS Bull\n- Context7-compatible library ID: /nestjs/bull\n- Description: NestJS Bull provides modules for integrating Bull and BullMQ, popular queueing libraries, into NestJS applications for efficient background job processing.\n- Code Snippets: 316\n- Source Reputation: High\n- Benchmark Score: 85.82\n----------\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/docs.nestjs.com\n- Description: NestJS is a progressive Node.js framework for building efficient and scalable server-side applications, utilizing Angular CLI and Dgeni for documentation generation.\n- Code Snippets: 4608\n- Source Reputation: High\n- Benchmark Score: 76.99\n----------\n- Title: NestJS\n- Context7-compatible library ID: /llmstxt/nestjs_llms_txt\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications with TypeScript.\n- Code Snippets: 5489\n- Source Reputation: High\n- Benchmark Score: 74.8"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "libraryId": "/nestjs/docs.nestjs.com",
+  "query": "NestJS 11 BullModule registerQueue Processor WorkerHost OnWorkerEvent failed attemptsMade and standalone NestFactory createApplicationContext enableShutdownHooks",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Declare a BullMQ consumer class with @Processor\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nDecorate a class with @Processor to define a queue consumer for a specific queue. Consumers must be registered as NestJS providers so @nestjs/bullmq can pick them up.\n\n```typescript\nimport { Processor } from '@nestjs/bullmq';\n\n@Processor('audio')\nexport class AudioConsumer {}\n```\n\n--------------------------------\n\n### Subscribe to worker events using @OnWorkerEvent\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nWorker events must be declared inside a consumer class decorated with @Processor(). Use @OnWorkerEvent() to handle events such as a job entering the active state in a queue.\n\n```typescript\nimport { Processor, WorkerHost, OnWorkerEvent } from '@nestjs/bullmq';\nimport { Job } from 'bullmq';\n\n@Processor('audio')\nexport class AudioConsumer extends WorkerHost {\n  @OnWorkerEvent('active')\n  onActive(job: Job) {\n    console.log(\n      `Processing job ${job.id} of type ${job.name} with data ${job.data}...`,\n    );\n  }\n\n  // ...\n}\n```\n\n--------------------------------\n\n### Register a queue with BullModule.registerQueue()\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nRegisters a named queue with BullModule to instantiate the queue and provide an injection token for producers and consumers.\n\n```typescript\nBullModule.registerQueue({\n  name: 'audio',\n});\n```\n\n--------------------------------\n\n### Create standalone AWS Lambda handler with NestFactory.createApplicationContext\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/faq/serverless.md\n\nUse NestFactory.createApplicationContext() to run lightweight Lambda functions without starting an entire HTTP server. Note that createApplicationContext() does not wrap controller methods with enhancers such as guards, interceptors, or pipes.\n\n```typescript\n@@filename(main)\nimport { HttpStatus } from '@nestjs/common';\nimport { NestFactory } from '@nestjs/core';\nimport type { Callback, Context, Handler } from 'aws-lambda';\nimport { AppModule } from './app.module.js';\nimport { AppService } from './app.service.js';\n\nexport const handler: Handler = async (\n  event: any,\n  context: Context,\n  callback: Callback,\n) => {\n  const appContext = await NestFactory.createApplicationContext(AppModule);\n  const appService = appContext.get(AppService);\n\n  return {\n    body: appService.getHello(),\n    statusCode: HttpStatus.OK,\n  };\n};\n```\n\n--------------------------------\n\n### Close Standalone Application Context using app.close()\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application-context.md\n\nTriggers NestJS shutdown lifecycle hooks and allows the Node.js process to exit cleanly after execution completes. Call app.close() at the end of the bootstrap function for scripts and CRON tasks.\n\n```typescript\n@@filename()\nasync function bootstrap() {\n  const app = await NestFactory.createApplicationContext(AppModule);\n  // application logic...\n  await app.close();\n}\nawait bootstrap();\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

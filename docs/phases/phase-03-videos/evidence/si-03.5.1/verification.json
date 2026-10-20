@@ -1,0 +1,130 @@
+{
+  "si": "SI-03.5.1",
+  "status": "passed",
+  "recorded_at": "2026-10-20T02:19:02.523344+00:00",
+  "scope": "Domain initialization, resume and batch part authorization only. HTTP endpoints/DTO mapping, upload completion and reconciliation workers remain in their planned SIs.",
+  "installed_versions": {
+    "typeorm": "0.3.28",
+    "@nestjs/core": "11.1.16"
+  },
+  "created_files": [
+    "src/videos/video-uploads.service.ts",
+    "src/videos/video-uploads.types.ts",
+    "src/videos/videos.module.ts",
+    "src/videos/video-uploads.service.spec.ts",
+    "src/videos/video-uploads.service.integration-spec.ts"
+  ],
+  "modified_files": [
+    "src/channels/channels.service.ts",
+    "src/videos/videos.repository.ts",
+    "src/videos/videos.constants.ts",
+    "src/videos/videos.exceptions.ts",
+    "src/app.module.ts"
+  ],
+  "implementation": {
+    "ownership": "JWT sub is passed as userId and resolved via ChannelsService.findByUserId; video queries always use the resolved channel id. Creation without channel is CHANNEL_NOT_FOUND; private absence or other owner is VIDEO_NOT_FOUND.",
+    "initialization": "Input validated against title/filename/MIME and integer 1..10000000000 byte contract. Draft UUID/slug/source key are committed before acquiring initializing claim and before any S3 session/permission. A separate 120s initialization lease is used; no S3 request runs inside a database transaction.",
+    "session_persistence": "New rememberUploadSession conditionally persists upload id/deadline while retaining initializing claim. Existing attachUploadSession conditionally releases it for use. Both use owner/token/live-lease guards and check affected rows. Returned initialization is read back from persisted state.",
+    "compensation": "After a known create, failure re-reads ownership/state. An already committed attachment is recovered without abort. For a still-owned initializing claim with at least 60s remaining, abort is attempted before failUpload persists UPLOAD_INITIALIZATION_FAILED. Lost/expired claims are not overwritten or aborted. Failed abort/DB compensation preserves pending state for reconciliation. Recovered committed attachment also revalidates state and expiry before returning success.",
+    "uncertain_create": "If CreateMultipartUpload succeeds remotely but its response is lost, the draft/source key and initializing claim remain recognizable even without upload id. Later orphan/session reconciliation must resolve it; no false success or destructive guess.",
+    "resume": "Authoritative ListParts maps server sizes to sizeBytes and preserves id/slug. Owner, draft state, operation and expiry checked before storage access; persisted state/session re-read before returning.",
+    "permissions": "1..50 distinct integer part numbers within persisted part count. Expected size derives from declared bytes: 64MiB except exact final remainder. Session existence checked through ListParts; signer receives server-owned key/id and stored expiry. State/session checked again before returning URLs.",
+    "expiry": "Expired draft checks HeadObject first. Missing object is UPLOAD_EXPIRED/410; completed object yields UPLOAD_OPERATION_IN_PROGRESS/409 for later completion reconciliation. Neither path deletes session/object or mutates the draft.",
+    "errors": "DomainException subclasses follow Error Catalog. Intended StorageError becomes sanitized STORAGE_UNAVAILABLE; unexpected SQL/programming failures propagate to existing 500 handling. Results contain explicit domain projections/dates, not entity objects, keys, upload ids or HTTP DTOs.",
+    "wiring": "VideosModule imports ChannelsModule, VideosPersistenceModule, StorageModule and videos config, exports VideoUploadsService and is imported by AppModule. No controller or queue/worker activated.",
+    "schema_changed": false,
+    "dependencies_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/video-uploads.service.spec.ts src/videos/video-uploads.service.integration-spec.ts",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 2,
+      "tests_passed": 49,
+      "log": "focused-tests.raw.log"
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 37,
+      "tests_passed": 353,
+      "log": "full-tests.raw.log"
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker test stack; serial suites",
+      "exit_code": 0,
+      "suites_passed": 3,
+      "tests_passed": 52,
+      "log": "e2e.raw.log"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run build",
+      "execution": "isolated Docker test stack",
+      "exit_code": 0,
+      "log": "build.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_breakdown": {
+    "unit": 36,
+    "integration": 13
+  },
+  "lint_integrity": {
+    "files_checked": 122,
+    "changed_files": []
+  },
+  "acceptance_proofs": [
+    "Real SQL read inside the S3 create boundary observes committed draft UUID/slug, owner channel and initializing claim before actual CreateMultipartUpload.",
+    "Real signed PUT uploads exact last-part bytes; repeated resume returns authoritative size/ETag, same id/slug and only one persisted video/S3 session.",
+    "Other actual channel gets VIDEO_NOT_FOUND for resume/signing without storage lookup; missing-channel creation returns CHANNEL_NOT_FOUND.",
+    "Expired session gets no new signatures and remains intact; completed source with expired DB draft is preserved and returned as pending reconciliation rather than expired/lost.",
+    "Actual SQL failures in rememberUploadSession and attachUploadSession both trigger real multipart abort and guarded initialization failure persistence.",
+    "Simulated abort outage retains actual persisted upload id and initializing claim; remote create followed by lost response leaves actual orphan discoverable by stored source key.",
+    "Attachment that commits and then loses its response is recovered; resulting session can receive a real signed PUT and resume normally.",
+    "Real claim token replacement/expiry during create makes remember CAS fail; stale initializer cannot abort or overwrite it.",
+    "Unit tests cover exact numeric 10GB boundary without video allocation, invalid controls/batches, exact full/final part sizes, state/ownership/operation guards, post-ListParts state change and typed versus unexpected failures.",
+    "Additional final-review regression: committed attachment with lost response and expired session yields UPLOAD_EXPIRED, never initialization success or a destructive abort."
+  ],
+  "documentation": {
+    "context7": "context7-typeorm.json",
+    "library_id": "/typeorm/typeorm",
+    "resolve_before_query": true,
+    "version_note": "Context7 returned master/branch docs, flagged before implementation; query/transaction APIs cross-checked against installed TypeORM 0.3.28 and real PostgreSQL execution. Storage/signing uses existing tested project ports. Earlier filesystem/localhost/synchronize guide recipes do not override phase requirements."
+  },
+  "development_database": {
+    "normalized_dump_sha256_before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "normalized_dump_sha256_after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true,
+    "state": "Existing container started temporarily for read-only hash comparison and stopped again. No development migration or writes."
+  },
+  "limitations": [
+    "Completion/outbox transition, abort/status service and HTTP controllers belong to subsequent SIs.",
+    "Preserved initializing/orphan states require the later planned reconciler; this SI does not run background recovery.",
+    "Numeric 10GB boundary coverage is not the later full valid-video 10GB transfer/processing/RSS proof.",
+    "Development HTTP server and worker not started; no commit or push performed."
+  ],
+  "test_history": {
+    "initial_focused_tests_passed": 48,
+    "initial_log": "focused-tests.initial.raw.log",
+    "final_focused_tests_passed": 49,
+    "reason_for_repeat": "Added explicit expiry guard and regression for the committed-attachment recovery path; all mandatory checks repeated on final source."
+  }
+}

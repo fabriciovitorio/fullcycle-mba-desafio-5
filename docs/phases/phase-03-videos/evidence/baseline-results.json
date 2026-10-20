@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-18",
+  "scope": "existing backend before Phase 03 implementation",
+  "results": [
+    {
+      "check": "unit-integration",
+      "command": "docker compose exec -T nestjs-api npm test -- --config package.json --runInBand",
+      "exit_code": 1,
+      "seconds": 23.1,
+      "evidence": "docs/phases/phase-03-videos/evidence/phase03-baseline-unit-integration.log",
+      "sha256": "9445966ad0f0b35e73bd714e8b20f84bf776190bbf79be5830f64741905c5c67",
+      "summary": [
+        "Test Suites: 1 failed, 22 passed, 23 total",
+        "Tests:       2 failed, 142 passed, 144 total",
+        "Time:        16.02 s"
+      ]
+    },
+    {
+      "check": "e2e",
+      "command": "docker compose exec -T nestjs-api npm run test:e2e -- --runInBand",
+      "exit_code": 0,
+      "seconds": 6.6,
+      "evidence": "docs/phases/phase-03-videos/evidence/phase03-baseline-e2e.log",
+      "sha256": "10c950f59be710f645161b93868d0cdaba3d4bc11a553b6b3391f9666603bcc9",
+      "summary": [
+        "Test Suites: 3 passed, 3 total",
+        "Tests:       52 passed, 52 total",
+        "Time:        5.974 s"
+      ]
+    },
+    {
+      "check": "typecheck",
+      "command": "docker compose exec -T nestjs-api npx tsc --noEmit",
+      "exit_code": 0,
+      "seconds": 2.1,
+      "evidence": "docs/phases/phase-03-videos/evidence/phase03-baseline-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "check": "lint",
+      "command": "docker compose exec -T nestjs-api npm run lint -- --no-fix",
+      "exit_code": 1,
+      "seconds": 4.2,
+      "evidence": "docs/phases/phase-03-videos/evidence/phase03-baseline-lint.log",
+      "sha256": "517e3553cd9c5e394c7fb7ee7e6e6101d6950841a4fe7d68ead65dcbb40d80c2",
+      "summary": [
+        "✖ 190 problems (150 errors, 40 warnings)"
+      ]
+    }
+  ]
+}

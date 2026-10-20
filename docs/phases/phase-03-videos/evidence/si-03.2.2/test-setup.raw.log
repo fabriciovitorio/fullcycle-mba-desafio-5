@@ -1,0 +1,192 @@
+ Image streamtube-test-nestjs-api Building 
+ Image streamtube-minio:7aac2a2c5b7c Building 
+ Image streamtube-mc:77f82e18b540 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.59kB done
+#1 DONE 0.0s
+
+#2 [nestjs-api internal] load build definition from Dockerfile.dev
+#2 transferring dockerfile: 441B done
+#2 DONE 0.1s
+
+#3 [minio internal] load build definition from Dockerfile.minio
+#3 transferring dockerfile: 2.67kB done
+#3 DONE 0.1s
+
+#4 [minio-init internal] load metadata for docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b
+#4 ...
+
+#5 [nestjs-api internal] load metadata for docker.io/library/node:25.6.0-slim@sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730
+#5 DONE 0.3s
+
+#6 [nestjs-api 1/3] FROM docker.io/library/node:25.6.0-slim@sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730
+#6 resolve docker.io/library/node:25.6.0-slim@sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730 0.0s done
+#6 CACHED
+
+#7 [minio internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+#7 DONE 0.3s
+
+#4 [minio internal] load metadata for docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b
+#4 DONE 0.3s
+
+#8 [minio internal] load .dockerignore
+#8 transferring context: 123B done
+#8 DONE 0.1s
+
+#9 [nestjs-api 2/3] RUN apt-get update     && apt-get install -y --no-install-recommends procps curl ca-certificates ffmpeg     && rm -rf /var/lib/apt/lists/*     && mkdir -p /tmp/streamtube-videos     && chown node:node /tmp/streamtube-videos
+#9 CACHED
+
+#10 [nestjs-api 3/3] WORKDIR /home/node/app
+#10 CACHED
+
+#11 [nestjs-api] exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:388693ae1cb063db975669439c7e491a036033dc324cea737b0e88236368f3a2
+#11 exporting manifest sha256:388693ae1cb063db975669439c7e491a036033dc324cea737b0e88236368f3a2 0.2s done
+#11 exporting config sha256:82809dc275aa2689e5649cd6ef2885cc27d313ff9114a6bae0ea1c052de35a6b
+#11 exporting config sha256:82809dc275aa2689e5649cd6ef2885cc27d313ff9114a6bae0ea1c052de35a6b 0.1s done
+#11 ...
+
+#12 [minio server-build 1/4] FROM docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b
+#12 resolve docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b 0.4s done
+#12 DONE 0.4s
+
+#13 [minio common 1/2] FROM docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+#13 resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 0.4s done
+#13 DONE 0.5s
+
+#14 [minio server-build 3/4] RUN git init && git remote add origin https://github.com/minio/minio.git     && git fetch --depth=1 origin 7aac2a2c5b7c882e68c1ce017d8256be2feea27f     && git checkout --detach FETCH_HEAD
+#14 CACHED
+
+#15 [minio server-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="-s -w -X github.com/minio/minio/cmd.CommitID=7aac2a2c5b7c882e68c1ce017d8256be2feea27f -X github.com/minio/minio/cmd.Version=source-7aac2a2c5b7c" -o /out/minio .
+#15 CACHED
+
+#16 [minio minio 2/4] COPY --from=server-build /src/LICENSE /src/NOTICE /licenses/
+#16 CACHED
+
+#17 [minio minio 3/4] COPY --from=server-build /src /usr/src/minio
+#17 CACHED
+
+#18 [minio minio 1/4] COPY --from=server-build /out/minio /usr/local/bin/minio
+#18 CACHED
+
+#19 [minio common 2/2] RUN apt-get update     && apt-get install -y --no-install-recommends ca-certificates curl     && rm -rf /var/lib/apt/lists/*     && useradd --uid 1000 --create-home minio
+#19 CACHED
+
+#20 [minio server-build 2/4] WORKDIR /src
+#20 CACHED
+
+#11 [nestjs-api] exporting to image
+#11 exporting attestation manifest sha256:f6493c32163243c4d3eeb4cb978e16fe5feabbbb630583694fdc72c8a2376c38
+#11 ...
+
+#20 [minio-init server-build 2/4] WORKDIR /src
+#20 CACHED
+
+#21 [minio-init client-build 3/4] RUN git init && git remote add origin https://github.com/minio/mc.git     && git fetch --depth=1 origin 77f82e18b5401a65958f1619df6ebb994634bd88     && git checkout --detach FETCH_HEAD
+#21 CACHED
+
+#22 [minio-init client-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="-s -w -X github.com/minio/mc/cmd.commitID=77f82e18b5401a65958f1619df6ebb994634bd88 -X github.com/minio/mc/cmd.version=source-77f82e18b540" -o /out/mc .
+#22 CACHED
+
+#23 [minio-init mc 1/3] COPY --from=client-build /out/mc /usr/local/bin/mc
+#23 CACHED
+
+#24 [minio-init mc 2/3] COPY --from=client-build /src/LICENSE /licenses/LICENSE
+#24 CACHED
+
+#19 [minio-init common 2/2] RUN apt-get update     && apt-get install -y --no-install-recommends ca-certificates curl     && rm -rf /var/lib/apt/lists/*     && useradd --uid 1000 --create-home minio
+#19 CACHED
+
+#25 [minio-init mc 3/3] COPY --from=client-build /src /usr/src/mc
+#25 CACHED
+
+#26 [minio minio 4/4] RUN mkdir /data && chown minio:minio /data
+#26 CACHED
+
+#27 [minio-init] exporting to image
+#27 exporting layers done
+#27 exporting manifest sha256:b7805e0f905fb9849ea92ad970c93c7308b292cdb27476298c56ac2e176cf038 0.2s done
+#27 exporting config sha256:880d7891abf8a2a61de63437fa0ddf1294734d981cd5428af8e23aa432375fa7
+#27 exporting config sha256:880d7891abf8a2a61de63437fa0ddf1294734d981cd5428af8e23aa432375fa7 0.2s done
+#27 exporting attestation manifest sha256:c97d6ed78f9c05609186ba52f7b303ae95c369bae8232fb61970f6af71c53407
+#27 exporting attestation manifest sha256:c97d6ed78f9c05609186ba52f7b303ae95c369bae8232fb61970f6af71c53407 0.4s done
+#27 exporting manifest list sha256:c49968ac94957ff00b6b058798252e5b6c3433ce1f4ca5a9ce286ad4f0b7e28a
+#27 ...
+
+#11 [nestjs-api] exporting to image
+#11 exporting attestation manifest sha256:f6493c32163243c4d3eeb4cb978e16fe5feabbbb630583694fdc72c8a2376c38 0.5s done
+#11 exporting manifest list sha256:0cc3aeeab5307836d2b5fa6f5efa96075ee01168187d4e3fbde42049e5acaff0 0.2s done
+#11 naming to docker.io/library/streamtube-test-nestjs-api:latest 0.2s done
+#11 unpacking to docker.io/library/streamtube-test-nestjs-api:latest 0.1s done
+#11 DONE 1.6s
+
+#27 [minio-init] exporting to image
+#27 exporting manifest list sha256:c49968ac94957ff00b6b058798252e5b6c3433ce1f4ca5a9ce286ad4f0b7e28a 0.2s done
+#27 naming to docker.io/library/streamtube-mc:77f82e18b540
+#27 naming to docker.io/library/streamtube-mc:77f82e18b540 0.2s done
+#27 unpacking to docker.io/library/streamtube-mc:77f82e18b540
+#27 unpacking to docker.io/library/streamtube-mc:77f82e18b540 0.1s done
+#27 DONE 1.6s
+
+#28 [minio] exporting to image
+#28 exporting layers done
+#28 exporting manifest sha256:5683098c43df3f25d8a075e1a410a8145a022f5ee0842186a17cdaf53eb5e6f0 0.3s done
+#28 exporting config sha256:526ec11ecba9f75ea449483854f1296d848dcc6e6158e06baadd907c1d0eaf5b 0.2s done
+#28 exporting attestation manifest sha256:52c52d29c38e3bead471b6c48911b3a74765ddabbc8654947be8af0f3c20b9bd 0.4s done
+#28 exporting manifest list sha256:17fd64e8ca3ee4059c6cad89712c6b0093c6b540c9a8801a079a8e835ace5acc 0.3s done
+#28 naming to docker.io/library/streamtube-minio:7aac2a2c5b7c 0.1s done
+#28 unpacking to docker.io/library/streamtube-minio:7aac2a2c5b7c 0.1s done
+#28 DONE 1.6s
+
+#29 [nestjs-api] resolving provenance for metadata file
+#29 DONE 0.3s
+
+#30 [minio-init] resolving provenance for metadata file
+#30 DONE 0.3s
+
+#31 [minio] resolving provenance for metadata file
+#31 DONE 0.0s
+ Image streamtube-test-nestjs-api Built 
+ Image streamtube-minio:7aac2a2c5b7c Built 
+ Image streamtube-mc:77f82e18b540 Built 
+ Network streamtube-test_default Creating 
+ Network streamtube-test_default Created 
+ Volume streamtube-test_test-db-data Creating 
+ Volume streamtube-test_test-db-data Created 
+ Volume streamtube-test_test-minio-data Creating 
+ Volume streamtube-test_test-minio-data Created 
+ Volume streamtube-test_test-redis-data Creating 
+ Volume streamtube-test_test-redis-data Created 
+ Container streamtube-test-db-1 Creating 
+ Container streamtube-test-minio-1 Creating 
+ Container streamtube-test-redis-1 Creating 
+ Container streamtube-test-mailpit-1 Creating 
+ Container streamtube-test-minio-1 Created 
+ Container streamtube-test-minio-init-1 Creating 
+ Container streamtube-test-mailpit-1 Created 
+ Container streamtube-test-redis-1 Created 
+ Container streamtube-test-db-1 Created 
+ Container streamtube-test-minio-init-1 Created 
+ Container streamtube-test-nestjs-api-1 Creating 
+ Container streamtube-test-nestjs-api-1 Created 
+ Container streamtube-test-db-1 Starting 
+ Container streamtube-test-redis-1 Starting 
+ Container streamtube-test-minio-1 Starting 
+ Container streamtube-test-mailpit-1 Starting 
+ Container streamtube-test-redis-1 Started 
+ Container streamtube-test-minio-1 Started 
+ Container streamtube-test-minio-1 Waiting 
+ Container streamtube-test-db-1 Started 
+ Container streamtube-test-mailpit-1 Started 
+ Container streamtube-test-minio-1 Healthy 
+ Container streamtube-test-minio-init-1 Starting 
+ Container streamtube-test-minio-init-1 Started 
+ Container streamtube-test-redis-1 Waiting 
+ Container streamtube-test-db-1 Waiting 
+ Container streamtube-test-minio-init-1 Waiting 
+ Container streamtube-test-minio-init-1 Exited 
+ Container streamtube-test-redis-1 Healthy 
+ Container streamtube-test-db-1 Healthy 
+ Container streamtube-test-nestjs-api-1 Starting 
+ Container streamtube-test-nestjs-api-1 Started 

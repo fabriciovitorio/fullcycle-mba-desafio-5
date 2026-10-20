@@ -1,0 +1,126 @@
+
+> nestjs-project@0.0.1 test
+> jest --config package.json --runInBand
+
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:90) Warning: `--localstorage-file` was provided without a valid path
+PASS src/auth/auth.service.integration-spec.ts (6.685 s)
+PASS src/auth/auth.service.spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/auth/entities/verification-token.entity.integration-spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/auth/entities/refresh-token.entity.integration-spec.ts
+PASS src/channels/channels.service.spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/users/users.service.integration-spec.ts
+PASS src/openapi-export.integration-spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/channels/entities/channel.entity.integration-spec.ts
+PASS src/mail/mail.service.integration-spec.ts
+PASS src/common/filters/domain-exception.filter.spec.ts
+PASS src/auth/guards/jwt-auth.guard.spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/channels/channels.service.integration-spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/users/entities/user.entity.integration-spec.ts
+FAIL src/database/migrations.integration-spec.ts
+  ● Console
+
+    console.log
+      Migration "CreateUsersAndChannels1775687773260" failed, error: relation "channels" already exists
+
+      at PlatformTools.log (platform/PlatformTools.ts:274:17)
+
+  ● Database migrations (integration) › should apply all migrations and create all four tables
+
+    QueryFailedError: deadlock detected
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+          at async Promise.all (index 3)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:34:5)
+
+  ● Database migrations (integration) › should revert the last migration and remove token tables
+
+    QueryFailedError: deadlock detected
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+          at async Promise.all (index 3)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:34:5)
+
+
+  ● Test suite failed to run
+
+    QueryFailedError: relation "channels" already exists
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at CreateUsersAndChannels1775687773260.up (database/migrations/1775687773260-CreateUsersAndChannels.ts:7:5)
+      at MigrationExecutor.executePendingMigrations (migration/MigrationExecutor.ts:336:17)
+      at DataSource.runMigrations (data-source/DataSource.ts:404:13)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:45:5)
+
+PASS src/channels/nickname.util.spec.ts
+PASS src/common/filters/validation-exception.filter.spec.ts
+PASS src/config/swagger.config.spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+[Nest] 90  - 10/18/2026, 3:04:05 PM   ERROR [TypeOrmModule] Unable to connect to the database. Retrying (1)...
+QueryFailedError: relation "public.channels" does not exist
+    at PostgresQueryRunner.query (/home/node/app/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Promise.all (index 0)
+    at PostgresQueryRunner.loadTables (/home/node/app/src/driver/postgres/PostgresQueryRunner.ts:3437:32)
+    at PostgresQueryRunner.getTables (/home/node/app/src/query-runner/BaseQueryRunner.ts:179:29)
+    at RdbmsSchemaBuilder.build (/home/node/app/src/schema-builder/RdbmsSchemaBuilder.ts:92:13)
+    at DataSource.synchronize (/home/node/app/src/data-source/DataSource.ts:340:9)
+    at DataSource.initialize (/home/node/app/src/data-source/DataSource.ts:278:43)
+PASS src/auth/auth.module.spec.ts
+PASS src/config/env.validation.integration-spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/channels/channels.module.spec.ts
+(node:90) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/users/users.module.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/mail/mail.module.spec.ts
+
+Summary of all failing tests
+FAIL database/migrations.integration-spec.ts
+  ● Database migrations (integration) › should apply all migrations and create all four tables
+
+    QueryFailedError: deadlock detected
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+          at async Promise.all (index 3)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:34:5)
+
+  ● Database migrations (integration) › should revert the last migration and remove token tables
+
+    QueryFailedError: deadlock detected
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+          at async Promise.all (index 3)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:34:5)
+
+
+  ● Test suite failed to run
+
+    QueryFailedError: relation "channels" already exists
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at CreateUsersAndChannels1775687773260.up (database/migrations/1775687773260-CreateUsersAndChannels.ts:7:5)
+      at MigrationExecutor.executePendingMigrations (migration/MigrationExecutor.ts:336:17)
+      at DataSource.runMigrations (data-source/DataSource.ts:404:13)
+      at Object.<anonymous> (database/migrations.integration-spec.ts:45:5)
+
+
+Test Suites: 1 failed, 22 passed, 23 total
+Tests:       2 failed, 142 passed, 144 total
+Snapshots:   0 total
+Time:        16.02 s
+Ran all test suites.
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

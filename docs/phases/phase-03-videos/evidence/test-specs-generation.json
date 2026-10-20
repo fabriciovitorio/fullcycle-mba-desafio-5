@@ -1,0 +1,621 @@
+{
+  "stage": "plan-test-specs",
+  "scope": "phase-03-videos",
+  "status": "specs-generated-and-verified",
+  "runtime_tests_executed": false,
+  "implementation_started": false,
+  "new_files": 10,
+  "new_scenarios": 49,
+  "preserved": 0,
+  "updated": 0,
+  "manual": 0,
+  "deleted": 0,
+  "orphan": 0,
+  "warnings": [],
+  "criteria_covered": 30,
+  "pending_references": 0,
+  "all_specs_fresh": true,
+  "plan_only_changes": "ten Test Specs references populated; all other content unchanged",
+  "plan_sha256_before": "94e2c4f36f0574195b104264f6f6a179f2052355637e59fe6c302cb488b996d1",
+  "plan_sha256_after": "485d584018161236bd43a760888b558985fa93eb10ded35d6ef9780d5c46f856",
+  "specs": [
+    {
+      "si": "SI-03.5.3",
+      "route": "POST /videos/uploads",
+      "path": "nestjs-project/specs/videos-uploads-create.plan.md",
+      "target_file": "nestjs-project/test/videos-uploads-create.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "criar-rascunho-no-canal-autenticado",
+          "covers_ac": [
+            1,
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "aceitar-limite-declarado-sem-transferir-binario",
+          "covers_ac": [
+            1,
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "rejeitar-tamanho-acima-do-teto",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "rejeitar-canal-forjado-no-body",
+          "covers_ac": [
+            2,
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "rejeitar-ausencia-e-invalidade-de-jwt",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.6",
+          "name": "preservar-throttling-da-criacao",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "203abf99f77e051b134a7e82ec54f58fb95050890b8e688733fd3ae4771f02d2"
+    },
+    {
+      "si": "SI-03.5.4",
+      "route": "GET /videos/:id/upload",
+      "path": "nestjs-project/specs/videos-upload-resume.plan.md",
+      "target_file": "nestjs-project/test/videos-upload-resume.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "listar-partes-reais-e-preservar-sessao",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "ocultar-sessao-de-outro-canal",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "exigir-jwt-na-retomada",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "informar-expiracao-sem-objeto-concluido",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "validar-uuid-e-estado-da-retomada",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "ac11d3ea1cbd3ff1bccdf84ec887ce596e98c407409bb446506dae7af1e3b7db"
+    },
+    {
+      "si": "SI-03.5.5",
+      "route": "POST /videos/:id/upload/parts",
+      "path": "nestjs-project/specs/videos-upload-parts.plan.md",
+      "target_file": "nestjs-project/test/videos-upload-parts.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "assinar-partes-e-enviar-direto-ao-storage",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "rejeitar-lotes-e-numeros-invalidos",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "impedir-assinatura-para-outro-canal",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "exigir-autenticacao-para-assinar",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "rejeitar-claim-em-andamento",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.6",
+          "name": "limitar-sessao-vencida-e-validar-parametro",
+          "covers_ac": [
+            1,
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "08dc9793f964b70d6eecab019dd203a60458cc99bb80104df680079ec16c1c1b"
+    },
+    {
+      "si": "SI-03.5.6",
+      "route": "POST /videos/:id/upload/completion",
+      "path": "nestjs-project/specs/videos-upload-completion.plan.md",
+      "target_file": "nestjs-project/test/videos-upload-completion.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "concluir-upload-valido-e-persistir-intencao",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "repetir-conclusao-em-processing",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "repetir-conclusao-em-ready",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "rejeitar-parte-ausente",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "rejeitar-tamanho-real-divergente",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.6",
+          "name": "proteger-conclusao-e-validar-identificador",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "d199117fc8301e1c4e1fe6135a5b0b7250035ce9920a9b63f9046b54108ac0fd"
+    },
+    {
+      "si": "SI-03.5.7",
+      "route": "DELETE /videos/:id/upload",
+      "path": "nestjs-project/specs/videos-upload-abort.plan.md",
+      "target_file": "nestjs-project/test/videos-upload-abort.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "abortar-draft-e-revogar-sessao",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "repetir-abort-sem-efeitos-adicionais",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "recusar-abort-de-video-em-processamento-ou-pronto",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "ocultar-video-de-outro-canal",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "exigir-jwt-e-validar-uuid",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "e3d7b576fd64c3c8cea98daa7df1741eafab9a43621de6e41ccf5ec4a0f9206f"
+    },
+    {
+      "si": "SI-03.5.8",
+      "route": "GET /videos/:id/status",
+      "path": "nestjs-project/specs/videos-status.plan.md",
+      "target_file": "nestjs-project/test/videos-status.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "consultar-todos-os-estados-como-dono",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "retornar-codigo-seguro-sem-detalhes-internos",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "exigir-jwt-para-estado-privado",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "ocultar-estado-de-outro-canal",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.5",
+          "name": "validar-identificador-do-status",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "6a6ebac62641a2cc48e0b79806149c9003f9dfb1653c7ca7377593ae2e3ff6c6"
+    },
+    {
+      "si": "SI-03.8.2",
+      "route": "GET /videos/:slug",
+      "path": "nestjs-project/specs/videos-details.plan.md",
+      "target_file": "nestjs-project/test/videos-details.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "consultar-video-pronto-sem-jwt",
+          "covers_ac": [
+            1,
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "permitir-leitura-por-outro-usuario",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "ocultar-slug-ausente-invalido-e-nao-pronto",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "manter-urls-estaveis-da-api",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "90168ff5dd613de948a414550f67bb44d9c1ea47b749a7b959e8eda1c15f5d38"
+    },
+    {
+      "si": "SI-03.8.3",
+      "route": "GET /videos/:slug/stream",
+      "path": "nestjs-project/specs/videos-stream.plan.md",
+      "target_file": "nestjs-project/test/videos-stream.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "redirecionar-stream-anonimo-para-playback",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "ler-range-simples-e-suffix-no-storage",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "rejeitar-range-fora-do-objeto-no-destino",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "nao-assinar-stream-de-video-nao-pronto",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "3b7b14818a67b2725a0e42d2b8cb567908f9460e9d0b898bca4c29fed8e6a0d8"
+    },
+    {
+      "si": "SI-03.8.4",
+      "route": "GET /videos/:slug/download",
+      "path": "nestjs-project/specs/videos-download.plan.md",
+      "target_file": "nestjs-project/test/videos-download.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "redirecionar-download-sem-jwt",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "entregar-attachment-com-nome-seguro",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "preservar-tamanho-e-hash-do-original",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "negar-download-antes-de-ready",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "885b2b328e9940e99470f74055d9ba6c51ea1b8879f485ca0b931214e55eeead"
+    },
+    {
+      "si": "SI-03.8.5",
+      "route": "GET /videos/:slug/thumbnail",
+      "path": "nestjs-project/specs/videos-thumbnail.plan.md",
+      "target_file": "nestjs-project/test/videos-thumbnail.e2e-spec.ts",
+      "scenarios": [
+        {
+          "id": "1.1",
+          "name": "redirecionar-thumbnail-anonimo-para-jpeg-real",
+          "covers_ac": [
+            1
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.2",
+          "name": "ocultar-thumbnail-intermediario-de-processing",
+          "covers_ac": [
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.3",
+          "name": "nao-serializar-dados-privados-da-sessao",
+          "covers_ac": [
+            3
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        },
+        {
+          "id": "1.4",
+          "name": "preservar-politica-publica-para-todos-os-atores",
+          "covers_ac": [
+            1,
+            2
+          ],
+          "state": "NEW",
+          "last_sync": "2026-10-18T16:44:53.125780+00:00"
+        }
+      ],
+      "coverage": [
+        1,
+        2,
+        3
+      ],
+      "warnings": [],
+      "sha256": "aced45c9ccebf24e454016f13def5d99e0b0e3f94e5dd5addc34d53080184727"
+    }
+  ],
+  "verified_at": "2026-10-18T16:45:34.296661+00:00"
+}

@@ -1,0 +1,123 @@
+{
+  "si": "SI-03.3.2",
+  "status": "passed",
+  "scope": "PostgreSQL repository operations and conditional transitions only; no S3 I/O, queue publishing, worker activation or HTTP endpoints.",
+  "installed_versions": {
+    "typeorm": "0.3.28",
+    "@nestjs/core": "11.1.16"
+  },
+  "implementation": {
+    "repositories": [
+      "src/videos/videos.repository.ts",
+      "src/videos/video-processing-outbox.repository.ts"
+    ],
+    "module": "VideosPersistenceModule registers and exports both repositories; one injected DataSource and transactional EntityManager per atomic operation.",
+    "ownership": "Private reads/updates scope video id to the owning channel; internal session read explicitly selects upload_id; public slug lookup requires ready.",
+    "slug": "Cryptographically generated 24-character lowercase hex; retry only SQLSTATE 23505 on UQ_videos_slug; fixed SAVEPOINT/ROLLBACK TO/RELEASE around each attempt; maximum five attempts; exhausted collision maps to inherited DomainException VIDEO_ID_GENERATION_FAILED / 503.",
+    "upload_claims": "Row-locked draft claims, UUID tokens and database-clock deadlines. Recovery reports previousOperation and requiresReconciliation; expired session alone does not discard a possibly completed object. Session attachment/completion/failure/release require owning channel, current token and live operation deadline.",
+    "atomic_completion": "draft-to-processing update, persisted actual size equal to declared, and one outbox insert share the same transaction manager. Outbox repository also requires active transaction and processing video with actual size.",
+    "processing_claims": "Conditional claim increments persisted processing_attempts only on acquisition, at most VIDEO_QUEUE.MAX_ATTEMPTS=3. Busy duplicate does not consume budget. Heartbeat/retry release/terminal writes require current token and unexpired lease.",
+    "terminal_fencing": "Finalization locks the video before checking live deadline, uses matching processing token, and atomically closes the outbox. Ready keys must match videos/<id>/attempts/<token>/playback.mp4 and thumbnail.jpg. Stale attempts cannot overwrite terminal results.",
+    "dispatch": "Due, incomplete intents of processing videos only; pessimistic_write FOR UPDATE OF outbox with SKIP LOCKED and bounded batch. Lease/UUID token fence acknowledgments and releases. Successful dispatch records dispatched_at without completing the intent; due dispatched intents remain eligible for reconciliation. Fixed sanitized failure diagnostic.",
+    "schema_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/videos.repository.integration-spec.ts src/videos/video-processing-outbox.repository.integration-spec.ts",
+      "execution": "delegated, isolated Docker stack",
+      "exit_code": 0,
+      "suites_passed": 2,
+      "tests_passed": 23,
+      "breakdown": {
+        "videos_repository": 12,
+        "outbox_repository": 11
+      },
+      "log": "focused-tests.raw.log"
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker stack",
+      "exit_code": 0,
+      "suites_passed": 30,
+      "tests_passed": 258,
+      "log": "full-tests.raw.log"
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker stack",
+      "exit_code": 0,
+      "suites_passed": 3,
+      "tests_passed": 52,
+      "log": "e2e.raw.log"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker stack",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker stack",
+      "exit_code": 0,
+      "errors": 0,
+      "warnings": 0,
+      "source_files_hash_checked": 101,
+      "source_files_modified": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run build",
+      "execution": "isolated Docker stack",
+      "exit_code": 0,
+      "log": "build.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "real_database_proofs": [
+    "Private cross-channel lookup returns null; ordinary reads exclude multipart upload id.",
+    "Forced real UNIQUE collision retries successfully and SELECT 1 remains usable in the surrounding transaction; bounded exhaustion also leaves that transaction usable; unrelated FK violation is not retried.",
+    "Concurrent upload, processing and dispatch claims each produce one winner; actual row held by another QueryRunner is skipped without blocking the dispatch batch.",
+    "Expired upload token fails completion/release; replacement claim reports required reconciliation and rejects old failure write.",
+    "Real division-by-zero SQL failure after actual outbox insertion rolls back processing transition, actual size and outbox together; retry succeeds.",
+    "Wrong size/channel and repeated/concurrent completion create no duplicate outbox or partial transition.",
+    "Only acquired processing attempts consume the persisted three-attempt budget; transient release leaves processing and open outbox.",
+    "Expired worker cannot heartbeat, release, publish ready or finish error, even before replacement; superseded token cannot overwrite the winning derived keys or error state.",
+    "Real SQL failure after terminal update and outbox completion rolls both back; missing intent also rolls terminal update back; retry safely finishes error.",
+    "Dispatch does not close intent; expired dispatcher is fenced; dispatched due intent can be reclaimed; terminal videos are excluded."
+  ],
+  "documentation": {
+    "provider": "Context7 MCP",
+    "evidence": [
+      "typeorm.json",
+      "nestjs.json"
+    ],
+    "version_note": "Upstream branch documentation cross-checked against installed TypeORM 0.3.28 declarations for setLock/setOnLocked and UpdateResult.affected. Avoided raw:any results; used IsNull/Not/In for nullable predicates. Container lacks rg; declaration check used grep fallback."
+  },
+  "test_environment": {
+    "project": "streamtube-test",
+    "database": "streamtube_test",
+    "host": "db",
+    "synchronize": false,
+    "tests_serialized": true,
+    "concurrency": "Within individual tests only; independent suites never run in parallel."
+  },
+  "development_database": {
+    "name": "streamtube",
+    "comparison": "SHA-256 of normalized pg_dump excluding comments/backslash directives",
+    "before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true
+  },
+  "resolved_check_findings": [
+    "Initial directed lint found unsafe any inferred by Function.bind in failure-injection test spies; spies now restore the public collaborator before invoking its real implementation, preserving real SQL failure and rollback assertions. No casts, lint suppression or reduced assertions."
+  ],
+  "limits": [
+    "S3 confirmation/reconciliation, media processing and actual BullMQ delivery belong to later SIs; requiresReconciliation is an explicit contract for those callers.",
+    "No existing migrations or unrelated channel collision logic changed.",
+    "No development HTTP server started.",
+    "No commit or push performed."
+  ]
+}

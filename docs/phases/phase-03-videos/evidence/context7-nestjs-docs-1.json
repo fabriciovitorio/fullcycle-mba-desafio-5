@@ -1,0 +1,16 @@
+{
+  "libraryId": "/nestjs/docs.nestjs.com",
+  "query": "NestJS 11 BullMQ registerQueue InjectQueue Processor WorkerHost standalone application context workers",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Inject queue into a service with @InjectQueue\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nInject a BullMQ queue instance into a NestJS provider. The `@InjectQueue()` decorator identifies the queue by the name passed to `registerQueue()`.\n\n```typescript\nimport { Injectable } from '@nestjs/common';\nimport { Queue } from 'bullmq';\nimport { InjectQueue } from '@nestjs/bullmq';\n\n@Injectable()\nexport class AudioService {\n  constructor(@InjectQueue('audio') private audioQueue: Queue) {}\n}\n```\n\n--------------------------------\n\n### Declare a BullMQ consumer class with @Processor\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nDecorate a class with @Processor to define a queue consumer for a specific queue. Consumers must be registered as NestJS providers so @nestjs/bullmq can pick them up.\n\n```typescript\nimport { Processor } from '@nestjs/bullmq';\n\n@Processor('audio')\nexport class AudioConsumer {}\n```\n\n--------------------------------\n\n### Create a Standalone Application with NestFactory.createApplicationContext\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application-context.md\n\nInitializes a Nest standalone application without network listeners by wrapping the Nest IoC container. Use this construction to run standalone scripts, CRON jobs, or CLI tools.\n\n```typescript\n@@filename()\nasync function bootstrap() {\n  const app = await NestFactory.createApplicationContext(AppModule);\n  // your application logic here ...\n}\nawait bootstrap();\n```\n\n--------------------------------\n\n### Process queue jobs by extending WorkerHost\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nExtend WorkerHost and implement the process() method to handle jobs when the worker is idle. The value returned by process() is stored on the job object and accessible in completed event listeners.\n\n```typescript\nimport { Processor, WorkerHost } from '@nestjs/bullmq';\nimport { Job } from 'bullmq';\n\n@Processor('audio')\nexport class AudioConsumer extends WorkerHost {\n  async process(job: Job<any, any, string>): Promise<any> {\n    let progress = 0;\n    for (let i = 0; i < 100; i++) {\n      await doSomething(job.data);\n      progress += 1;\n      await job.updateProgress(progress);\n    }\n    return {};\n  }\n}\n```\n\n--------------------------------\n\n### Register a queue with BullModule.registerQueue()\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/queues.md\n\nRegisters a named queue with BullModule to instantiate the queue and provide an injection token for producers and consumers.\n\n```typescript\nBullModule.registerQueue({\n  name: 'audio',\n});\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

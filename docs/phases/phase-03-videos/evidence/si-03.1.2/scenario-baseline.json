@@ -1,0 +1,86 @@
+{
+  "auth/auth.service.spec.ts": {
+    "scenarios": [
+      "throws EmailAlreadyExistsException when email is already registered",
+      "hashes the password before creating the user",
+      "calls createUserWithChannel with the correct email",
+      "stores a verification token with EMAIL_CONFIRMATION type",
+      "sends a confirmation email with the raw token",
+      "returns the user id and email",
+      "marks user as confirmed and token as used for a valid token",
+      "throws InvalidTokenException when token is not found",
+      "throws TokenExpiredException when token is expired",
+      "returns silently when email is not found",
+      "returns silently when user is already confirmed",
+      "invalidates old tokens and sends a new confirmation email",
+      "throws InvalidCredentialsException when email is not found",
+      "throws InvalidCredentialsException when password is wrong",
+      "throws EmailNotConfirmedException when user is not confirmed",
+      "returns access_token and refresh_token on valid credentials",
+      "throws InvalidTokenException when token is not found",
+      "throws TokenExpiredException when token is expired",
+      "rotates token: revokes old, persists new, returns both tokens",
+      "returns new access token without revoking family when reuse is within grace period",
+      "revokes entire family and throws TokenReuseDetectedException beyond grace period",
+      "revokes all active refresh tokens for the user",
+      "returns silently when email is not registered",
+      "invalidates previous reset tokens and sends a reset email",
+      "throws InvalidTokenException when token is not found",
+      "throws TokenExpiredException when token is expired",
+      "hashes the new password, marks token used, and revokes refresh tokens"
+    ],
+    "assertions": 62
+  },
+  "auth/auth.service.integration-spec.ts": {
+    "scenarios": [
+      "persists a user, channel, and verification token on successful registration",
+      "stores a valid SHA-256 hex hash in verification_tokens",
+      "throws EmailAlreadyExistsException on duplicate email",
+      "confirmation token hash matches sha256 of raw token delivered by mail service",
+      "sets is_confirmed = true and used_at on valid token",
+      "throws InvalidTokenException for an unknown token",
+      "throws TokenExpiredException for an expired token",
+      "invalidates old tokens and creates a new confirmation token",
+      "returns silently for a non-existent email",
+      "persists a refresh token in DB with correct family UUID and expiry",
+      "returns a valid JWT access token with correct sub and email claims",
+      "rotates token: revokes old token and persists new token in DB",
+      "access token from refresh is a valid JWT with correct sub and email",
+      "returns valid access token within grace period without revoking family",
+      "revokes entire family and throws when reuse is detected beyond grace period",
+      "revokes all active refresh tokens for the user after logout",
+      "does not revoke tokens from other users",
+      "persists a password reset token and sends an email containing the raw token",
+      "invalidates previously issued unused reset tokens",
+      "returns silently for an unregistered email",
+      "updates the password hash, marks token used, and revokes all refresh tokens",
+      "throws InvalidTokenException for an unknown token",
+      "throws TokenExpiredException for an expired reset token",
+      "throws InvalidTokenException when the same token is reused",
+      "allows login with the new password and rejects the old one"
+    ],
+    "assertions": 59
+  },
+  "users/users.service.integration-spec.ts": {
+    "scenarios": [
+      "creates a user and channel",
+      "derives nickname from email prefix",
+      "handles nickname collision by appending a random suffix",
+      "compensates by deleting the user when channel creation fails irrecoverably",
+      "returns null when user does not exist",
+      "returns the user with password selected",
+      "returns null for a different email"
+    ],
+    "assertions": 16
+  },
+  "mail/mail.service.integration-spec.ts": {
+    "scenarios": [
+      "sendConfirmationEmail delivers to Mailpit with correct subject and recipient",
+      "sendConfirmationEmail renders the confirmation URL in the body",
+      "sendPasswordResetEmail delivers to Mailpit with correct subject and recipient",
+      "sendPasswordResetEmail renders the reset URL and expiry notice in the body",
+      "both emails use the configured MAIL_FROM address as sender"
+    ],
+    "assertions": 14
+  }
+}

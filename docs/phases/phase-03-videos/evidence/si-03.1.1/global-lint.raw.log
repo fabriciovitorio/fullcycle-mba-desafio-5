@@ -1,0 +1,254 @@
+
+> nestjs-project@0.0.1 lint
+> eslint "{src,apps,libs,test}/**/*.ts" --fix --no-fix
+
+
+/home/node/app/src/auth/auth.service.integration-spec.ts
+   68:11  error    Unsafe assignment of an `any` value                                                                                                @typescript-eslint/no-unsafe-assignment
+   68:54  error    Unsafe member access .mailService on an `any` value                                                                                @typescript-eslint/no-unsafe-member-access
+   71:73  error    Async arrow function has no 'await' expression                                                                                     @typescript-eslint/require-await
+  234:17  error    'userId' is assigned a value but never used                                                                                        @typescript-eslint/no-unused-vars
+  467:62  warning  Unsafe argument of type `any` assigned to a parameter of type `FindOptionsWhere<RefreshToken> | FindOptionsWhere<RefreshToken>[]`  @typescript-eslint/no-unsafe-argument
+  565:11  error    Unsafe assignment of an `any` value                                                                                                @typescript-eslint/no-unsafe-assignment
+  565:54  error    Unsafe member access .mailService on an `any` value                                                                                @typescript-eslint/no-unsafe-member-access
+  568:73  error    Async arrow function has no 'await' expression                                                                                     @typescript-eslint/require-await
+
+/home/node/app/src/auth/auth.service.spec.ts
+   95:48  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  110:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User>`                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-argument
+  115:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  129:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User>`                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-argument
+  134:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  141:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  149:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User>`                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-argument
+  164:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  170:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  175:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User>`                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-argument
+  180:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  187:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  196:58  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User>`                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-argument
+  201:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  284:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  285:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  290:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  293:59  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken | Promise<VerificationToken | null> | null`                                                                                                                                                                                                                @typescript-eslint/no-unsafe-argument
+  297:19  error    Unsafe member access .used_at on an `any` value                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unsafe-member-access
+  298:17  error    Unsafe member access .is_confirmed on an `any` value                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unsafe-member-access
+  299:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  300:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  313:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  321:59  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken | Promise<VerificationToken | null> | null`                                                                                                                                                                                                                @typescript-eslint/no-unsafe-argument
+  351:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  355:59  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  364:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  368:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  374:59  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  384:7   warning  Unsafe argument of type `any` assigned to a parameter of type `SelectQueryBuilder<VerificationToken>`                                                                                                                                                                                                                                       @typescript-eslint/no-unsafe-argument
+  386:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  391:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  397:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  434:48  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  450:48  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  466:48  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  482:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  490:9   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  509:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  513:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  517:54  warning  Unsafe argument of type `any` assigned to a parameter of type `RefreshToken | Promise<RefreshToken | null> | null`                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  525:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  529:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  533:54  warning  Unsafe argument of type `any` assigned to a parameter of type `RefreshToken | Promise<RefreshToken | null> | null`                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  534:51  warning  Unsafe argument of type `any` assigned to a parameter of type `RefreshToken`                                                                                                                                                                                                                                                                @typescript-eslint/no-unsafe-argument
+  538:19  error    Unsafe member access .revoked_at on an `any` value                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-member-access
+  539:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  540:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  550:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  554:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  558:54  warning  Unsafe argument of type `any` assigned to a parameter of type `RefreshToken | Promise<RefreshToken | null> | null`                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  564:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  569:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  573:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  577:54  warning  Unsafe argument of type `any` assigned to a parameter of type `RefreshToken | Promise<RefreshToken | null> | null`                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  586:63  warning  Unsafe argument of type `any` assigned to a parameter of type `SelectQueryBuilder<RefreshToken>`                                                                                                                                                                                                                                            @typescript-eslint/no-unsafe-argument
+  617:63  warning  Unsafe argument of type `any` assigned to a parameter of type `SelectQueryBuilder<RefreshToken>`                                                                                                                                                                                                                                            @typescript-eslint/no-unsafe-argument
+  621:47  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  652:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  656:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  661:59  warning  Unsafe argument of type `any` assigned to a parameter of type `User | Promise<User | null> | null`                                                                                                                                                                                                                                          @typescript-eslint/no-unsafe-argument
+  671:7   warning  Unsafe argument of type `any` assigned to a parameter of type `SelectQueryBuilder<VerificationToken>`                                                                                                                                                                                                                                       @typescript-eslint/no-unsafe-argument
+  673:56  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken`                                                                                                                                                                                                                                                           @typescript-eslint/no-unsafe-argument
+  681:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  687:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  721:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  728:59  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken | Promise<VerificationToken | null> | null`                                                                                                                                                                                                                @typescript-eslint/no-unsafe-argument
+  737:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  738:11  error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  743:7   error    Unsafe assignment of an `any` value                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unsafe-assignment
+  745:59  warning  Unsafe argument of type `any` assigned to a parameter of type `VerificationToken | Promise<VerificationToken | null> | null`                                                                                                                                                                                                                @typescript-eslint/no-unsafe-argument
+  754:63  warning  Unsafe argument of type `any` assigned to a parameter of type `SelectQueryBuilder<RefreshToken>`                                                                                                                                                                                                                                            @typescript-eslint/no-unsafe-argument
+  758:19  error    Unsafe member access .used_at on an `any` value                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unsafe-member-access
+  759:17  error    Unsafe member access .password on an `any` value                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unsafe-member-access
+  760:17  error    Unsafe member access .password on an `any` value                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unsafe-member-access
+  761:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+  762:12  error    A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+
+/home/node/app/src/channels/channels.service.spec.ts
+   27:9   error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+   28:7   error    Unsafe member access .code on an `any` value                                @typescript-eslint/no-unsafe-member-access
+   29:7   error    Unsafe member access .detail on an `any` value                              @typescript-eslint/no-unsafe-member-access
+   30:3   error    Unsafe return of a value of type `any`                                      @typescript-eslint/no-unsafe-return
+   43:13  error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+   48:43  warning  Unsafe argument of type `any` assigned to a parameter of type `DataSource`  @typescript-eslint/no-unsafe-argument
+   52:22  error    Unsafe member access .findOne on an `any` value                             @typescript-eslint/no-unsafe-member-access
+   55:22  error    Unsafe member access .save on an `any` value                                @typescript-eslint/no-unsafe-member-access
+   62:13  error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+   70:43  warning  Unsafe argument of type `any` assigned to a parameter of type `DataSource`  @typescript-eslint/no-unsafe-argument
+   74:22  error    Unsafe member access .findOne on an `any` value                             @typescript-eslint/no-unsafe-member-access
+   75:22  error    Unsafe member access .save on an `any` value                                @typescript-eslint/no-unsafe-member-access
+   81:13  error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+   92:43  warning  Unsafe argument of type `any` assigned to a parameter of type `DataSource`  @typescript-eslint/no-unsafe-argument
+   99:22  error    Unsafe member access .save on an `any` value                                @typescript-eslint/no-unsafe-member-access
+  105:13  error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+  110:43  warning  Unsafe argument of type `any` assigned to a parameter of type `DataSource`  @typescript-eslint/no-unsafe-argument
+  122:13  error    Unsafe assignment of an `any` value                                         @typescript-eslint/no-unsafe-assignment
+  127:43  warning  Unsafe argument of type `any` assigned to a parameter of type `DataSource`  @typescript-eslint/no-unsafe-argument
+  132:22  error    Unsafe member access .save on an `any` value                                @typescript-eslint/no-unsafe-member-access
+
+/home/node/app/src/channels/channels.service.ts
+  12:9   error  Unsafe assignment of an `any` value             @typescript-eslint/no-unsafe-assignment
+  13:3   error  Unsafe return of a value of type `any`          @typescript-eslint/no-unsafe-return
+  14:7   error  Unsafe member access .code on an `any` value    @typescript-eslint/no-unsafe-member-access
+  15:14  error  Unsafe member access .detail on an `any` value  @typescript-eslint/no-unsafe-member-access
+  16:5   error  Unsafe call of an `any` typed value             @typescript-eslint/no-unsafe-call
+  16:7   error  Unsafe member access .detail on an `any` value  @typescript-eslint/no-unsafe-member-access
+
+/home/node/app/src/common/filters/domain-exception.filter.spec.ts
+  30:26  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
+  31:25  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
+  54:7   error  Unsafe assignment of an `any` value     @typescript-eslint/no-unsafe-assignment
+  65:7   error  Unsafe assignment of an `any` value     @typescript-eslint/no-unsafe-assignment
+  76:7   error  Unsafe assignment of an `any` value     @typescript-eslint/no-unsafe-assignment
+  87:7   error  Unsafe assignment of an `any` value     @typescript-eslint/no-unsafe-assignment
+  98:7   error  Unsafe assignment of an `any` value     @typescript-eslint/no-unsafe-assignment
+
+/home/node/app/src/common/filters/validation-exception.filter.spec.ts
+  22:26  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
+  23:25  error  Unsafe return of a value of type `any`  @typescript-eslint/no-unsafe-return
+
+/home/node/app/src/config/env.validation.integration-spec.ts
+  35:13  error  Unsafe object destructuring of a property with an `any` value  @typescript-eslint/no-unsafe-assignment
+  37:18  error  Unsafe member access .SWAGGER_ENABLED on an `any` value        @typescript-eslint/no-unsafe-member-access
+
+/home/node/app/src/mail/mail.service.integration-spec.ts
+  41:24  error    Unsafe member access .To on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  42:24  error    Unsafe member access .Subject on an `any` value                         @typescript-eslint/no-unsafe-member-access
+  53:11  error    Unsafe assignment of an `any` value                                     @typescript-eslint/no-unsafe-assignment
+  53:44  warning  Unsafe argument of type `any` assigned to a parameter of type `string`  @typescript-eslint/no-unsafe-argument
+  53:56  error    Unsafe member access .ID on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  55:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  56:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  57:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  69:24  error    Unsafe member access .To on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  70:24  error    Unsafe member access .Subject on an `any` value                         @typescript-eslint/no-unsafe-member-access
+  81:11  error    Unsafe assignment of an `any` value                                     @typescript-eslint/no-unsafe-assignment
+  81:44  warning  Unsafe argument of type `any` assigned to a parameter of type `string`  @typescript-eslint/no-unsafe-argument
+  81:56  error    Unsafe member access .ID on an `any` value                              @typescript-eslint/no-unsafe-member-access
+  83:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  84:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  85:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  86:19  error    Unsafe member access .HTML on an `any` value                            @typescript-eslint/no-unsafe-member-access
+  97:24  error    Unsafe member access .From on an `any` value                            @typescript-eslint/no-unsafe-member-access
+
+/home/node/app/src/users/users.service.integration-spec.ts
+  12:10  error  'TestingModule' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/node/app/test/auth.e2e-spec.ts
+   63:11  error  Unsafe assignment of an `any` value                    @typescript-eslint/no-unsafe-assignment
+   63:54  error  Unsafe member access .mailService on an `any` value    @typescript-eslint/no-unsafe-member-access
+   67:73  error  Async arrow function has no 'await' expression         @typescript-eslint/require-await
+   88:7   error  Unsafe assignment of an `any` value                    @typescript-eslint/no-unsafe-assignment
+   88:30  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+   89:7   error  Unsafe assignment of an `any` value                    @typescript-eslint/no-unsafe-assignment
+   89:31  error  Unsafe member access .refresh_token on an `any` value  @typescript-eslint/no-unsafe-member-access
+  100:23  error  Unsafe member access .id on an `any` value             @typescript-eslint/no-unsafe-member-access
+  101:23  error  Unsafe member access .email on an `any` value          @typescript-eslint/no-unsafe-member-access
+  114:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  123:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  132:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  141:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  154:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  181:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  197:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  205:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  249:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  273:23  error  Unsafe member access .sub on an `any` value            @typescript-eslint/no-unsafe-member-access
+  274:23  error  Unsafe member access .email on an `any` value          @typescript-eslint/no-unsafe-member-access
+  308:23  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+  309:23  error  Unsafe member access .refresh_token on an `any` value  @typescript-eslint/no-unsafe-member-access
+  310:30  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+  311:30  error  Unsafe member access .refresh_token on an `any` value  @typescript-eslint/no-unsafe-member-access
+  322:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  331:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  344:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  353:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  368:23  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+  369:23  error  Unsafe member access .refresh_token on an `any` value  @typescript-eslint/no-unsafe-member-access
+  370:23  error  Unsafe member access .refresh_token on an `any` value  @typescript-eslint/no-unsafe-member-access
+  379:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  400:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  416:23  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+  455:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  473:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  508:18  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  515:11  error  Unsafe assignment of an `any` value                    @typescript-eslint/no-unsafe-assignment
+  515:54  error  Unsafe member access .mailService on an `any` value    @typescript-eslint/no-unsafe-member-access
+  519:73  error  Async arrow function has no 'await' expression         @typescript-eslint/require-await
+  551:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  574:28  error  Unsafe member access .access_token on an `any` value   @typescript-eslint/no-unsafe-member-access
+  594:18  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  604:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  621:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  638:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  647:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+  656:23  error  Unsafe member access .error on an `any` value          @typescript-eslint/no-unsafe-member-access
+
+✖ 189 problems (149 errors, 40 warnings)
+

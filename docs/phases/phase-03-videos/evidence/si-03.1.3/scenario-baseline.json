@@ -1,0 +1,89 @@
+{
+  "src/common/filters/domain-exception.filter.spec.ts": {
+    "scenarios": [
+      "maps EmailAlreadyExistsException to 409 with EMAIL_ALREADY_EXISTS",
+      "maps InvalidCredentialsException to 401 with INVALID_CREDENTIALS",
+      "maps EmailNotConfirmedException to 403 with EMAIL_NOT_CONFIRMED",
+      "maps InvalidTokenException to 401 with INVALID_TOKEN",
+      "maps TokenExpiredException to 401 with TOKEN_EXPIRED",
+      "maps TokenReuseDetectedException to 401 with TOKEN_REUSE_DETECTED"
+    ],
+    "assertions": 12
+  },
+  "src/common/filters/validation-exception.filter.spec.ts": {
+    "scenarios": [
+      "normalizes array of class-validator messages",
+      "wraps single string message into array"
+    ],
+    "assertions": 4
+  },
+  "src/config/env.validation.integration-spec.ts": {
+    "scenarios": [
+      "should reject SWAGGER_ENABLED with an invalid value",
+      "should accept SWAGGER_ENABLED=true",
+      "should accept SWAGGER_ENABLED=false",
+      "should apply default false when SWAGGER_ENABLED is not set"
+    ],
+    "assertions": 6
+  },
+  "src/channels/channels.service.spec.ts": {
+    "scenarios": [
+      "derives nickname from email prefix and saves when no collision",
+      "retries with suffix when pre-check finds existing nickname",
+      "retries with suffix on concurrent unique constraint violation",
+      "throws after exhausting max retries",
+      "re-throws non-unique-constraint errors immediately"
+    ],
+    "assertions": 11
+  },
+  "test/auth.e2e-spec.ts": {
+    "scenarios": [
+      "returns 201 with { id, email } on valid registration",
+      "returns 409 with EMAIL_ALREADY_EXISTS on duplicate email",
+      "returns 400 with VALIDATION_ERROR on missing email",
+      "returns 400 with VALIDATION_ERROR on invalid email format",
+      "returns 400 with VALIDATION_ERROR when password is too short",
+      "returns 400 with VALIDATION_ERROR on unknown extra fields",
+      "returns 204 with a valid, unused, non-expired token",
+      "returns 401 with INVALID_TOKEN on an already-used token",
+      "returns 401 with TOKEN_EXPIRED on an expired token",
+      "returns 400 with VALIDATION_ERROR on missing token query param",
+      "returns 204 for a registered, unconfirmed email",
+      "returns 204 for a non-existent email (no leak)",
+      "returns 204 for an already-confirmed email (no leak)",
+      "returns 400 with VALIDATION_ERROR on invalid email format",
+      "returns 401 on GET /auth/me without Authorization header",
+      "returns 401 on GET /auth/me with an invalid token",
+      "returns 200 on GET /auth/me with a valid access token",
+      "GET / is accessible without any Authorization header (@Public)",
+      "POST /auth/register is accessible without Authorization header (@Public)",
+      "returns 200 with access_token and refresh_token on valid credentials",
+      "returns 401 with INVALID_CREDENTIALS on wrong password",
+      "returns 401 with INVALID_CREDENTIALS on unknown email",
+      "returns 403 with EMAIL_NOT_CONFIRMED when user is not confirmed",
+      "returns 400 with VALIDATION_ERROR on missing password",
+      "returns 200 with new access_token and refresh_token on valid refresh token",
+      "returns 401 with INVALID_TOKEN on an unknown refresh token",
+      "returns 401 with TOKEN_EXPIRED on an expired refresh token",
+      "returns 200 with valid access token when reuse is within grace period",
+      "returns 401 with TOKEN_REUSE_DETECTED when reuse is beyond grace period",
+      "returns 400 with VALIDATION_ERROR on missing refresh_token field",
+      "returns 204 with a valid access token",
+      "returns 401 without an Authorization header",
+      "revokes all refresh tokens so subsequent refresh calls return 401",
+      "returns 204 for a registered email",
+      "returns 204 for a non-existent email (no leak)",
+      "returns 400 with VALIDATION_ERROR on invalid email format",
+      "returns 204 with a valid token and updates the password",
+      "revokes all refresh tokens after reset",
+      "returns 401 with INVALID_TOKEN on an unknown token",
+      "returns 401 with INVALID_TOKEN on a reused token",
+      "returns 401 with TOKEN_EXPIRED on an expired token",
+      "returns 400 with VALIDATION_ERROR on missing token",
+      "returns 400 with VALIDATION_ERROR on short new_password",
+      "returns 429 on the 11th request to an auth endpoint within the ttl window",
+      "does not rate-limit the non-auth GET / endpoint"
+    ],
+    "assertions": 92
+  }
+}

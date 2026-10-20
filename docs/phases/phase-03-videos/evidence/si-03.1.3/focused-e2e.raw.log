@@ -1,0 +1,69 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/auth.e2e-spec.ts
+
+(node:274) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/auth.e2e-spec.ts (5.855 s)
+  Auth (e2e)
+    POST /auth/register
+      ✓ returns 201 with { id, email } on valid registration (213 ms)
+      ✓ returns 409 with EMAIL_ALREADY_EXISTS on duplicate email (143 ms)
+      ✓ returns 400 with VALIDATION_ERROR on missing email (15 ms)
+      ✓ returns 400 with VALIDATION_ERROR on invalid email format (6 ms)
+      ✓ returns 400 with VALIDATION_ERROR when password is too short (5 ms)
+      ✓ returns 400 with VALIDATION_ERROR on unknown extra fields (4 ms)
+    GET /auth/confirm-email
+      ✓ returns 204 with a valid, unused, non-expired token (95 ms)
+      ✓ returns 401 with INVALID_TOKEN on an already-used token (93 ms)
+      ✓ returns 401 with TOKEN_EXPIRED on an expired token (76 ms)
+      ✓ returns 400 with VALIDATION_ERROR on missing token query param (7 ms)
+    POST /auth/resend-confirmation
+      ✓ returns 204 for a registered, unconfirmed email (184 ms)
+      ✓ returns 204 for a non-existent email (no leak) (8 ms)
+      ✓ returns 204 for an already-confirmed email (no leak) (85 ms)
+      ✓ returns 400 with VALIDATION_ERROR on invalid email format (7 ms)
+    JWT Guard
+      ✓ returns 401 on GET /auth/me without Authorization header (4 ms)
+      ✓ returns 401 on GET /auth/me with an invalid token (3 ms)
+      ✓ returns 200 on GET /auth/me with a valid access token (143 ms)
+      ✓ GET / is accessible without any Authorization header (@Public) (8 ms)
+      ✓ POST /auth/register is accessible without Authorization header (@Public) (126 ms)
+    POST /auth/login
+      ✓ returns 200 with access_token and refresh_token on valid credentials (160 ms)
+      ✓ returns 401 with INVALID_CREDENTIALS on wrong password (146 ms)
+      ✓ returns 401 with INVALID_CREDENTIALS on unknown email (8 ms)
+      ✓ returns 403 with EMAIL_NOT_CONFIRMED when user is not confirmed (168 ms)
+      ✓ returns 400 with VALIDATION_ERROR on missing password (7 ms)
+    POST /auth/refresh
+      ✓ returns 200 with new access_token and refresh_token on valid refresh token (140 ms)
+      ✓ returns 401 with INVALID_TOKEN on an unknown refresh token (9 ms)
+      ✓ returns 401 with TOKEN_EXPIRED on an expired refresh token (143 ms)
+      ✓ returns 200 with valid access token when reuse is within grace period (170 ms)
+      ✓ returns 401 with TOKEN_REUSE_DETECTED when reuse is beyond grace period (156 ms)
+      ✓ returns 400 with VALIDATION_ERROR on missing refresh_token field (8 ms)
+    POST /auth/logout
+      ✓ returns 204 with a valid access token (171 ms)
+      ✓ returns 401 without an Authorization header (8 ms)
+      ✓ revokes all refresh tokens so subsequent refresh calls return 401 (180 ms)
+    POST /auth/forgot-password
+      ✓ returns 204 for a registered email (232 ms)
+      ✓ returns 204 for a non-existent email (no leak) (9 ms)
+      ✓ returns 400 with VALIDATION_ERROR on invalid email format (3 ms)
+    POST /auth/reset-password
+      ✓ returns 204 with a valid token and updates the password (372 ms)
+      ✓ revokes all refresh tokens after reset (251 ms)
+      ✓ returns 401 with INVALID_TOKEN on an unknown token (13 ms)
+      ✓ returns 401 with INVALID_TOKEN on a reused token (260 ms)
+      ✓ returns 401 with TOKEN_EXPIRED on an expired token (200 ms)
+      ✓ returns 400 with VALIDATION_ERROR on missing token (9 ms)
+      ✓ returns 400 with VALIDATION_ERROR on short new_password (3 ms)
+  Rate Limiting (e2e)
+    ✓ returns 429 on the 11th request to an auth endpoint within the ttl window (32 ms)
+    ✓ does not rate-limit the non-auth GET / endpoint (15 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       45 passed, 45 total
+Snapshots:   0 total
+Time:        5.891 s
+Ran all test suites within paths "test/auth.e2e-spec.ts".

@@ -1,4 +1,6 @@
-import { ArgumentsHost } from '@nestjs/common';
+import { jest } from '@jest/globals';
+import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
+import type { ArgumentsHost } from '@nestjs/common';
 import { DomainExceptionFilter } from './domain-exception.filter';
 import {
   EmailAlreadyExistsException,
@@ -11,26 +13,21 @@ import {
 
 describe('DomainExceptionFilter', () => {
   let filter: DomainExceptionFilter;
-  let mockJson: jest.Mock;
-  let mockStatus: jest.Mock;
+  let mockJson: jest.Mock<(body: unknown) => void>;
+  let mockStatus: jest.Mock<(statusCode: number) => { json: typeof mockJson }>;
   let mockHost: ArgumentsHost;
 
   beforeEach(() => {
     filter = new DomainExceptionFilter();
-    mockJson = jest.fn();
-    mockStatus = jest.fn().mockReturnValue({ json: mockJson });
+    mockJson = jest.fn<(body: unknown) => void>();
+    mockStatus = jest
+      .fn<(statusCode: number) => { json: typeof mockJson }>()
+      .mockReturnValue({ json: mockJson });
 
-    mockHost = {
-      switchToHttp: () => ({
-        getResponse: () => ({ status: mockStatus }),
-        getRequest: () => ({ url: '/test', method: 'POST' }),
-      }),
-      getArgs: () => [],
-      getArgByIndex: () => null,
-      switchToRpc: () => ({}) as any,
-      switchToWs: () => ({}) as any,
-      getType: () => 'http',
-    } as unknown as ArgumentsHost;
+    mockHost = new ExecutionContextHost([
+      { url: '/test', method: 'POST' },
+      { status: mockStatus },
+    ]);
   });
 
   it('maps EmailAlreadyExistsException to 409 with EMAIL_ALREADY_EXISTS', () => {
@@ -51,7 +48,7 @@ describe('DomainExceptionFilter', () => {
     expect(mockJson).toHaveBeenCalledWith({
       statusCode: 401,
       error: 'INVALID_CREDENTIALS',
-      message: expect.any(String),
+      message: expect.any(String) as unknown,
     });
   });
 
@@ -62,7 +59,7 @@ describe('DomainExceptionFilter', () => {
     expect(mockJson).toHaveBeenCalledWith({
       statusCode: 403,
       error: 'EMAIL_NOT_CONFIRMED',
-      message: expect.any(String),
+      message: expect.any(String) as unknown,
     });
   });
 
@@ -73,7 +70,7 @@ describe('DomainExceptionFilter', () => {
     expect(mockJson).toHaveBeenCalledWith({
       statusCode: 401,
       error: 'INVALID_TOKEN',
-      message: expect.any(String),
+      message: expect.any(String) as unknown,
     });
   });
 
@@ -84,7 +81,7 @@ describe('DomainExceptionFilter', () => {
     expect(mockJson).toHaveBeenCalledWith({
       statusCode: 401,
       error: 'TOKEN_EXPIRED',
-      message: expect.any(String),
+      message: expect.any(String) as unknown,
     });
   });
 
@@ -95,7 +92,7 @@ describe('DomainExceptionFilter', () => {
     expect(mockJson).toHaveBeenCalledWith({
       statusCode: 401,
       error: 'TOKEN_REUSE_DETECTED',
-      message: expect.any(String),
+      message: expect.any(String) as unknown,
     });
   });
 });

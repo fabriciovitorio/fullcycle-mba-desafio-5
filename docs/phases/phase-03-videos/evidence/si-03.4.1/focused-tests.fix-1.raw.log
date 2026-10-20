@@ -1,0 +1,37 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/storage/s3-storage.service.spec.ts src/storage/s3-storage.service.integration-spec.ts
+
+(node:441) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL src/storage/s3-storage.service.integration-spec.ts
+  ● S3StorageService (integration) › should distinguish actual connection unavailability from a missing object
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "kind": "unavailable",
+    +   "kind": "operation_failed",
+      }
+
+      210 |       await expect(
+      211 |         unavailableModule.get<StoragePort>(STORAGE).headObject('missing'),
+    > 212 |       ).rejects.toMatchObject({ kind: 'unavailable' });
+          |                 ^
+      213 |     } finally {
+      214 |       await unavailableModule.close();
+      215 |     }
+
+      at Object.toMatchObject (../node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (storage/s3-storage.service.integration-spec.ts:212:17)
+
+PASS src/storage/s3-storage.service.spec.ts
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 27 passed, 28 total
+Snapshots:   0 total
+Time:        1.376 s, estimated 15 s
+Ran all test suites within paths "src/storage/s3-storage.service.spec.ts", "src/storage/s3-storage.service.integration-spec.ts".

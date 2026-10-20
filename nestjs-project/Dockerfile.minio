@@ -1,0 +1,47 @@
+# Official public images are unavailable. Build unmodified upstream source at
+# immutable commits; source/license/revision remain in each runtime image.
+FROM golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b AS server-build
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOMAXPROCS=2 GOMEMLIMIT=1GiB
+WORKDIR /src
+RUN git init && git remote add origin https://github.com/minio/minio.git \
+    && git fetch --depth=1 origin 7aac2a2c5b7c882e68c1ce017d8256be2feea27f \
+    && git checkout --detach FETCH_HEAD
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/minio .
+
+FROM golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b AS client-build
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local GOMAXPROCS=2 GOMEMLIMIT=1GiB
+WORKDIR /src
+RUN git init && git remote add origin https://github.com/minio/mc.git \
+    && git fetch --depth=1 origin 77f82e18b5401a65958f1619df6ebb994634bd88 \
+    && git checkout --detach FETCH_HEAD
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/mc .
+
+FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 AS common
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --uid 1000 --create-home minio
+USER minio
+
+FROM common AS minio
+LABEL org.opencontainers.image.source="https://github.com/minio/minio" \
+    org.opencontainers.image.revision="7aac2a2c5b7c882e68c1ce017d8256be2feea27f"
+COPY --from=server-build /out/minio /usr/local/bin/minio
+COPY --from=server-build /src/LICENSE /src/NOTICE /licenses/
+COPY --from=server-build /src /usr/src/minio
+USER root
+RUN mkdir /data && chown minio:minio /data
+USER minio
+EXPOSE 9000 9001
+ENTRYPOINT ["minio"]
+CMD ["server", "/data", "--console-address", ":9001"]
+
+FROM common AS mc
+LABEL org.opencontainers.image.source="https://github.com/minio/mc" \
+    org.opencontainers.image.revision="77f82e18b5401a65958f1619df6ebb994634bd88"
+COPY --from=client-build /out/mc /usr/local/bin/mc
+COPY --from=client-build /src/LICENSE /licenses/LICENSE
+COPY --from=client-build /src /usr/src/mc
+ENTRYPOINT ["mc"]

@@ -1,0 +1,11 @@
+{
+  "commands": [
+    {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand --runTestsByPath src/config/storage.config.spec.ts src/config/videos.config.spec.ts src/config/env.validation.integration-spec.ts",
+      "exitCode": 0,
+      "suites": { "passed": 3, "total": 3 },
+      "tests": { "passed": 43, "total": 43 },
+      "snapshots": { "total": 0 }
+    }
+  ]
+}

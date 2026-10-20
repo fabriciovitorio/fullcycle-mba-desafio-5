@@ -1,0 +1,22 @@
+FROM node:25.6.0-slim@sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730 AS base
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /home/node/app
+
+FROM base AS build
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build && npm prune --omit=dev
+
+FROM base AS runtime
+ENV NODE_ENV=production VIDEO_TEMP_DIRECTORY=/tmp/streamtube-videos
+COPY --from=build --chown=node:node /home/node/app/node_modules ./node_modules
+COPY --from=build --chown=node:node /home/node/app/dist ./dist
+COPY --from=build --chown=node:node /home/node/app/package.json ./package.json
+RUN mkdir -p /tmp/streamtube-videos && chown node:node /tmp/streamtube-videos
+USER node
+VOLUME ["/tmp/streamtube-videos"]
+# The standalone entry is delivered and activated in SI-03.7.3.
+CMD ["node", "dist/worker.js"]

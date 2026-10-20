@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/taskforcesh/bullmq/v5.81.5/src/interfaces/base-job-options.ts",
+    "file": "bullmq-5-jobs-options.txt",
+    "sha256": "2634247b370a6186e728bf5d522fcda7338b72c1231b6f8203c5c5af1e867e70"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/taskforcesh/bullmq/v5.81.5/src/interfaces/worker-options.ts",
+    "file": "bullmq-5-worker-options.txt",
+    "sha256": "3d5868008597d21f68cf7b6ab6f99550c1735b2525c5b091a8df543d7194e976"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/taskforcesh/bullmq/v5.81.5/src/classes/errors/unrecoverable-error.ts",
+    "file": "bullmq-5-unrecoverable.txt",
+    "sha256": "b605c4ee56f9b9c93f53f059bec285407df6e0c0d417ec6b2aa7463ce340d02c"
+  }
+]

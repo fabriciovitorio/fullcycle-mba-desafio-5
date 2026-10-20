@@ -1,0 +1,19 @@
+{
+  "vulnerabilities": {
+    "info": 0,
+    "low": 2,
+    "moderate": 17,
+    "high": 29,
+    "critical": 3,
+    "total": 51
+  },
+  "affected_nodes_checked": 70,
+  "new_or_changed_affected_nodes": [],
+  "all_affected_nodes_unchanged_from_baseline": true,
+  "critical_packages": [
+    "handlebars",
+    "liquidjs",
+    "proxy-addr"
+  ],
+  "baseline": "git HEAD package-lock.json, before installing phase 03 libraries"
+}

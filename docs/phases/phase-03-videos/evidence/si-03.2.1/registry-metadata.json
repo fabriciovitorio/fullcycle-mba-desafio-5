@@ -1,0 +1,44 @@
+[
+  {
+    "name": "@nestjs/bullmq",
+    "version": "11.0.5",
+    "peerDependencies": {
+      "bullmq": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+      "@nestjs/core": "^10.0.0 || ^11.0.0",
+      "@nestjs/common": "^10.0.0 || ^11.0.0"
+    },
+    "integrity": "sha512-u0VGVc5aER8A+4jEYXDin2rtqIHR8sFL68RUgNDgZslvjdeb1QL4CF+Sr0v4zMXJEfaLSVD606Oq0cryNNCxHg=="
+  },
+  {
+    "name": "bullmq",
+    "version": "5.81.5",
+    "peerDependencies": {
+      "redis": ">=5.0.0"
+    },
+    "peerDependenciesMeta": {
+      "redis": {
+        "optional": true
+      }
+    },
+    "engines": {
+      "node": ">=12.22.0"
+    },
+    "integrity": "sha512-pW7pFc/X+9AEIx91TWTdIpZ1icfbJnA0unsyzD7VICjCUw8a3qedSjej5dxxn6LjfM1kr2jvalOCGbCmoA5Kxg=="
+  },
+  {
+    "name": "@aws-sdk/client-s3",
+    "version": "3.1152.0",
+    "engines": {
+      "node": ">=20.0.0"
+    },
+    "integrity": "sha512-oI1+ZaM6pSOwZazu4nAb7rL8ug7LSjg31tDoJqRB9MooRqqWCf/qvkIZqne1mRA3xK3slg6K0RNWXaJYHbWLvg=="
+  },
+  {
+    "name": "@aws-sdk/s3-request-presigner",
+    "version": "3.1152.0",
+    "engines": {
+      "node": ">=20.0.0"
+    },
+    "integrity": "sha512-hddG6iscvmJaToltXuAjyszhIfOe6Fw+Xcy/0V5DslTmX91AH5DKG5VMZdKso+9LK4+8dJbyPxEl2/tT06ySkg=="
+  }
+]

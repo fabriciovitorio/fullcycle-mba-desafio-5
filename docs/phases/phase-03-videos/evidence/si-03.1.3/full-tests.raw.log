@@ -1,0 +1,35 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand
+
+(node:2398) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/auth/auth.service.spec.ts
+PASS src/auth/auth.service.integration-spec.ts
+PASS src/database/migrations.integration-spec.ts
+PASS src/auth/entities/verification-token.entity.integration-spec.ts
+PASS src/auth/entities/refresh-token.entity.integration-spec.ts
+PASS src/openapi-export.integration-spec.ts
+PASS src/users/users.service.integration-spec.ts
+PASS src/channels/entities/channel.entity.integration-spec.ts
+PASS src/mail/mail.service.integration-spec.ts
+PASS src/auth/guards/jwt-auth.guard.spec.ts
+PASS src/channels/channels.service.integration-spec.ts
+PASS src/users/entities/user.entity.integration-spec.ts
+PASS src/channels/nickname.util.spec.ts
+PASS src/auth/auth.module.integration-spec.ts
+PASS src/channels/channels.module.integration-spec.ts
+PASS src/users/users.module.integration-spec.ts
+PASS src/config/swagger.config.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/mail/mail.module.spec.ts
+PASS src/channels/channels.service.spec.ts
+PASS src/config/env.validation.integration-spec.ts
+PASS src/common/filters/domain-exception.filter.spec.ts
+PASS src/common/filters/validation-exception.filter.spec.ts
+
+Test Suites: 23 passed, 23 total
+Tests:       149 passed, 149 total
+Snapshots:   0 total
+Time:        9.015 s
+Ran all test suites.

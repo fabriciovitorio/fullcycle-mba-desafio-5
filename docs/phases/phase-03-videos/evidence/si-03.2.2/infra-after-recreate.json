@@ -1,0 +1,1 @@
+{"mode":"verify","database":"streamtube_test","mailpit":"ready","minio":"ready","redis":"PONG","appendonly":true,"evictionPolicy":"noeviction","objectIntact":true,"unsignedGet":403,"cors":"passed","bullmqJobState":"waiting","nonRoot":true,"ffmpeg":"available","ffprobe":"available"}

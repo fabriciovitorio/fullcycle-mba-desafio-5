@@ -1,0 +1,14 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/videos/video-uploads.service.spec.ts src/videos/video-uploads.service.integration-spec.ts
+
+(node:14992) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/videos/video-uploads.service.integration-spec.ts
+PASS src/videos/video-uploads.service.spec.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       49 passed, 49 total
+Snapshots:   0 total
+Time:        3.704 s
+Ran all test suites within paths "src/videos/video-uploads.service.spec.ts", "src/videos/video-uploads.service.integration-spec.ts".

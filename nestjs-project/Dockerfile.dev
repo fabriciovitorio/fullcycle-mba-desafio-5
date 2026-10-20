@@ -1,9 +1,13 @@
-FROM node:25.6.0-slim
+FROM node:25.6.0-slim@sha256:3746b7c78e343062cbad1a1a9f22e582e2aaeda5b183b7050b5831e22f988730
 
-RUN apt update && apt install -y procps curl
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends procps curl ca-certificates ffmpeg \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /tmp/streamtube-videos \
+    && chown node:node /tmp/streamtube-videos
 
 WORKDIR /home/node/app
 
 USER node
 
-CMD [ "tail", "-f", "/dev/null" ] 
+CMD [ "tail", "-f", "/dev/null" ]

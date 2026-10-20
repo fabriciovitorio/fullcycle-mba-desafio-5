@@ -1,0 +1,108 @@
+ Image streamtube-mc:77f82e18b540 Building 
+ Image streamtube-minio:7aac2a2c5b7c Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.10kB done
+#1 DONE 0.0s
+
+#2 [minio-init internal] load build definition from Dockerfile.minio
+#2 transferring dockerfile: 2.46kB done
+#2 DONE 0.0s
+
+#3 [minio internal] load metadata for docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+#3 DONE 0.0s
+
+#4 [minio-init internal] load metadata for docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b
+#4 DONE 0.0s
+
+#5 [minio internal] load .dockerignore
+#5 transferring context: 123B done
+#5 DONE 0.0s
+
+#6 [minio common 1/2] FROM docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+#6 resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 0.0s done
+#6 resolve docker.io/library/debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587 0.0s done
+#6 DONE 0.0s
+
+#7 [minio-init client-build 1/4] FROM docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b
+#7 resolve docker.io/library/golang:1.24.9-bookworm@sha256:737b40b61ce956d738bed59f18ba854d8d67e7a4c4fa63f64437f4c70247ac5b 0.0s done
+#7 DONE 0.0s
+
+#8 [minio-init client-build 2/4] WORKDIR /src
+#8 CACHED
+
+#9 [minio server-build 3/4] RUN git init && git remote add origin https://github.com/minio/minio.git     && git fetch --depth=1 origin 7aac2a2c5b7c882e68c1ce017d8256be2feea27f     && git checkout --detach FETCH_HEAD
+#9 CACHED
+
+#10 [minio-init client-build 3/4] RUN git init && git remote add origin https://github.com/minio/mc.git     && git fetch --depth=1 origin 77f82e18b5401a65958f1619df6ebb994634bd88     && git checkout --detach FETCH_HEAD
+#10 CACHED
+
+#11 [minio-init client-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/mc .
+#11 DONE 5.8s
+
+#12 [minio server-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/minio .
+#12 ...
+
+#13 [minio common 2/2] RUN apt-get update     && apt-get install -y --no-install-recommends ca-certificates curl     && rm -rf /var/lib/apt/lists/*     && useradd --uid 1000 --create-home minio
+#13 CACHED
+
+#14 [minio-init mc 1/3] COPY --from=client-build /out/mc /usr/local/bin/mc
+#14 DONE 0.1s
+
+#12 [minio server-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/minio .
+#12 ...
+
+#15 [minio-init mc 2/3] COPY --from=client-build /src/LICENSE /licenses/LICENSE
+#15 DONE 0.1s
+
+#16 [minio-init mc 3/3] COPY --from=client-build /src /usr/src/mc
+#16 DONE 0.1s
+
+#12 [minio server-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/minio .
+#12 ...
+
+#17 [minio-init] exporting to image
+#17 exporting layers
+#17 exporting layers 1.0s done
+#17 exporting manifest sha256:8a49c2b68f6f6e45cd7aae65098f65f55d82c1b4faf269f1893c193eb7c47d74 0.0s done
+#17 exporting config sha256:287c8059c427c329e2911a21ed73eb994e391f9af48a52c7cd5b9248d711d96a 0.0s done
+#17 exporting attestation manifest sha256:7d6fbbd4e8e90cdbadf7d60f7de93d75530b3acb370cd4c29e14f3d9aa7d57ab 0.0s done
+#17 exporting manifest list sha256:414eb3913ac7d8203b1630abd0074d10de579a47d4918e86f882625230d978e0 0.0s done
+#17 naming to docker.io/library/streamtube-mc:77f82e18b540
+#17 naming to docker.io/library/streamtube-mc:77f82e18b540 done
+#17 unpacking to docker.io/library/streamtube-mc:77f82e18b540
+#17 unpacking to docker.io/library/streamtube-mc:77f82e18b540 0.2s done
+#17 DONE 1.4s
+
+#18 [minio-init] resolving provenance for metadata file
+#18 DONE 0.0s
+
+#12 [minio server-build 4/4] RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build     go build -p 2 -trimpath -ldflags="$(go run buildscripts/gen-ldflags.go)" -o /out/minio .
+#12 DONE 8.5s
+
+#19 [minio minio 1/4] COPY --from=server-build /out/minio /usr/local/bin/minio
+#19 DONE 0.3s
+
+#20 [minio minio 2/4] COPY --from=server-build /src/LICENSE /src/NOTICE /licenses/
+#20 DONE 0.1s
+
+#21 [minio minio 3/4] COPY --from=server-build /src /usr/src/minio
+#21 DONE 0.2s
+
+#22 [minio minio 4/4] RUN mkdir /data && chown minio:minio /data
+#22 DONE 0.3s
+
+#23 [minio] exporting to image
+#23 exporting layers 2.9s done
+#23 exporting manifest sha256:be50c03143b230e81668babca1a3cbfbfab648e7b6ab5298870c4ab15a65f834 0.0s done
+#23 exporting config sha256:21ad81a060472d746537fc393721b6f2c8e3cf3232e0b0de6dd04bbdee2b362b 0.0s done
+#23 exporting attestation manifest sha256:9344ceee0d5db1d04a40d3dbe11f2d1c1fd70172aafbced717c9068aac5b3687 0.0s done
+#23 exporting manifest list sha256:86e208e69119978895ddac38bbae27c7001207a76778a9992711710baa400b4d 0.0s done
+#23 naming to docker.io/library/streamtube-minio:7aac2a2c5b7c done
+#23 unpacking to docker.io/library/streamtube-minio:7aac2a2c5b7c
+#23 unpacking to docker.io/library/streamtube-minio:7aac2a2c5b7c 0.9s done
+#23 DONE 3.9s
+
+#24 [minio] resolving provenance for metadata file
+#24 DONE 0.0s
+ Image streamtube-minio:7aac2a2c5b7c Built 
+ Image streamtube-mc:77f82e18b540 Built 

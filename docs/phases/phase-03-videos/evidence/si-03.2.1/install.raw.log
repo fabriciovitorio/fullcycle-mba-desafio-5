@@ -1,0 +1,13 @@
+npm warn deprecated cron-parser@4.9.0: v4 is no longer maintained, upgrade to v5
+
+added 43 packages, changed 1 package, and audited 1064 packages in 10s
+
+220 packages are looking for funding
+  run `npm fund` for details
+
+51 vulnerabilities (2 low, 17 moderate, 29 high, 3 critical)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.

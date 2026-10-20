@@ -1,0 +1,28 @@
+{
+  "libraryId": "/redis/docs",
+  "query": "Redis 7 Docker appendonly yes maxmemory-policy noeviction persistent /data redis-cli ping",
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: Redis\n- Context7-compatible library ID: /redis/docs\n- Description: This repository contains the documentation for Redis, including site structure, build requirements, and pipeline details.\n- Code Snippets: 38715\n- Source Reputation: High\n- Benchmark Score: 74.45\n----------\n- Title: Redis\n- Context7-compatible library ID: /websites/redis_io\n- Description: Redis is an open-source, in-memory data structure store used as a database, cache, and message broker. It supports various data structures and is often used for high-performance applications, including AI and real-time data processing.\n- Code Snippets: 6\n- Source Reputation: High\n- Benchmark Score: 56.21\n----------\n- Title: Redis\n- Context7-compatible library ID: /llmstxt/redis_io_llms_txt\n- Description: Redis is an in-memory data structure store used as a database, cache, and message broker, offering robust commands, data types, and operational features.\n- Code Snippets: 6643\n- Source Reputation: High\n- Benchmark Score: 58.48\n----------\n- Title: Redis\n- Context7-compatible library ID: /redis/redis-doc\n- Description: This repository contains the documentation for Redis, including information on clients, commands, and styling guidelines.\n- Code Snippets: 4180\n- Source Reputation: High\n- Benchmark Score: 70.92\n----------\n- Title: Redis Py\n- Context7-compatible library ID: /redis/redis-py\n- Description: The Python interface to the Redis key-value store, providing a robust and efficient way to interact with Redis databases from Python applications.\n- Code Snippets: 4359\n- Source Reputation: High\n- Benchmark Score: 80.75\n- Versions: v6_4_0, v5.2.0"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Enable AOF with appendonly yes\n\nSource: https://github.com/redis/docs/blob/main/content/operate/oss_and_stack/management/persistence.md\n\nEnables the append-only file (AOF) persistence strategy in the Redis configuration file. When enabled, every command that changes the dataset is appended to the AOF and replayed on restart to rebuild state.\n\n```plaintext\nappendonly yes\n```\n\n--------------------------------\n\n### Mount local data directory for persistence\n\nSource: https://github.com/redis/docs/blob/main/content/operate/oss_and_stack/install/install-stack/docker.md\n\nStarts Redis with a local volume mounted to /data, storing all data in the local-data directory on the host.\n\n```bash\n$ docker run -v /local-data/:/data --name redis -p 6379:6379 redis:<version>\n```\n\n--------------------------------\n\n### Redis cache configuration with maxmemory and maxmemory-policy\n\nSource: https://github.com/redis/docs/blob/main/content/operate/oss_and_stack/management/config.md\n\nUse this configuration to set Redis as a cache with a maximum memory limit of 2 megabytes and an allkeys-lru eviction policy. This allows Redis to evict keys using an approximated LRU algorithm when the memory limit is reached, without requiring the application to set explicit expirations.\n\n```redis\nmaxmemory 2mb\nmaxmemory-policy allkeys-lru\n```\n\n--------------------------------\n\n### Test connection with PING\n\nSource: https://github.com/redis/docs/blob/main/content/operate/oss_and_stack/install/install-stack/snap.md\n\nUse the PING command in redis-cli to test the connection. The expected response is PONG.\n\n```bash\n127.0.0.1:6379> PING\nPONG\n```\n\n--------------------------------\n\n### Connect with redis-cli from Docker container\n\nSource: https://github.com/redis/docs/blob/main/content/operate/oss_and_stack/install/install-stack/docker.md\n\nRuns redis-cli inside the running Redis container. Use this when redis-cli is not installed locally.\n\n```bash\n$ docker exec -it redis redis-cli\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

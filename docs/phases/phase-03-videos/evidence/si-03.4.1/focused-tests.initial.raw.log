@@ -1,0 +1,52 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/storage/s3-storage.service.spec.ts src/storage/s3-storage.service.integration-spec.ts
+
+(node:254) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/storage/s3-storage.service.spec.ts
+FAIL src/storage/s3-storage.service.integration-spec.ts (13.515 s)
+  ● S3StorageService (integration) › should list multiple real pages and complete exactly the uploaded bytes
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      80 |   }
+      81 |
+    > 82 |   it('should list multiple real pages and complete exactly the uploaded bytes', async () => {
+         |   ^
+      83 |     const { key, uploadId } = await session();
+      84 |     expect(await storage.listParts(key, uploadId)).toEqual([]);
+      85 |     const first = Buffer.alloc(5 * 1024 * 1024, 0x61);
+
+      at storage/s3-storage.service.integration-spec.ts:82:3
+      at Object.<anonymous> (storage/s3-storage.service.integration-spec.ts:17:1)
+
+  ● S3StorageService (integration) › should distinguish actual connection unavailability from a missing object
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "kind": "unavailable",
+    +   "kind": "operation_failed",
+      }
+
+      208 |       await expect(
+      209 |         unavailableModule.get<StoragePort>(STORAGE).headObject('missing'),
+    > 210 |       ).rejects.toMatchObject({ kind: 'unavailable' });
+          |                 ^
+      211 |     } finally {
+      212 |       await unavailableModule.close();
+      213 |     }
+
+      at Object.toMatchObject (../node_modules/expect/build/index.js:2155:20)
+      at Object.<anonymous> (storage/s3-storage.service.integration-spec.ts:210:17)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       2 failed, 25 passed, 27 total
+Snapshots:   0 total
+Time:        14.773 s
+Ran all test suites within paths "src/storage/s3-storage.service.spec.ts", "src/storage/s3-storage.service.integration-spec.ts".

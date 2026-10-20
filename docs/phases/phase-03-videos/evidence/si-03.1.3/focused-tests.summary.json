@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "testsPassed": 62,
+  "testsTotal": 62,
+  "runs": [
+    {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand --runTestsByPath src/common/filters/domain-exception.filter.spec.ts src/common/filters/validation-exception.filter.spec.ts src/config/env.validation.integration-spec.ts src/channels/channels.service.spec.ts",
+      "exitCode": 0,
+      "suitesPassed": 4,
+      "testsPassed": 17,
+      "testsTotal": 17,
+      "log": "focused-unit.raw.log"
+    },
+    {
+      "command": "docker compose exec -T nestjs-api npm run test:e2e -- --runInBand --runTestsByPath test/auth.e2e-spec.ts",
+      "exitCode": 0,
+      "suitesPassed": 1,
+      "testsPassed": 45,
+      "testsTotal": 45,
+      "log": "focused-e2e.raw.log"
+    }
+  ]
+}

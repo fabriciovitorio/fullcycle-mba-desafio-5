@@ -1,0 +1,233 @@
+# phase-03-videos — Progress
+
+**Status:** in_progress
+**SIs:** 10/31 completed
+
+### SI-03.1.1 — Consolidar Jest e isolar o banco de testes
+- **Status:** completed
+- **Tests:** 10/10 testes do SI (4 suítes), 149/149 testes da suíte completa (23 suítes), 52/52 E2E (3 suítes); descoberta padrão de 23 suítes sem configuração concorrente; tsc --noEmit e lint dos 8 arquivos TypeScript alterados passaram no Docker. Lint global: 149 erros e 40 avisos preexistentes em 10 arquivos fora deste SI, pendentes nos SIs 03.1.2/03.1.3.
+- **Observations:**
+  - Jest consolidado em package.json; jest.config.ts removido. Auth/Channels/Users module tests renomeados para integration-spec, preservando os asserts de compilação e acrescentando verificação do banco efetivo e do schema migrado.
+  - globalSetup cria/migra streamtube_test (TEST_DB_NAME opcional; padrão DB_NAME + _test). setupFiles redireciona DB_NAME antes dos imports de AppModule, inclusive no E2E; TEST_PROTECTED_DB_NAME captura o banco da aplicação. Helpers validam nomes *_test antes de DDL/cleanup, usam o host db, synchronize:false, entidades/migrations explícitas e limpeza em ordem de FK.
+  - Adaptação limitada do isolamento: banco migrations_<uuid>_test descartável, com public exclusivo, porque a migration histórica de auth qualifica public explicitamente. Nenhuma migration existente foi alterada. Rollback, restauração após erro SQL real e preservação do registro sentinela no banco operacional de testes foram comprovados; nenhum banco temporário restou.
+  - O hash SHA-256 do dump normalizado de streamtube permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois das suítes; dados e schema de desenvolvimento preservados.
+  - Context7 consultado antes da implementação para Jest, TypeORM e NestJS. Referências retornadas são de main, sem snapshot das versões instaladas; exemplos Nest com Vitest não foram adotados. APIs conferidas nos tipos/fontes instalados: Jest 30.3.0, TypeORM 0.3.28, Nest core 11.1.16 e ts-jest 29.4.6.
+  - Evidências, comandos, documentação consultada e limitações em evidence/si-03.1.1/verification.json e logs adjacentes. Suítes completas adicionais executadas para cumprir o AGENTS.md raiz. npm run lint -- --no-fix registrou a dívida existente sem alterar os arquivos dos próximos SIs; o gate global da fase permanece aberto. Node 25 emite aviso de --localstorage-file, sem falha dos testes.
+
+### SI-03.1.2 — Corrigir tipagem dos testes de autenticação e serviços
+- **Status:** completed
+- **Tests:** 64/64 testes do SI (4 suítes; 27 unitários auth, 25 integração auth, 7 users, 5 mail), 149/149 testes da suíte completa (23 suítes), 52/52 E2E (3 suítes); tsc --noEmit e lint dirigido com --max-warnings 0 passaram no Docker. Lint global sem autofix: 80 erros e 5 avisos restantes, contra 149 erros e 40 avisos ao término do SI-03.1.1; gate pendente no SI-03.1.3.
+- **Observations:**
+  - Mocks de serviços, repositórios de tokens e cadeia de query builder tipados; factories de User/Channel/VerificationToken/RefreshToken substituem casts any no teste unitário. JWT e argon2 reais preservados, sem mudanças na implementação de autenticação.
+  - Captura de tokens recebe MailService via TestingModule, sem acesso a propriedade privada do AuthService; callbacks retornam Promise<void> e spies são restaurados após cada cenário. Consulta de tokens ativos usa IsNull(), eliminando o cast que ocultava um filtro null ignorado pelo TypeORM instalado.
+  - Helper src/test/mailpit.ts recebeu tipos de resumo/detalhe, origem dos unsafe any no teste de e-mail, mantendo fetch real. Os cinco cenários de envio/corpo/remetente passaram contra Mailpit real; módulo de teste fecha ao terminar. Import não utilizado de UsersService removido.
+  - Os mesmos 64 títulos de cenários foram mantidos; nenhuma asserção removida e nenhum skip introduzido. Asserções passaram de 151 para 152, com verificação adicional de revoked_at nulo no teste de grace period. Evidência em evidence/si-03.1.2/scenario-preservation.json.
+  - Context7 consultado para Jest, TypeORM e Mailpit. Referências main/develop divergem das versões instaladas: documentação TypeORM descreve null com padrão throw, enquanto 0.3.28 usa ignore; discrepância informada antes da implementação e API IsNull conferida localmente. Tipos modernos Jest usados via @jest/globals. Versões verificadas: Jest 30.3.0, TypeORM 0.3.28, Nest core 11.1.16, ts-jest 29.4.6, Mailpit v1.31.3.
+  - Hash do banco de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois das suítes. Comandos, resultados, logs e documentação em evidence/si-03.1.2/verification.json. Suítes completas adicionais cumprem o AGENTS.md raiz; lint global permanece aberto nos seis arquivos já previstos para SI-03.1.3, sem alterar esse escopo antecipadamente.
+
+### SI-03.1.3 — Fechar o gate de qualidade da base
+- **Status:** completed
+- **Tests:** 62/62 testes afetados (17 unitários/integração em 4 suítes e 45 E2E de auth); suíte completa 149/149 testes em 23 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit e npm run lint encerraram com exit 0 no Docker. Lint global: 0 erros e 0 avisos, contra 80 erros e 5 avisos anteriores. Gate de qualidade da base fechado.
+- **Observations:**
+  - Mocks tipados de resposta dos filtros usam ExecutionContextHost instalado, preservando todos os envelopes/códigos de domínio e validação. O helper de teste do Joi mantém value como unknown, pois a união ValidationResult expõe any na falha mesmo com genérico; validação real e default de Swagger preservados.
+  - ChannelsService elimina cast any com guardas estruturais de code/detail no QueryFailedError, mantendo classificação por SQLSTATE/coluna e fluxo existente. Testes de canais usam mocks tipados de manager/transação injetados por TestingModule, sem banco real sob sufixo unitário.
+  - E2E de auth tipa os corpos de cadastro/usuário/tokens/erro na fronteira Supertest, resolve MailService diretamente no container de DI e restaura spies após cada cenário. Mantidos os mesmos 62 títulos e 125 asserções, sem skips nem regras desligadas; evidence/si-03.1.3/scenario-preservation.json registra a comparação.
+  - npm run lint foi executado com o script original --fix; comparação SHA-256 de 79 arquivos TypeScript antes/depois comprovou que o comando não alterou fontes. Compilação e lint dirigido com --max-warnings 0 também passaram. Todos os testes foram executados serialmente no Docker; servidor NestJS de desenvolvimento não foi iniciado.
+  - Context7 consultado antes da edição para NestJS, TypeORM e Joi. Referências de branches recentes foram conferidas nas assinaturas/fontes instaladas: Jest 30.3.0, TypeORM 0.3.28, Nest core 11.1.16, Joi 18.1.2, Supertest 7.2.2. Evidências, comandos e logs em evidence/si-03.1.3/verification.json.
+  - Banco de desenvolvimento preservado: hash do dump normalizado permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois das suítes. Infraestrutura encontrada parada foi restabelecida; banco de testes continua dedicado.
+  - Risco preexistente fora do gate registrado em docs/tasks/channel-nickname-transaction-retry.md: retry após violação UNIQUE dentro da mesma transação PostgreSQL sem SAVEPOINT. A tarefa pede reprodução real e recuperação transacional adequada; a lógica não foi refatorada neste SI. O aviso preexistente de --localstorage-file do Node 25 continua sem falhar os testes.
+
+### SI-03.2.1 — Infra: fixar bibliotecas e configuração de vídeos
+- **Status:** completed
+- **Tests:** 43/43 testes do SI em 3 suítes; suíte completa 188/188 testes em 25 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, lint dirigido com --max-warnings 0, npm run lint e npm ls encerraram com exit 0 no Docker. Lint global: 0 erros e 0 avisos.
+- **Observations:**
+  - Dependências fixadas no manifesto, lockfile e instalação: @nestjs/bullmq 11.0.5, bullmq 5.81.5, @aws-sdk/client-s3 e @aws-sdk/s3-request-presigner 3.1152.0; peers compatíveis com NestJS 11. A única versão de pacote preexistente alterada foi semver 7.7.4 para 7.8.5, exigida exatamente pelo BullMQ instalado.
+  - Namespaces storage, queue e videos tipados e carregados no ConfigModule global, sem registrar consumidores na API. Joi exige credenciais e endpoints, separa endpoint interno do público, valida bucket/Redis/TTLs/controles operacionais e rejeita heartbeat incompatível com lease, inclusive quando há defaults. Erros de configuração não expõem credenciais; .env.example atualizado com hosts Docker e placeholders.
+  - Contrato público fixo de 10_000_000_000 bytes, partes de 64 MiB e lote de 50 partes; variáveis operacionais não ampliam esse limite. Defaults de upload 24h, URLs assinadas até 900s, três tentativas e backoff exponencial inicial de 2s. Configuração inclui concorrência, threads, timeouts, lease, heartbeat, cleanup e diretório temporário.
+  - Fixture de credenciais apenas no setup Jest cobre todas as suítes que importam AppModule, incluindo OpenAPI, sem substituir valores explícitos nem introduzir fallback de produção. Testes exercitam ConfigModule e Joi reais, ausência de configuração, valores inválidos e limites constantes.
+  - Context7 consultado antes da implementação para Nest Config, BullMQ v5 e AWS SDK v3; APIs conferidas nos tipos instalados. Documentação atual do Nest descreve validationOptions.libraryOptions, incompatível com @nestjs/config 4.0.3 instalado; discrepância informada e configuração Joi plana compatível preservada.
+  - npm audit registrou 51 vulnerabilidades (2 low, 17 moderate, 29 high, 3 critical); os 70 caminhos afetados mantêm as mesmas versões do lockfile anterior. Críticas em handlebars, liquidjs e proxy-addr. Correção separada em docs/tasks/dependency-vulnerability-triage.md; nenhum npm audit fix aplicado neste SI.
+  - Comparação SHA-256 de 87 arquivos TypeScript comprovou que o lint global não alterou fontes. Hash do dump normalizado do banco de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois. Evidências e resultados em evidence/si-03.2.1/verification.json e logs adjacentes. MinIO/Redis reais e ferramentas de mídia permanecem no SI-03.2.2; upload/processamento ainda não implementados.
+
+### SI-03.2.2 — Infra: disponibilizar MinIO, Redis e ferramentas de mídia
+- **Status:** completed
+- **Tests:** no tests (Infra) no contrato do SI; probes reais de readiness, privacidade/CORS, idempotência do init, persistência de objeto/job BullMQ após restart e objeto após recriação do container passaram. Regressão obrigatória: 188/188 testes em 25 suítes e 52/52 E2E em 3 suítes, serializados na stack isolada. npx tsc --noEmit, npm run lint, lint dirigido do helper/probe, node --check, builds dev/MinIO/mc/worker e validação Compose passaram com exit 0.
+- **Observations:**
+  - compose.yaml acrescenta MinIO, init one-shot e Redis com readiness e volumes persistentes; bucket privado inicializado idempotentemente, Redis AOF/everysec e noeviction. PostgreSQL/Mailpit preservados e imagens externas fixadas por digest. API continua em tail, sem consumidor de fila; conexão de prova à porta 3000 foi recusada.
+  - Imagens oficiais minio/minio e minio/mc recusaram download no Docker Hub; referência Quay do servidor retornou HTTP 401. Mantida a decisão de MinIO com build local do código oficial sem alterações: servidor 7aac2a2c5b7c882e68c1ce017d8256be2feea27f e cliente 77f82e18b5401a65958f1619df6ebb994634bd88, bases Go/Debian por digest e fonte/licenças nas imagens. Gerador oficial de metadados identifica DEVELOPMENT.2026-02-12T20-18-48Z e DEVELOPMENT.2025-11-06T16-25-29Z; não foram inventados digests de registry para imagens locais. Upstream arquivado/distribuição source-only registrado como follow-up em docs/tasks/minio-distribution-lifecycle-review.md, sem substituição da tecnologia aprovada.
+  - CORS configurado no serviço por MINIO_API_CORS_ALLOW_ORIGIN, conforme implementação oficial; nenhum suporte não comprovado de escrita por bucket foi presumido. Probe real comprovou origem permitida/rejeitada, GET/HEAD/PUT, header de checksum e exposição de ETag/Content-Range/Accept-Ranges/Content-Length. Objeto conhecido retornou 403 sem assinatura e 200 íntegro com assinatura; job BullMQ real permaneceu waiting após restart. Apenas os dois artefatos do probe foram removidos ao concluir.
+  - Dockerfile.worker inclui FFmpeg/ffprobe, build Nest e dependências de produção, usuário node UID 1000 e volume temporário gravável. compose.worker-tools.yaml permite validar a imagem com 2 GiB/1 CPU sem ligar consumidor. Binários também presentes na imagem dev: FFmpeg/ffprobe 5.1.9-0+deb12u1; Redis 7.4.8, PostgreSQL 17.11, Mailpit 1.31.3 e Go 1.24.9 verificados. Entrada dist/worker.js e serviço video-worker-test permanecem sem ativação até SI-03.7.3.
+  - compose.test.yaml usa projeto/rede/volumes próprios, perfil test e nenhuma porta publicada, fixando banco streamtube_test, bucket streamtube-test-videos e prefixo streamtube-test. .env.test.example contém placeholders; arquivos locais ignorados/excluídos do contexto Docker e credenciais não impressas. Duas migrations aplicadas no banco isolado com synchronize:false. globalSetup respeita TEST_PROTECTED_DB_NAME explícito; guarda *_test e rejeição do banco protegido foram preservadas. Orientações antigas da referência de testes sobre localhost/synchronize/filesystem foram preteridas pelo contrato explícito da fase.
+  - Novo scripts/verify-video-infra.cjs torna os probes reproduzíveis e recusa nomes fora dos recursos de teste. Tentativa suplementar de lint com o parser TypeScript não incluía CommonJS fora do tsconfig; scripts/eslint.config.mjs aplica a configuração JavaScript recommended específica, sem desligar regras existentes. Lint dirigido do probe/helper e lint global passaram; hashes de 87 arquivos TypeScript permaneceram iguais após autofix.
+  - Context7 consultado antes da implementação para Compose, mc/MinIO, Redis e FFmpeg; divergência de distribuição e CORS conferida em fontes oficiais e execução real. Procedimentos em infrastructure.md; comandos, IDs de imagens, versões, logs e limitações em evidence/si-03.2.2/verification.json. Hash do dump normalizado do banco de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois. Sem commit/push; upload, processamento e prova integral de 10 GB continuam nos SIs seguintes.
+
+### SI-03.3.1 — Persistir vídeos, outbox e relações com canais
+- **Status:** completed
+- **Tests:** 54/54 testes do SI em 4 suítes (36 Video, 7 outbox, 10 migrations, 1 módulo); suíte completa 235/235 testes em 28 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, npm run lint, npm run build e git diff --check passaram. Lint global: 0 erros e 0 avisos; comparação de hashes de 96 arquivos TypeScript comprovou ausência de alterações pelo autofix. Testes serializados na stack Docker isolada.
+- **Observations:**
+  - Video e VideoProcessingOutbox criados conforme Data Model, com UUID, timestamps timestamptz, campos operacionais e bigint representado por string. CHECKs persistidos validam slug/título, estados, tamanho de 1 a 10_000_000_000 bytes, igualdade do tamanho real, duração finita positiva, metadados limitados, requisitos de ready e código não vazio em error. upload_id permanece select:false e seleção interna explícita foi comprovada.
+  - Relações Channel.videos/Video.channel e Video.processingOutbox/outbox.video bidirecionais, sem eager ou cascade de entidades de outro domínio. FK de canal usa RESTRICT; FK de outbox usa CASCADE; slug/source_key são únicos e a relação OneToOne impede duas intenções para um vídeo. VideosPersistenceModule registra e exporta ambos os repositórios via TypeOrmModule, integrado ao AppModule sem consumidor/produtor de fila ou novos endpoints.
+  - Migration 1792367555018-CreateVideos.ts gerada pela CLI no banco isolado e revisada para alterar somente videos/outbox, índices e FKs novos. Na revisão, unicidade explícita redundante de video_id foi removida do mapeamento e a migration ainda não aplicada foi regenerada pela CLI, mantendo a única constraint OneToOne automática. Após geração houve somente ajuste de import type e formatação; nenhuma SQL manual adicional. As duas migrations anteriores continuam idênticas ao Git, com hashes em evidence/si-03.3.1/previous-migrations.json.
+  - Provas reais cobrem banco vazio, rollback/reaplicação da nova migration preservando usuários/canais e registros das migrations anteriores, ausência de schema drift e restauração após erro SQL. A cobertura anterior de rollback da migration de auth também foi mantida em cenário adicional que desfaz vídeos/auth e reaplica ambos. DDL destrutiva permanece em banco migrations_<uuid>_test com public exclusivo, restauração finally e exclusão protegida; nenhuma reversão no banco compartilhado ou de desenvolvimento.
+  - Lista de seis entidades explícitas centralizada em src/test/test-entities.ts e adotada pelo globalSetup e 11 suítes existentes, pois a relação inversa de Channel exige toda a cadeia de metadados. Cleanup passa a outbox → videos → tokens → channels → users. Factory tipada de Channel no teste unitário de auth recebeu videos:[]; import sem uso removido na centralização, sem mudar lógica ou asserções de autenticação.
+  - Context7 consultado para TypeORM/NestJS antes da implementação; referências de branches recentes conferidas nas APIs/fontes instaladas: TypeORM 0.3.28, @nestjs/typeorm 11.0.1 e Nest core 11.1.16. Check, Relation e geração de unicidade OneToOne conferidos localmente. Exemplos antigos de synchronize/localhost nos guias não substituem o contrato da fase: migrations, synchronize:false, DNS db e imports explícitos.
+  - Evidências, comandos, logs e limitações em evidence/si-03.3.1/verification.json. Nova migration aplicada em streamtube_test e bancos descartáveis de prova; não aplicada em streamtube. Hash do dump normalizado do banco de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois. Servidor HTTP de desenvolvimento não iniciado; sem commit/push. Repositórios de transição, claims e transações de outbox permanecem nos próximos SIs.
+
+### SI-03.3.2 — Implementar repositórios e transições condicionais
+- **Status:** completed
+- **Tests:** 23/23 testes do SI em 2 suítes de integração (12 VideosRepository, 11 outbox); suíte completa 258/258 testes em 30 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, npm run lint, npm run build e git diff --check passaram. Lint global: 0 erros e 0 avisos; hashes de 101 arquivos TypeScript permaneceram iguais após autofix. Suítes serializadas na stack Docker isolada; concorrência exercitada apenas dentro dos cenários.
+- **Observations:**
+  - VideosRepository e VideoProcessingOutboxRepository registrados/exportados por VideosPersistenceModule com DataSource injetado. Consultas privadas incluem id e canal; sessão interna seleciona upload_id explicitamente, enquanto consulta normal o omite. Busca pública por slug exige ready. Nenhum endpoint, produtor/consumidor de fila, operação S3 ou alteração de schema foi acrescentado neste SI.
+  - Geração de slug usa 12 bytes criptográficos e até cinco tentativas; somente UNIQUE UQ_videos_slug/23505 é repetida, com SAVEPOINT/ROLLBACK TO/RELEASE por tentativa. Colisão real e esgotamento foram provocados dentro de uma transação externa que continuou executando SQL; falha FK não é repetida. Esgotamento usa DomainException herdada com VIDEO_ID_GENERATION_FAILED/503. Retry de nickname de outro domínio não foi alterado.
+  - Claims de upload usam lock de linha, UUID e prazo calculado pelo banco. Anexar sessão, concluir, falhar ou liberar exige canal, token e prazo vigentes. Claim recuperado informa previousOperation/requiresReconciliation para o chamador conferir S3 antes de abortar/reiniciar; adquirir o claim não descarta sessão/objeto pela expiração. Draft → processing, tamanho real igual ao declarado e inserção única de outbox usam o mesmo EntityManager/transação. A outbox recusa criação fora de transação ou para rascunho sem upload concluído.
+  - Claim de processamento incrementa processing_attempts apenas quando adquirido e limita o orçamento persistente a três; duplicado/busy não consome tentativa. Heartbeat, liberação transitória e finalização exigem token e lease vivos. Finalização bloqueia a linha antes de conferir o prazo, publica somente chaves da tentativa vigente e encerra a outbox na mesma transação. Tentativa vencida não publica ready/error nem renova/libera lease; repetição terminal preserva os resultados.
+  - Claims de despacho consultam somente intenções abertas, vencidas para tentativa e vinculadas a vídeos processing; usam FOR UPDATE OF outbox SKIP LOCKED, lote limitado e token/prazo próprios. Confirmação registra dispatched_at sem completar a intenção; registros já despachados continuam elegíveis após o próximo prazo para reconciliação. Falha guarda diagnóstico fixo sanitizado. Token expirado não confirma/libera o claim recuperado e vídeos terminais não entram no lote.
+  - Falha SQL real após inserção efetiva da outbox provou rollback de status/tamanho/intenção juntos; falha após finalização/outbox também reverteu ambos, permitindo retry seguro. Concorrência real de claims e completion teve um vencedor, sem duplicar outbox; teste com linha bloqueada por outro QueryRunner comprovou skip_locked sem esperar. Finalização com intenção ausente também não deixa o vídeo terminal parcialmente.
+  - Context7 consultado antes da implementação para TypeORM/NestJS; APIs setLock/setOnLocked e UpdateResult.affected conferidas nos tipos instalados TypeORM 0.3.28/Nest core 11.1.16. Predicados nulos usam IsNull/Not/In e updates verificam affected, sem casts dos resultados raw:any. Lint dirigido identificou inferência any de Function.bind nos spies; os testes passaram a restaurar o colaborador público antes de chamar sua implementação real, sem enfraquecer asserções ou desligar regras.
+  - Evidências, comandos, logs e limites em evidence/si-03.3.2/verification.json. Hash do dump normalizado de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1 antes/depois; migrations anteriores preservadas. Servidor HTTP de desenvolvimento não iniciado e nenhum commit/push realizado. Reconciliação S3, processamento de mídia e entrega BullMQ efetiva permanecem nos SIs seguintes.
+
+### SI-03.4.1 — Implementar controle multipart no adaptador S3
+- **Status:** completed
+- **Tests:** 30/30 testes do SI em 2 suítes (26 unitários e 4 integrações com MinIO real); suíte completa 288/288 testes em 32 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, npm run lint, npm run build e git diff --check passaram. Lint global sem erros/avisos; hashes de 108 arquivos TypeScript permaneceram iguais após autofix. Suítes serializadas na stack Docker isolada.
+- **Observations:**
+  - StorageModule exporta o token STORAGE usando useExisting para S3StorageService; StoragePort e StorageError não expõem tipos do SDK nem HTTP. Cliente S3 injetado e encerrado no shutdown. Importação pelos consumidores permanece nos SIs que introduzem os serviços de upload, sem registrar provedores duplicados ou ligar endpoints neste SI.
+  - Adaptador implementa create/list/complete/abort/head com bucket e endpoint interno configurados, forcePathStyle e checksums WHEN_REQUIRED explícitos, até duas tentativas do SDK e deadline único de 30 segundos por operação. ListParts percorre NextPartNumberMarker, preserva tamanho/ETag autoritativos e rejeita paginação inválida/não progressiva, partes fora de ordem e metadados incompletos. Conclusão envia ETags exatos e consulta HeadObject no mesmo prazo para obter ContentLength/ETag reais.
+  - Erros tipados distinguem upload_not_found, object_not_found, invalid_multipart, unavailable, operation_failed e invalid_response. AccessDenied/NoSuchBucket não viram objeto ausente; erros propagam mensagens fixas sanitizadas sem diagnóstico bruto ou credenciais. AbortController cancela requisição pendente no prazo, coberto por teste unitário.
+  - Integração com StorageModule real usa bucket streamtube-test-videos e paginação de uma parte por página, enviando duas partes reais (5 MiB + sufixo). Listagem confere tamanhos/ETags; GetObject comprova tamanho e SHA-256 dos bytes concatenados. Repetição da conclusão é recuperável por resposta idempotente ou sessão ausente seguida de HeadObject da chave controlada pelo servidor. Abort impede novo UploadPart com o mesmo identificador; ETag incorreto não cria objeto; conexão recusada em minio:1 difere de chave ausente. Cleanup remove somente sessões/chaves UUID criadas pelos testes.
+  - Duas correções focadas: comparação recursiva de Buffer pelo Jest excedia 5 segundos, substituída por tamanho e SHA-256; falha de transporte entre realms era encapsulada pelo asSdkError do Smithy em mensagem sem code/cause. Fonte instalada do middleware de retry conferida; mapeamento reconhece apenas prefixo exato do wrapper com códigos de transporte conhecidos, além de name/code estruturais. Wrapper desconhecido continua operation_failed, com cobertura positiva/negativa. Logs temporários de diagnóstico removidos; evidências das tentativas preservadas.
+  - Context7 consultado antes da implementação para AWS SDK v3; exemplos de branch/main conferidos nos tipos instalados de @aws-sdk/client-s3 3.1152.0 e no MinIO real. Nenhuma dependência ou migration alterada. Evidências, comandos e limites em evidence/si-03.4.1/verification.json. Prova de 5 MiB cobre controle multipart e integridade; assinatura, transferências com memória limitada e prova integral de 10 GB permanecem nos SIs previstos.
+  - Hash do dump normalizado de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1. Container existente de desenvolvimento iniciado somente para leitura do hash e devolvido ao estado parado anterior; nenhuma migration ou escrita aplicada. Servidor HTTP de desenvolvimento e worker não iniciados; sem commit/push.
+
+### SI-03.4.2 — Assinar acesso e transferir arquivos com memória limitada
+- **Status:** completed
+- **Tests:** 16/16 testes do SI em 3 suítes de integração com MinIO real (5 assinatura, 8 transferência, 3 módulo), aprovados na primeira execução; suíte completa 304/304 testes em 35 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, npm run lint, npm run build e git diff --check passaram. Lint global sem erros/avisos; hashes de 117 arquivos TypeScript permaneceram iguais após autofix. Suítes serializadas na stack Docker isolada.
+- **Observations:**
+  - StorageSigningService e StorageFileTransferService têm ports próprios sem tipos SDK, exportados por STORAGE_SIGNING/STORAGE_FILES com useExisting. StorageModule mantém cliente interno para controle/I/O e acrescenta cliente separado no publicEndpoint somente para assinatura. Teste com módulo consumidor comprova exports, aliases, configuração real e encerramento de ambos os clientes uma única vez.
+  - UploadPart assina ContentLength com signableHeaders content-length. TTL efetivo é o menor entre configuração, 900 segundos e segundos restantes da sessão; data de assinatura alinhada ao segundo determina o expiresAt retornado. Sessões expiradas e partes/tamanhos inválidos são recusados. MinIO real aceitou PUT correto, rejeitou tamanho divergente com 403, preservou a parte válida e recusou a URL após completion com 404. Expiração curta real resultou em 403 sem gravar parte.
+  - GET assinado define ResponseContentType e Content-Disposition inline/attachment, sem fixar Range. Nome-base sanitizado remove componentes de caminho, controles e aspas; fallback ASCII e filename* UTF-8 preservam nome Unicode seguro. Provas reais cobrem MP4/JPEG, original íntegro, 200 completo, 206 simples/suffix com Content-Range/bytes corretos, 416 fora do objeto e acesso não assinado 403.
+  - Download usa criação exclusiva wx e pipeline para disco, confere tamanho autoritativo, fecha streams/descritores e remove arquivo parcial em falha/cancelamento, preservando destino preexistente. Upload usa multipart para todos os arquivos, inclusive JPEG pequeno: faixas sequenciais de 64 MiB por padrão, buffers de leitura de 64 KiB, até 10000 partes e nenhuma via PutObject. Metadados do arquivo e tamanho final são conferidos antes de retornar sucesso.
+  - Cancelamento chega às requisições SDK e ao pipeline; abort de multipart usa prazo independente do sinal cancelado. Falha de cleanup propaga StorageCleanupError sanitizado com chave/sessão ou caminho local internos para recuperação, sem serialização HTTP. Inicialização S3 com resultado incerto preserva a chave para reconciliação futura. Tratamento de erros/deadlines extraído para storage-operation.ts e reutilizado; create/complete de controle aceitam sinal opcional, com todos os testes anteriores preservados na regressão.
+  - Provas reais incluem upload/download de 5 MiB + 97 bytes com SHA-256 igual, dois leitores de arquivo fechados, cancelamento durante download sem parcial, cancelamento de fonte esparsa maior que 5 GiB após primeira parte real sem sessão ativa, falha após UploadPart com abort efetivo e falha simulada no abort com recuperação real posterior. Fixture esparsa valida escolha multipart/cancelamento, não uma transferência integral acima de 5 GiB nem a prova de 10 GB/RSS. Fixtures de transporte não substituem validação de codecs/MP4 faststart/JPEG dos SIs de mídia.
+  - Teste de origens distintas executa PUT/GET pela URL gerada em http://streamtube-test-minio-1:9000, alias real Docker, enquanto controle/listagem usa http://minio:9000. Nenhuma reescrita de host após assinatura ou conexão interserviços por loopback. Fixture dedicada usa somente streamtube-test-videos, prefixos UUID e cleanup restrito às próprias sessões/chaves; nenhum ajuste de Compose foi necessário.
+  - Context7 consultado antes da implementação para AWS SDK e streams/arquivos do Node, com resolve antes de query. Respostas de branch/main conferidas nos tipos instalados de client/presigner 3.1152.0, Node v25.6.0 e execução real; exemplos preview/lib-storage não adotados. Sem nova dependência, migration, endpoint HTTP ou ativação de worker. Evidências, comandos e limites em evidence/si-03.4.2/verification.json; domínio de ownership/estados e reconciliadores permanecem nos SIs previstos.
+  - Hash do dump normalizado de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1. Container existente iniciado apenas para leitura do hash e devolvido ao estado parado anterior; nenhuma migration ou escrita aplicada. Servidor HTTP de desenvolvimento e worker não iniciados; sem commit/push.
+
+### SI-03.5.1 — Criar rascunhos e preparar a retomada
+- **Status:** completed
+- **Tests:** 49/49 testes do SI em 2 suítes (36 unitários e 13 integrações com PostgreSQL/MinIO reais); suíte completa 353/353 testes em 37 suítes; E2E completa 52/52 em 3 suítes. npx tsc --noEmit, npm run lint, npm run build e git diff --check passaram. Lint global sem erros/avisos; hashes de 122 arquivos TypeScript permaneceram iguais após autofix. Suítes serializadas na stack Docker isolada. Execução inicial aprovou 48 testes; revisão final acrescentou proteção/teste de expiração na recuperação de attach confirmado, seguida de repetição de todas as verificações na versão final.
+- **Observations:**
+  - VideoUploadsService implementa initialize/resume/signParts. Canal é resolvido pelo JWT.sub através do novo ChannelsService.findByUserId; consultas privadas incluem id e canal resolvido, sem channelId/chave fornecidos pelo cliente. Ausência de canal na criação usa CHANNEL_NOT_FOUND; ausência ou outro dono no controle usa VIDEO_NOT_FOUND antes de acessar storage.
+  - Entrada valida título normalizado, nome de arquivo seguro de 1–255 caracteres, MIME video/mp4 e tamanho inteiro de 1 a 10_000_000_000 bytes. Rascunho com UUID/slug/source_key é persistido antes do claim initializing e antes de CreateMultipartUpload. Lease própria de inicialização de 120 segundos centralizada em VIDEO_UPLOAD; nenhum I/O S3 ocorre em transação de banco longa.
+  - VideosRepository.rememberUploadSession persiste upload_id/prazo mantendo claim initializing, condicionado a dono/token/lease vigente; attachUploadSession libera a sessão somente após essa gravação. Ambos verificam affected. Resultado é relido do banco. Compensação confirma estado/token antes de abortar e só persiste UPLOAD_INITIALIZATION_FAILED após aborto confirmado, com janela restante mínima de 60 segundos. Claim perdido/expirado não permite abortar ou sobrescrever outra operação.
+  - Resposta perdida após attach efetivamente commitado é recuperada sem abortar sessão utilizável, com revalidação de estado e expiração também nesse caminho. Falha no abort ou na compensação SQL mantém estado reconhecível. Create remoto com resposta perdida conserva rascunho/source_key/claim mesmo sem upload_id; o órfão permanece para o reconciliador previsto, sem falso sucesso ou descarte por suposição.
+  - Retomada usa ListParts autoritativo, mapeia size para sizeBytes e conserva id/slug. Assinatura exige lote de 1–50 números inteiros distintos dentro de partCount e calcula 64 MiB por parte, salvo resto exato da última, a partir do tamanho persistido. Propriedade, draft, operação pendente e prazo são conferidos antes de storage; sessão/estado são relidos antes de devolver partes/URLs. Ausência de sessão S3 verifica objeto concluído antes de classificar a operação como não confirmada.
+  - Sessão vencida consulta HeadObject antes de declarar UPLOAD_EXPIRED/410. Objeto já concluído retorna UPLOAD_OPERATION_IN_PROGRESS/409 para reconciliação futura, sem excluir objeto/sessão nem alterar o draft. Exceções de domínio seguem Error Catalog e filtro herdado; StorageError intencional vira STORAGE_UNAVAILABLE sanitizado, enquanto erros SQL/programação inesperados propagam ao tratamento 500 existente. Resultados tipados usam projeções/datas de domínio, sem entidades, chaves, upload_id ou DTO HTTP.
+  - VideosModule importa canais, persistência, storage e configuração, exporta VideoUploadsService e é registrado no AppModule. Não foram criados controllers, endpoints, filas, workers ou migrations. Teste de integração compila a composição real e comprova draft/claim commitados no ponto anterior à criação S3, PUT assinado real, retomada estável, outro dono bloqueado, falhas SQL reais em remember/attach, aborto real, compensação indisponível, resposta perdida do S3/DB e troca de token impedindo inicializador antigo.
+  - Context7 consultado antes da implementação para TypeORM, resolve antes de query; diferença entre docs master/branch e versão instalada explicitada. APIs conferidas em TypeORM 0.3.28/Nest core 11.1.16 e execução PostgreSQL real. Ports de storage/assinatura previamente validados foram reutilizados; receitas antigas de filesystem/localhost/synchronize não substituem o contrato da fase. Evidências, comandos e limites em evidence/si-03.5.1/verification.json. Limite numérico de 10 GB testado sem alocação integral, sem substituir a prova completa de transferência/processamento/RSS posterior.
+  - Hash do dump normalizado de desenvolvimento permaneceu e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1. Container existente iniciado apenas para leitura do hash e devolvido ao estado parado anterior; nenhuma migration ou escrita aplicada. Servidor HTTP de desenvolvimento e worker não iniciados; sem commit/push. Completion/abort/status, controllers e recuperação em background permanecem nos SIs previstos.
+
+### SI-03.5.2 — Concluir ou abortar uploads sem perder processamento
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.3 — Iniciar upload por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.4 — Retomar upload por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.5 — Emitir permissões de partes por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.6 — Confirmar conclusão por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.7 — Abortar sessão por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.5.8 — Consultar estado privado por HTTP
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.6.1 — Despachar a outbox para BullMQ
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.6.2 — Reconciliar jobs ausentes e falhas terminais
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.7.1 — Extrair metadados e preparar mídia progressiva
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.7.2 — Processar vídeos com lease e finalização protegida
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.7.3 — Ativar o consumidor em container separado
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.7.4 — Recuperar sessões e limpar artefatos abandonados
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.8.1 — Resolver acesso público apenas para vídeos prontos
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.8.2 — Expor metadados por URL única
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.8.3 — Redirecionar reprodução progressiva
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.8.4 — Redirecionar download do original
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.8.5 — Disponibilizar thumbnail de vídeo pronto
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.9.1 — Comprovar recuperação do fluxo com serviços reais
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.9.2 — Comprovar upload integral de 10GB e responsividade
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+
+### SI-03.10 — Documentar a entrega e fechar a Definition of Done
+- **Status:** pending
+- **Tests:** not run
+- **Observations:** none
+

@@ -1,28 +1,25 @@
-import { BadRequestException, ArgumentsHost } from '@nestjs/common';
+import { jest } from '@jest/globals';
+import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
+import { BadRequestException, type ArgumentsHost } from '@nestjs/common';
 import { ValidationExceptionFilter } from './validation-exception.filter';
 
 describe('ValidationExceptionFilter', () => {
   let filter: ValidationExceptionFilter;
-  let mockJson: jest.Mock;
-  let mockStatus: jest.Mock;
+  let mockJson: jest.Mock<(body: unknown) => void>;
+  let mockStatus: jest.Mock<(statusCode: number) => { json: typeof mockJson }>;
   let mockHost: ArgumentsHost;
 
   beforeEach(() => {
     filter = new ValidationExceptionFilter();
-    mockJson = jest.fn();
-    mockStatus = jest.fn().mockReturnValue({ json: mockJson });
+    mockJson = jest.fn<(body: unknown) => void>();
+    mockStatus = jest
+      .fn<(statusCode: number) => { json: typeof mockJson }>()
+      .mockReturnValue({ json: mockJson });
 
-    mockHost = {
-      switchToHttp: () => ({
-        getResponse: () => ({ status: mockStatus }),
-        getRequest: () => ({ url: '/test', method: 'POST' }),
-      }),
-      getArgs: () => [],
-      getArgByIndex: () => null,
-      switchToRpc: () => ({}) as any,
-      switchToWs: () => ({}) as any,
-      getType: () => 'http',
-    } as unknown as ArgumentsHost;
+    mockHost = new ExecutionContextHost([
+      { url: '/test', method: 'POST' },
+      { status: mockStatus },
+    ]);
   });
 
   it('normalizes array of class-validator messages', () => {

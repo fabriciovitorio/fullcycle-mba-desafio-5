@@ -1,0 +1,433 @@
+{
+  "stage": "plan-build Phase B",
+  "implementation_started": false,
+  "planning_validation": "clean",
+  "sis": [
+    {
+      "id": "SI-03.1.1",
+      "actions": 4,
+      "test_files": 4,
+      "acceptance_criteria": 3,
+      "dependencies": "none"
+    },
+    {
+      "id": "SI-03.1.2",
+      "actions": 3,
+      "test_files": 4,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.1.1"
+    },
+    {
+      "id": "SI-03.1.3",
+      "actions": 3,
+      "test_files": 5,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.1.2"
+    },
+    {
+      "id": "SI-03.2.1",
+      "actions": 4,
+      "test_files": 3,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.1.3"
+    },
+    {
+      "id": "SI-03.2.2",
+      "actions": 4,
+      "test_files": 0,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.2.1"
+    },
+    {
+      "id": "SI-03.3.1",
+      "actions": 4,
+      "test_files": 4,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.2.2"
+    },
+    {
+      "id": "SI-03.3.2",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.3.1"
+    },
+    {
+      "id": "SI-03.4.1",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.3.2"
+    },
+    {
+      "id": "SI-03.4.2",
+      "actions": 4,
+      "test_files": 3,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.4.1"
+    },
+    {
+      "id": "SI-03.5.1",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.4.2"
+    },
+    {
+      "id": "SI-03.5.2",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 5,
+      "dependencies": "SI-03.5.1"
+    },
+    {
+      "id": "SI-03.5.3",
+      "actions": 3,
+      "test_files": 1,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.1"
+    },
+    {
+      "id": "SI-03.5.4",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.1 + SI-03.5.3"
+    },
+    {
+      "id": "SI-03.5.5",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.1 + SI-03.5.3"
+    },
+    {
+      "id": "SI-03.5.6",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.2 + SI-03.5.3"
+    },
+    {
+      "id": "SI-03.5.7",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.2 + SI-03.5.3"
+    },
+    {
+      "id": "SI-03.5.8",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.2 + SI-03.5.3"
+    },
+    {
+      "id": "SI-03.6.1",
+      "actions": 4,
+      "test_files": 3,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.5.2"
+    },
+    {
+      "id": "SI-03.6.2",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.6.1"
+    },
+    {
+      "id": "SI-03.7.1",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.6.2"
+    },
+    {
+      "id": "SI-03.7.2",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.7.1"
+    },
+    {
+      "id": "SI-03.7.3",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.7.2"
+    },
+    {
+      "id": "SI-03.7.4",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.7.3"
+    },
+    {
+      "id": "SI-03.8.1",
+      "actions": 3,
+      "test_files": 2,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.7.4"
+    },
+    {
+      "id": "SI-03.8.2",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.8.1"
+    },
+    {
+      "id": "SI-03.8.3",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.8.1 + SI-03.8.2"
+    },
+    {
+      "id": "SI-03.8.4",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.8.1 + SI-03.8.2"
+    },
+    {
+      "id": "SI-03.8.5",
+      "actions": 3,
+      "test_files": 0,
+      "acceptance_criteria": 3,
+      "dependencies": "SI-03.8.1 + SI-03.8.2"
+    },
+    {
+      "id": "SI-03.9.1",
+      "actions": 4,
+      "test_files": 2,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.5.4 + SI-03.5.5 + SI-03.5.6 + SI-03.5.7 + SI-03.5.8 + SI-03.7.4 + SI-03.8.2 + SI-03.8.3 + SI-03.8.4 + SI-03.8.5"
+    },
+    {
+      "id": "SI-03.9.2",
+      "actions": 4,
+      "test_files": 0,
+      "acceptance_criteria": 5,
+      "dependencies": "SI-03.9.1"
+    },
+    {
+      "id": "SI-03.10",
+      "actions": 4,
+      "test_files": 1,
+      "acceptance_criteria": 4,
+      "dependencies": "SI-03.9.2"
+    }
+  ],
+  "dependency_edges": [
+    [
+      "SI-03.1.1",
+      "SI-03.1.2"
+    ],
+    [
+      "SI-03.1.2",
+      "SI-03.1.3"
+    ],
+    [
+      "SI-03.1.3",
+      "SI-03.2.1"
+    ],
+    [
+      "SI-03.2.1",
+      "SI-03.2.2"
+    ],
+    [
+      "SI-03.2.2",
+      "SI-03.3.1"
+    ],
+    [
+      "SI-03.3.1",
+      "SI-03.3.2"
+    ],
+    [
+      "SI-03.3.2",
+      "SI-03.4.1"
+    ],
+    [
+      "SI-03.4.1",
+      "SI-03.4.2"
+    ],
+    [
+      "SI-03.4.2",
+      "SI-03.5.1"
+    ],
+    [
+      "SI-03.5.1",
+      "SI-03.5.2"
+    ],
+    [
+      "SI-03.5.1",
+      "SI-03.5.3"
+    ],
+    [
+      "SI-03.5.1",
+      "SI-03.5.4"
+    ],
+    [
+      "SI-03.5.3",
+      "SI-03.5.4"
+    ],
+    [
+      "SI-03.5.1",
+      "SI-03.5.5"
+    ],
+    [
+      "SI-03.5.3",
+      "SI-03.5.5"
+    ],
+    [
+      "SI-03.5.2",
+      "SI-03.5.6"
+    ],
+    [
+      "SI-03.5.3",
+      "SI-03.5.6"
+    ],
+    [
+      "SI-03.5.2",
+      "SI-03.5.7"
+    ],
+    [
+      "SI-03.5.3",
+      "SI-03.5.7"
+    ],
+    [
+      "SI-03.5.2",
+      "SI-03.5.8"
+    ],
+    [
+      "SI-03.5.3",
+      "SI-03.5.8"
+    ],
+    [
+      "SI-03.5.2",
+      "SI-03.6.1"
+    ],
+    [
+      "SI-03.6.1",
+      "SI-03.6.2"
+    ],
+    [
+      "SI-03.6.2",
+      "SI-03.7.1"
+    ],
+    [
+      "SI-03.7.1",
+      "SI-03.7.2"
+    ],
+    [
+      "SI-03.7.2",
+      "SI-03.7.3"
+    ],
+    [
+      "SI-03.7.3",
+      "SI-03.7.4"
+    ],
+    [
+      "SI-03.7.4",
+      "SI-03.8.1"
+    ],
+    [
+      "SI-03.8.1",
+      "SI-03.8.2"
+    ],
+    [
+      "SI-03.8.1",
+      "SI-03.8.3"
+    ],
+    [
+      "SI-03.8.2",
+      "SI-03.8.3"
+    ],
+    [
+      "SI-03.8.1",
+      "SI-03.8.4"
+    ],
+    [
+      "SI-03.8.2",
+      "SI-03.8.4"
+    ],
+    [
+      "SI-03.8.1",
+      "SI-03.8.5"
+    ],
+    [
+      "SI-03.8.2",
+      "SI-03.8.5"
+    ],
+    [
+      "SI-03.5.4",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.5.5",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.5.6",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.5.7",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.5.8",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.7.4",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.8.2",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.8.3",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.8.4",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.8.5",
+      "SI-03.9.1"
+    ],
+    [
+      "SI-03.9.1",
+      "SI-03.9.2"
+    ],
+    [
+      "SI-03.9.2",
+      "SI-03.10"
+    ]
+  ],
+  "http_contracts": {
+    "POST /videos/uploads": "SI-03.5.3",
+    "GET /videos/:id/upload": "SI-03.5.4",
+    "POST /videos/:id/upload/parts": "SI-03.5.5",
+    "POST /videos/:id/upload/completion": "SI-03.5.6",
+    "DELETE /videos/:id/upload": "SI-03.5.7",
+    "GET /videos/:id/status": "SI-03.5.8",
+    "GET /videos/:slug": "SI-03.8.2",
+    "GET /videos/:slug/stream": "SI-03.8.3",
+    "GET /videos/:slug/download": "SI-03.8.4",
+    "GET /videos/:slug/thumbnail": "SI-03.8.5"
+  },
+  "pending_http_specs": 10,
+  "source_mtimes_current": true,
+  "artifact_sha256": "94e2c4f36f0574195b104264f6f6a179f2052355637e59fe6c302cb488b996d1",
+  "library_cache_change": "Added package lookup headings from existing Context7 evidence; regenerated plan cites current cache mtime. No new fetch/install.",
+  "progress_artifact": "Not created: owned by implement, first SI execution.",
+  "verified_at": "2026-10-18T16:30:29.071536+00:00",
+  "test_environment_sequence": "infrastructure readiness -> test migrations -> isolated test worker -> suites"
+}

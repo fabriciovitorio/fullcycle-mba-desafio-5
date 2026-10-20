@@ -1,0 +1,60 @@
+# A separate project/network/volumes allows development to remain running.
+name: streamtube-test
+
+services:
+  nestjs-api:
+    profiles: [test]
+    ports: !reset []
+    env_file: !override
+      - .env.test
+    environment:
+      NODE_ENV: test
+      DOTENV_CONFIG_PATH: .env.test
+      DB_HOST: db
+      DB_NAME: streamtube_test
+      TEST_DB_NAME: streamtube_test
+      TEST_PROTECTED_DB_NAME: streamtube
+      STORAGE_ENDPOINT: http://minio:9000
+      STORAGE_PUBLIC_ENDPOINT: http://minio:9000
+      STORAGE_BUCKET: streamtube-test-videos
+      REDIS_HOST: redis
+      VIDEO_QUEUE_PREFIX: streamtube-test
+
+  db:
+    profiles: [test]
+    ports: !reset []
+    environment: !override
+      POSTGRES_USER: streamtube
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env.test}
+      POSTGRES_DB: streamtube_test
+    volumes:
+      - test-db-data:/var/lib/postgresql/data
+
+  mailpit:
+    profiles: [test]
+    ports: !reset []
+
+  minio:
+    profiles: [test]
+    ports: !reset []
+    volumes: !override
+      - test-minio-data:/data
+
+  minio-init:
+    profiles: [test]
+    environment:
+      STORAGE_BUCKET: streamtube-test-videos
+
+  redis:
+    profiles: [test]
+    volumes: !override
+      - test-redis-data:/data
+
+# video-worker-test is intentionally activated only in SI-03.7.3, once the
+# standalone entry exists. It must inherit the API's isolated environment and
+# start after a single migration:run has completed; never import AppModule.
+
+volumes:
+  test-db-data:
+  test-minio-data:
+  test-redis-data:

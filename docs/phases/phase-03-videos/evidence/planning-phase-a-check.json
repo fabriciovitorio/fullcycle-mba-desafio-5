@@ -1,0 +1,23 @@
+{
+  "stage": "plan-build Phase A",
+  "implementation_started": false,
+  "planning_validation": "clean",
+  "capabilities_covered": 9,
+  "current_decisions_resolved": 7,
+  "http_contracts": [
+    "POST /videos/uploads",
+    "GET /videos/:id/upload",
+    "POST /videos/:id/upload/parts",
+    "POST /videos/:id/upload/completion",
+    "DELETE /videos/:id/upload",
+    "GET /videos/:id/status",
+    "GET /videos/:slug",
+    "GET /videos/:slug/stream",
+    "GET /videos/:slug/download",
+    "GET /videos/:slug/thumbnail"
+  ],
+  "source_mtimes_current": true,
+  "phase_b_started": false,
+  "progress_artifact": "not created yet; no implementation results",
+  "verified_at": "2026-10-18T16:08:14.128752+00:00"
+}

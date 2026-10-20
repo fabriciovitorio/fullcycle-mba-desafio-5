@@ -1,0 +1,11 @@
+# Build/probe the runtime image without starting the future queue consumer.
+services:
+  worker-tools:
+    profiles: [tools]
+    image: streamtube-video-worker:phase03
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    command: ["ffmpeg", "-version"]
+    mem_limit: 2g
+    cpus: 1

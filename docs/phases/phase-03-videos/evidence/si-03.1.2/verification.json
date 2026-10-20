@@ -1,0 +1,116 @@
+{
+  "si": "SI-03.1.2",
+  "status": "implemented_and_si_checks_passed",
+  "phase_status": "in_progress",
+  "affected_files": [
+    "nestjs-project/src/auth/auth.service.spec.ts",
+    "nestjs-project/src/auth/auth.service.integration-spec.ts",
+    "nestjs-project/src/users/users.service.integration-spec.ts",
+    "nestjs-project/src/mail/mail.service.integration-spec.ts",
+    "nestjs-project/src/test/mailpit.ts"
+  ],
+  "changes": [
+    "Typed service mocks, token repositories, query-builder doubles and complete user/channel/token fixtures replace any casts in AuthService unit tests; real JwtModule and argon2 preserved.",
+    "Integration token-capture helpers receive MailService resolved through TestingModule; callbacks return Promise<void> and spies are restored after each test.",
+    "Active refresh-token query uses IsNull() instead of an any-cast null filter; original assertions preserved with one additional assertion for null revoked_at.",
+    "Mailpit helper exposes typed summary/detail responses while keeping real fetch and SMTP tests; mail test module closes after suite.",
+    "Unused UsersService test import removed; type-only imports corrected."
+  ],
+  "preservation": {
+    "scenarios_before": 64,
+    "scenarios_after": 64,
+    "titles_unchanged": true,
+    "skips_added": false,
+    "assertions_before": 151,
+    "assertions_after": 152,
+    "report": "scenario-preservation.json",
+    "runtime_application_changes": false
+  },
+  "checks": {
+    "focused": {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand --runTestsByPath src/auth/auth.service.spec.ts src/auth/auth.service.integration-spec.ts src/users/users.service.integration-spec.ts src/mail/mail.service.integration-spec.ts",
+      "exit_code": 0,
+      "suites": 4,
+      "tests": 64,
+      "log": "focused-tests.raw.log"
+    },
+    "full": {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand",
+      "exit_code": 0,
+      "suites": 23,
+      "tests": 149,
+      "log": "full-tests.raw.log"
+    },
+    "e2e": {
+      "command": "docker compose exec -T nestjs-api npm run test:e2e -- --runInBand",
+      "exit_code": 0,
+      "suites": 3,
+      "tests": 52,
+      "log": "e2e.raw.log"
+    },
+    "typescript": {
+      "command": "docker compose exec -T nestjs-api npx tsc --noEmit",
+      "exit_code": 0
+    },
+    "scoped_lint": {
+      "exit_code": 0,
+      "errors": 0,
+      "warnings": 0,
+      "max_warnings": 0,
+      "files": 5,
+      "log": "scoped-lint.raw.log"
+    },
+    "global_lint": {
+      "command": "docker compose exec -T nestjs-api npm run lint -- --no-fix",
+      "exit_code": 1,
+      "errors": 80,
+      "warnings": 5,
+      "previous_errors": 149,
+      "previous_warnings": 40,
+      "log": "global-lint.raw.log",
+      "remaining_scope": "SI-03.1.3",
+      "files": [
+        "src/channels/channels.service.spec.ts",
+        "src/channels/channels.service.ts",
+        "src/common/filters/domain-exception.filter.spec.ts",
+        "src/common/filters/validation-exception.filter.spec.ts",
+        "src/config/env.validation.integration-spec.ts",
+        "test/auth.e2e-spec.ts"
+      ]
+    },
+    "diff_check": {
+      "exit_code": 0
+    }
+  },
+  "documentation": {
+    "provider": "Context7 MCP: resolve-library-id before query-docs",
+    "libraries": [
+      "/jestjs/jest",
+      "/typeorm/typeorm",
+      "/axllent/mailpit"
+    ],
+    "installed": {
+      "jest": "30.3.0",
+      "typeorm": "0.3.28",
+      "nestjs_core": "11.1.16",
+      "ts_jest": "29.4.6",
+      "mailpit": "v1.31.3"
+    },
+    "compatibility_note": "Context7 responses describe main/develop branches, not exact version snapshots. Jest modern types verified in jest-mock; explicit @jest/globals import used. TypeORM docs say null defaults to throw, while installed 0.3.28 QueryBuilder defaults to ignore; flagged to user before implementation. IsNull() verified in installed types. Mailpit contract exercised against real service.",
+    "files": [
+      "context7-jest.json",
+      "context7-typeorm.json",
+      "context7-mailpit.json"
+    ]
+  },
+  "database": {
+    "before_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "after_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "development_unchanged": true,
+    "normalization": "pg_dump --no-owner --no-privileges; omit comment and backslash-directive lines; hash only."
+  },
+  "limitations": [
+    "Global phase lint gate remains open pending SI-03.1.3; no unrelated files auto-fixed.",
+    "Node 25 still emits --localstorage-file warning; all tests pass."
+  ]
+}

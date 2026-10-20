@@ -1,0 +1,28 @@
+{
+  "libraryId": "/websites/ffmpeg_documentation",
+  "query": "ffprobe -show_format -show_streams -of json; ffmpeg -version print version information",
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: FFmpeg\n- Context7-compatible library ID: /websites/ffmpeg_documentation\n- Description: FFmpeg is a complete, cross-platform solution to record, convert, stream, and play multimedia content, including audio and video.\n- Code Snippets: 3843\n- Source Reputation: High\n- Benchmark Score: 64.54\n----------\n- Title: FFmpeg\n- Context7-compatible library ID: /websites/ffmpeg_ffmpeg-all\n- Description: FFmpeg is a complete, cross-platform solution to record, convert, stream, and play multimedia content, providing a vast suite of libraries and programs for handling audio and video.\n- Code Snippets: 4212\n- Source Reputation: High\n- Benchmark Score: 64.41\n----------\n- Title: FFmpeg\n- Context7-compatible library ID: /websites/ffmpeg_doxygen_7_0\n- Description: FFmpeg is a comprehensive, cross-platform multimedia framework for recording, converting, and streaming audio and video, providing libraries for encoding, decoding, filtering, format handling, and more.\n- Code Snippets: 247920\n- Source Reputation: High\n- Benchmark Score: 65.08\n----------\n- Title: FFmpeg\n- Context7-compatible library ID: /websites/ffmpeg_doxygen_4_4\n- Description: FFmpeg is a comprehensive open-source project providing a vast suite of libraries and programs for handling multimedia data, including functionalities for encoding, decoding, streaming, filtering, and conversion of audio and video.\n- Code Snippets: 171383\n- Source Reputation: High\n- Benchmark Score: 70.02\n----------\n- Title: FFmpeg\n- Context7-compatible library ID: /ffmpeg/ffmpeg\n- Description: FFmpeg is a comprehensive collection of libraries and tools to process multimedia content including audio, video, subtitles and related metadata.\n- Code Snippets: 320\n- Source Reputation: Medium\n- Benchmark Score: 47.18"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Using ffprobe with dump_separator to format stream parameters\n\nSource: https://ffmpeg.org/ffmpeg-all.html\n\nThe dump_separator option sets the separator for fields printed about stream parameters. This example uses a newline and indentation as the separator.\n\n```bash\nffprobe -dump_separator \"\n                          \"  -i ~/videos/matrixbench_mpeg2.mpg\n\n```\n\n--------------------------------\n\n### Find object position per frame with ffprobe and log to CSV\n\nSource: https://ffmpeg.org/ffmpeg-all.html\n\nUse ffprobe to detect an object in each frame and output its x and y coordinates to a CSV file. The object image must be in gray8 format.\n\n```bash\nffprobe -f lavfi movie=test.mp4,find_rect=object=object.pgm:threshold=0.3 \\\n  -show_entries frame=pkt_pts_time:frame_tags=lavfi.rect.x,lavfi.rect.y \\\n  -of csv -o find_rect.csv\n```\n\n### 5.2 Generic options\n\nSource: https://ffmpeg.org/ffmpeg-all.html\n\nThese options are shared amongst the ff* tools.  \n\n-L, -license\n    \nShow license.  \n\n-h, -?, -help, --help [arg]\n    \nShow help. An optional parameter may be specified to print help about a specific item. If no argument is specified, only basic (non advanced) tool options are shown. \nPossible values of arg are:  \n\nlong\n    \nPrint advanced tool options in addition to the basic tool options.  \n\nfull\n    \nPrint complete list of options, including shared and private options for encoders, decoders, demuxers, muxers, filters, etc.  \n\ndecoder=decoder_name\n    \nPrint detailed information about the decoder named decoder_name. Use the -decoders option to get a list of all decoders.  \n\nencoder=encoder_name\n    \nPrint detailed information about the encoder named encoder_name. Use the -encoders option to get a list of all encoders.  \n\ndemuxer=demuxer_name\n    \nPrint detailed information about the demuxer named demuxer_name. Use the -formats option to get a list of all demuxers and muxers.  \n\nmuxer=muxer_name\n    \nPrint detailed information about the muxer named muxer_name. Use the -formats option to get a list of all muxers and demuxers.  \n\nfilter=filter_name\n    \nPrint detailed information about the filter named filter_name. Use the -filters option to get a list of all filters.  \n\nbsf=bitstream_filter_name\n    \nPrint detailed information about the bitstream filter named bitstream_filter_name. Use the -bsfs option to get a list of all bitstream filters.  \n\nprotocol=protocol_name\n    \nPrint detailed information about the protocol named protocol_name. Use the -protocols option to get a list of all protocols.  \n\n-version\n    \nShow version."
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

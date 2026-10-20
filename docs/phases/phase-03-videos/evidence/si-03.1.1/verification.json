@@ -1,0 +1,88 @@
+{
+  "si": "SI-03.1.1",
+  "status": "implemented_and_si_checks_passed",
+  "phase_status": "in_progress",
+  "environment": "Docker Compose: nestjs-api, db (PostgreSQL 17)",
+  "libraries": {
+    "jest": "30.3.0",
+    "typeorm": "0.3.28",
+    "nestjs_core": "11.1.16",
+    "ts-jest": "29.4.6"
+  },
+  "documentation": {
+    "provider": "Context7 MCP (resolve-library-id then query-docs)",
+    "libraries": [
+      "/jestjs/jest",
+      "/typeorm/typeorm",
+      "/nestjs/docs.nestjs.com"
+    ],
+    "version_note": "Context7 returned main-branch references rather than exact installed-version snapshots. Nest examples included Vitest; implementation uses installed Jest 30 APIs, checked in local typings. TypeORM PostgresDriver installExtensions and PostgresConnectionOptions were cross-checked locally.",
+    "files": [
+      "context7-jest.json",
+      "context7-typeorm.json",
+      "context7-nestjs.json"
+    ]
+  },
+  "checks": {
+    "si_tests": {
+      "exit_code": 0,
+      "suites": 4,
+      "tests": 10,
+      "log": "integration.raw.log"
+    },
+    "full_tests": {
+      "command": "docker compose exec -T nestjs-api npm test -- --runInBand",
+      "exit_code": 0,
+      "suites": 23,
+      "tests": 149,
+      "log": "full-tests.raw.log"
+    },
+    "e2e": {
+      "command": "docker compose exec -T nestjs-api npm run test:e2e -- --runInBand",
+      "exit_code": 0,
+      "suites": 3,
+      "tests": 52,
+      "log": "e2e.raw.log"
+    },
+    "discovery": {
+      "command": "docker compose exec -T nestjs-api npm test -- --listTests --runInBand",
+      "exit_code": 0,
+      "suites": 23
+    },
+    "typescript": {
+      "command": "docker compose exec -T nestjs-api npx tsc --noEmit",
+      "exit_code": 0
+    },
+    "changed_files_lint": {
+      "exit_code": 0,
+      "files": 8
+    },
+    "global_lint": {
+      "command": "docker compose exec -T nestjs-api npm run lint -- --no-fix",
+      "exit_code": 1,
+      "errors": 149,
+      "warnings": 40,
+      "log": "global-lint.raw.log",
+      "note": "Existing findings in 10 unchanged files; quality gate remains pending SI-03.1.2 and SI-03.1.3. --no-fix avoids modifying their scope."
+    },
+    "diff_check": {
+      "exit_code": 0
+    }
+  },
+  "database": {
+    "suite_database": "streamtube_test",
+    "test_database_environment": "TEST_DB_NAME (defaults to DB_NAME + _test); TEST_PROTECTED_DB_NAME captured from application DB_NAME by globalSetup; setupFiles redirects DB_NAME for AppModule/E2E. Host defaults to Compose db.",
+    "safety": "Helpers reject database names without safe *_test suffix, names over 63 bytes, and the protected application database before DDL/cleanup. Cleanup follows token/channel/user FK order. synchronize:false; explicit entity and migration classes.",
+    "migration_isolation": "Unique migrations_<uuid>_test database with exclusive public schema. Needed because the immutable auth-token migration qualifies public. Ordered rollback and finally restoration; private database dropped after connections close.",
+    "development_dump_sha256_before": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "development_dump_sha256_after": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "development_unchanged": true,
+    "dump_normalization": "pg_dump --no-owner --no-privileges with comment and backslash directive lines removed; hash only, no development data included.",
+    "temporary_migration_databases_remaining": 0
+  },
+  "notes": [
+    "No existing migrations, runtime domain logic, or production data modified.",
+    "Node 25 emits --localstorage-file warning; tests pass.",
+    "Full suites run after scoped delegated tests to satisfy explicit root AGENTS.md verification requirement."
+  ]
+}

@@ -1,0 +1,11 @@
+
+> nestjs-project@0.0.1 migration:generate
+> npm run typeorm -- migration:generate -d src/database/data-source.ts src/database/migrations/CreateVideos --timestamp 1792367555018
+
+
+> nestjs-project@0.0.1 typeorm
+> typeorm-ts-node-commonjs migration:generate -d src/database/data-source.ts src/database/migrations/CreateVideos --timestamp 1792367555018
+
+(node:4957) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Migration /home/node/app/src/database/migrations/1792367555018-CreateVideos.ts has been generated successfully.

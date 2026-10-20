@@ -1,0 +1,16 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/common/filters/domain-exception.filter.spec.ts src/common/filters/validation-exception.filter.spec.ts src/config/env.validation.integration-spec.ts src/channels/channels.service.spec.ts
+
+(node:244) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/channels/channels.service.spec.ts
+PASS src/common/filters/domain-exception.filter.spec.ts
+PASS src/common/filters/validation-exception.filter.spec.ts
+PASS src/config/env.validation.integration-spec.ts
+
+Test Suites: 4 passed, 4 total
+Tests:       17 passed, 17 total
+Snapshots:   0 total
+Time:        1.137 s
+Ran all test suites within paths "src/common/filters/domain-exception.filter.spec.ts", "src/common/filters/validation-exception.filter.spec.ts", "src/config/env.validation.integration-spec.ts", "src/channels/channels.service.spec.ts".

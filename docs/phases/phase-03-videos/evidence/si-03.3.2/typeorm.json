@@ -1,0 +1,28 @@
+{
+  "libraryId": "/typeorm/typeorm",
+  "query": "TypeORM 0.3.28 PostgreSQL EntityManager transaction same manager nested transactions savepoints rollback savepoint QueryBuilder pessimistic_write skip_locked update affected IsNull MoreThan lock tables alias",
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: TypeORM\n- Context7-compatible library ID: /typeorm/typeorm\n- Description: ORM for TypeScript and JavaScript. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL databases. Works in NodeJS, Browser, Ionic, Cordova and Electron platforms.\n- Code Snippets: 2031\n- Source Reputation: Medium\n- Benchmark Score: 80.97\n- Versions: 0.2.45, 1.1.1, 0.3.27\n----------\n- Title: TypeORM\n- Context7-compatible library ID: /llmstxt/typeorm_io_llms_txt\n- Description: TypeORM is an ORM that can run in Node.js and browser environments, supporting TypeScript and JavaScript with multiple database platforms including PostgreSQL, MySQL, MongoDB, SQLite, and more.\n- Code Snippets: 2022\n- Source Reputation: High\n- Benchmark Score: 76.72\n----------\n- Title: TypeORM\n- Context7-compatible library ID: /n8n-io/typeorm\n- Description: TypeORM is an Object-Relational Mapping (ORM) library that supports TypeScript and JavaScript, running on NodeJS, Browser, and other platforms, offering Active Record and Data Mapper patterns for database interactions.\n- Code Snippets: 1394\n- Source Reputation: High\n- Benchmark Score: 77.04\n----------\n- Title: NestJS TypeORM\n- Context7-compatible library ID: /nestjs/typeorm\n- Description: The TypeORM module for NestJS, a progressive Node.js framework for building efficient and scalable server-side applications.\n- Code Snippets: 352\n- Source Reputation: High\n- Benchmark Score: 85.79\n----------\n- Title: Typeorm Transactional\n- Context7-compatible library ID: /aliheym/typeorm-transactional\n- Description: A Transactional Method Decorator for TypeORM that uses Async Local Storage (ALS) or cls-hooked to manage and propagate transactions across repositories and service methods.\n- Code Snippets: 388\n- Source Reputation: Medium\n- Benchmark Score: 82.48"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Execute a transaction with EntityManager\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/working-with-entity-manager/5-entity-manager-api.md\n\nThe `transaction` method runs multiple database requests in a single transaction. Use the provided manager instance for all operations within the transaction.\n\n```typescript\nawait manager.transaction(async (manager) => {\n    // NOTE: you must perform all database operations using the given manager instance\n    // it's a special instance of EntityManager working with this transaction\n    // and don't forget to await things here\n})\n```\n\n--------------------------------\n\n### setOnLocked skip_locked\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/query-builder/1-select-query-builder.md\n\nUse setOnLocked(\"skip_locked\") to skip locked rows. Supported on MySQL 8+, Postgres, CockroachDB, SAP HANA.\n\n```typescript\nconst users = await dataSource\n    .getRepository(User)\n    .createQueryBuilder(\"user\")\n    .setLock(\"pessimistic_write\")\n    .setOnLocked(\"skip_locked\")\n    .getMany()\n```\n\n--------------------------------\n\n### Pessimistic write locking with setLock\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/query-builder/1-select-query-builder.md\n\nUse setLock(\"pessimistic_write\") to acquire an exclusive lock on the selected rows. Supported on all listed databases.\n\n```typescript\nconst users = await dataSource\n    .getRepository(User)\n    .createQueryBuilder(\"user\")\n    .setLock(\"pessimistic_write\")\n    .getMany()\n```\n\n--------------------------------\n\n### QueryBuilder .where() with IsNull() operator\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/data-source/5-null-and-undefined-handling.md\n\nUse the IsNull() operator to correctly match NULL values in QueryBuilder. This generates 'WHERE post.text IS NULL' and returns matching rows.\n\n```typescript\nimport { IsNull } from \"typeorm\"\n\nawait dataSource\n    .createQueryBuilder(Post, \"post\")\n    .where({ text: IsNull() })\n    .getMany()\n// Generates: WHERE post.text IS NULL\n```\n\n--------------------------------\n\n### Lock tables with setLock\n\nSource: https://github.com/typeorm/typeorm/blob/master/docs/docs/query-builder/1-select-query-builder.md\n\nUse the third argument to setLock to specify which tables to lock. Only supported in PostgreSQL/CockroachDB.\n\n```typescript\nconst users = await dataSource\n    .getRepository(Post)\n    .createQueryBuilder(\"post\")\n    .leftJoin(\"post.author\", \"user\")\n    .setLock(\"pessimistic_write\", undefined, [\"post\"])\n    .getMany()\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}
