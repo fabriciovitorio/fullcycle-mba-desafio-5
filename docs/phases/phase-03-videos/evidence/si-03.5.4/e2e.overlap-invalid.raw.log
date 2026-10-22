@@ -1,0 +1,567 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand
+
+[31m[Nest] 2192  - [39m10/22/2026, 2:06:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+    at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:325:19[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+    at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+    at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+    at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+    at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+    at [90m/home/node/app/[39msrc/channels/channels.service.ts:47:18
+    at EntityManager.transaction [90m(/home/node/app/[39msrc/entity-manager/EntityManager.ts:156:28[90m)[39m
+    at UsersService.createUserWithChannel [90m(/home/node/app/[39msrc/users/users.service.ts:25:23[90m)[39m
+    at AuthService.register [90m(/home/node/app/[39msrc/auth/auth.service.ts:63:18[90m)[39m
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "channels"("id", "name", "nickname", "description", "user_id", "created_at", "updated_at") VALUES (DEFAULT, $1, $2, DEFAULT, $3, DEFAULT, DEFAULT) RETURNING "id", "created_at", "updated_at"'[39m,
+  parameters: [
+    [32m'grace2'[39m,
+    [32m'grace2'[39m,
+    [32m'bc2bfb22-9bf1-41b1-b98a-33ff33837c0a'[39m
+  ],
+  driverError: error: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+      at [90m/home/node/app/[39mnode_modules/[4mpg[24m/lib/client.js:631:17
+  [90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+      at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:254:25[90m)[39m
+      at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+      at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+      at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+      at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+      at [90m/home/node/app/[39msrc/channels/channels.service.ts:47:18
+      at EntityManager.transaction [90m(/home/node/app/[39msrc/entity-manager/EntityManager.ts:156:28[90m)[39m
+      at UsersService.createUserWithChannel [90m(/home/node/app/[39msrc/users/users.service.ts:25:23[90m)[39m
+      at AuthService.register [90m(/home/node/app/[39msrc/auth/auth.service.ts:63:18[90m)[39m
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+    length: [33m307[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23503'[39m,
+    detail: [32m'Key (user_id)=(bc2bfb22-9bf1-41b1-b98a-33ff33837c0a) is not present in table "users".'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'channels'[39m,
+    column: [90mundefined[39m,
+    dataType: [90mundefined[39m,
+    constraint: [32m'FK_23dc7937150c9567d37869313ce'[39m,
+    file: [32m'ri_triggers.c'[39m,
+    line: [32m'2599'[39m,
+    routine: [32m'ri_ReportViolation'[39m
+  },
+  length: [33m307[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23503'[39m,
+  detail: [32m'Key (user_id)=(bc2bfb22-9bf1-41b1-b98a-33ff33837c0a) is not present in table "users".'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'channels'[39m,
+  column: [90mundefined[39m,
+  dataType: [90mundefined[39m,
+  constraint: [32m'FK_23dc7937150c9567d37869313ce'[39m,
+  file: [32m'ri_triggers.c'[39m,
+  line: [32m'2599'[39m,
+  routine: [32m'ri_ReportViolation'[39m
+}
+[31m[Nest] 2192  - [39m10/22/2026, 2:06:44 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+    at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:325:19[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+    at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+    at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+    at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+    at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+    at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "refresh_tokens"("id", "token_hash", "family", "user_id", "expires_at", "revoked_at", "created_at") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT) RETURNING "id", "created_at"'[39m,
+  parameters: [
+    [32m'a85c2fba4f4680ac0b43e8039af04a0e0b28b938371501181fc89a142825d977'[39m,
+    [32m'd8c46c80-7cec-4d62-8dee-d84a70849a70'[39m,
+    [32m'0396b194-2927-423a-b069-7e0dd9c1ddfc'[39m,
+    [35m2026-10-29T02:06:44.920Z[39m,
+    [1mnull[22m
+  ],
+  driverError: error: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+      at [90m/home/node/app/[39mnode_modules/[4mpg[24m/lib/client.js:631:17
+  [90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+      at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:254:25[90m)[39m
+      at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+      at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+      at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+      at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+      at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+    length: [33m319[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23503'[39m,
+    detail: [32m'Key (user_id)=(0396b194-2927-423a-b069-7e0dd9c1ddfc) is not present in table "users".'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'refresh_tokens'[39m,
+    column: [90mundefined[39m,
+    dataType: [90mundefined[39m,
+    constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+    file: [32m'ri_triggers.c'[39m,
+    line: [32m'2599'[39m,
+    routine: [32m'ri_ReportViolation'[39m
+  },
+  length: [33m319[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23503'[39m,
+  detail: [32m'Key (user_id)=(0396b194-2927-423a-b069-7e0dd9c1ddfc) is not present in table "users".'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'refresh_tokens'[39m,
+  column: [90mundefined[39m,
+  dataType: [90mundefined[39m,
+  constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+  file: [32m'ri_triggers.c'[39m,
+  line: [32m'2599'[39m,
+  routine: [32m'ri_ReportViolation'[39m
+}
+[31m[Nest] 2192  - [39m10/22/2026, 2:06:45 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+    at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:325:19[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+    at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+    at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+    at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+    at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+    at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "refresh_tokens"("id", "token_hash", "family", "user_id", "expires_at", "revoked_at", "created_at") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT) RETURNING "id", "created_at"'[39m,
+  parameters: [
+    [32m'5162a902bb597a5d5cb0ca12f21642bb0f45238f999f0cdebab03956458b7aad'[39m,
+    [32m'49f3ee55-2160-4e1b-9e81-6d3e2c4c1ff0'[39m,
+    [32m'0799c75f-06dd-44d0-91ee-fe611590d65f'[39m,
+    [35m2026-10-29T02:06:45.767Z[39m,
+    [1mnull[22m
+  ],
+  driverError: error: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+      at [90m/home/node/app/[39mnode_modules/[4mpg[24m/lib/client.js:631:17
+  [90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+      at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:254:25[90m)[39m
+      at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+      at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+      at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+      at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+      at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+    length: [33m319[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23503'[39m,
+    detail: [32m'Key (user_id)=(0799c75f-06dd-44d0-91ee-fe611590d65f) is not present in table "users".'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'refresh_tokens'[39m,
+    column: [90mundefined[39m,
+    dataType: [90mundefined[39m,
+    constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+    file: [32m'ri_triggers.c'[39m,
+    line: [32m'2599'[39m,
+    routine: [32m'ri_ReportViolation'[39m
+  },
+  length: [33m319[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23503'[39m,
+  detail: [32m'Key (user_id)=(0799c75f-06dd-44d0-91ee-fe611590d65f) is not present in table "users".'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'refresh_tokens'[39m,
+  column: [90mundefined[39m,
+  dataType: [90mundefined[39m,
+  constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+  file: [32m'ri_triggers.c'[39m,
+  line: [32m'2599'[39m,
+  routine: [32m'ri_ReportViolation'[39m
+}
+[31m[Nest] 2192  - [39m10/22/2026, 2:06:46 AM [31m  ERROR[39m [38;5;3m[ExceptionsHandler] [39mQueryFailedError: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+    at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:325:19[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+    at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+    at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+    at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+    at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+    at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+    at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+  query: [32m'INSERT INTO "refresh_tokens"("id", "token_hash", "family", "user_id", "expires_at", "revoked_at", "created_at") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT) RETURNING "id", "created_at"'[39m,
+  parameters: [
+    [32m'f020d189013c8e3f026c5eaf761672dbf5603e1f9bff4dd10e6a4870d2e5f886'[39m,
+    [32m'5067cfce-f098-48d4-89c9-1d20bd3fc5a6'[39m,
+    [32m'cd7eace6-fed1-4c1f-95b3-adef900c0db3'[39m,
+    [35m2026-10-29T02:06:46.610Z[39m,
+    [1mnull[22m
+  ],
+  driverError: error: insert or update on table "refresh_tokens" violates foreign key constraint "FK_3ddc983c5f7bcf132fd8732c3f4"
+      at [90m/home/node/app/[39mnode_modules/[4mpg[24m/lib/client.js:631:17
+  [90m    at processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+      at PostgresQueryRunner.query [90m(/home/node/app/[39msrc/driver/postgres/PostgresQueryRunner.ts:254:25[90m)[39m
+      at InsertQueryBuilder.execute [90m(/home/node/app/[39msrc/query-builder/InsertQueryBuilder.ts:164:33[90m)[39m
+      at SubjectExecutor.executeInsertOperations [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:435:42[90m)[39m
+      at SubjectExecutor.execute [90m(/home/node/app/[39msrc/persistence/SubjectExecutor.ts:137:9[90m)[39m
+      at EntityPersistExecutor.execute [90m(/home/node/app/[39msrc/persistence/EntityPersistExecutor.ts:182:21[90m)[39m
+      at AuthService.login [90m(/home/node/app/[39msrc/auth/auth.service.ts:113:5[90m)[39m
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-execution-context.js:46:28
+      at [90m/home/node/app/[39mnode_modules/[4m@nestjs/core[24m/router/router-proxy.js:9:17 {
+    length: [33m319[39m,
+    severity: [32m'ERROR'[39m,
+    code: [32m'23503'[39m,
+    detail: [32m'Key (user_id)=(cd7eace6-fed1-4c1f-95b3-adef900c0db3) is not present in table "users".'[39m,
+    hint: [90mundefined[39m,
+    position: [90mundefined[39m,
+    internalPosition: [90mundefined[39m,
+    internalQuery: [90mundefined[39m,
+    where: [90mundefined[39m,
+    schema: [32m'public'[39m,
+    table: [32m'refresh_tokens'[39m,
+    column: [90mundefined[39m,
+    dataType: [90mundefined[39m,
+    constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+    file: [32m'ri_triggers.c'[39m,
+    line: [32m'2599'[39m,
+    routine: [32m'ri_ReportViolation'[39m
+  },
+  length: [33m319[39m,
+  severity: [32m'ERROR'[39m,
+  code: [32m'23503'[39m,
+  detail: [32m'Key (user_id)=(cd7eace6-fed1-4c1f-95b3-adef900c0db3) is not present in table "users".'[39m,
+  hint: [90mundefined[39m,
+  position: [90mundefined[39m,
+  internalPosition: [90mundefined[39m,
+  internalQuery: [90mundefined[39m,
+  where: [90mundefined[39m,
+  schema: [32m'public'[39m,
+  table: [32m'refresh_tokens'[39m,
+  column: [90mundefined[39m,
+  dataType: [90mundefined[39m,
+  constraint: [32m'FK_3ddc983c5f7bcf132fd8732c3f4'[39m,
+  file: [32m'ri_triggers.c'[39m,
+  line: [32m'2599'[39m,
+  routine: [32m'ri_ReportViolation'[39m
+}
+(node:2192) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/auth.e2e-spec.ts (8.633 s)
+  ● Auth (e2e) › POST /auth/register › returns 409 with EMAIL_ALREADY_EXISTS on duplicate email
+
+    expected 409 "Conflict", got 201 "Created"
+
+      137 |         .post('/auth/register')
+      138 |         .send({ email: 'dup@example.com', password: 'password456' })
+    > 139 |         .expect(409);
+          |          ^
+      140 |       const body = res.body as AuthErrorBody;
+      141 |
+      142 |       expect(body.error).toBe('EMAIL_ALREADY_EXISTS');
+
+      at Object.<anonymous> (auth.e2e-spec.ts:139:10)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Auth (e2e) › POST /auth/register › returns 400 with VALIDATION_ERROR on invalid email format
+
+    QueryFailedError: update or delete on table "channels" violates foreign key constraint "FK_videos_channel" on table "videos"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (../src/data-source/DataSource.ts:541:20)
+      at cleanAllTables (../src/test/create-test-data-source.ts:40:3)
+      at Object.<anonymous> (auth.e2e-spec.ts:79:5)
+
+  ● Auth (e2e) › POST /auth/refresh › returns 401 with TOKEN_EXPIRED on an expired refresh token
+
+    TypeError: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+
+      430 |       const tokenHash = crypto
+      431 |         .createHash('sha256')
+    > 432 |         .update(refresh_token)
+          |          ^
+      433 |         .digest('hex');
+      434 |       await refreshTokenRepository.update(
+      435 |         { token_hash: tokenHash },
+
+      at Object.<anonymous> (auth.e2e-spec.ts:432:10)
+
+  ● Auth (e2e) › POST /auth/refresh › returns 200 with valid access token when reuse is within grace period
+
+    expected 200 "OK", got 400 "Bad Request"
+
+      457 |         .post('/auth/refresh')
+      458 |         .send({ refresh_token: token1 })
+    > 459 |         .expect(200);
+          |          ^
+      460 |       const body = res.body as AuthTokensBody;
+      461 |
+      462 |       expect(body.access_token).toBeDefined();
+
+      at Object.<anonymous> (auth.e2e-spec.ts:459:10)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Auth (e2e) › POST /auth/refresh › returns 401 with TOKEN_REUSE_DETECTED when reuse is beyond grace period
+
+    TypeError: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+
+      487 |       const tokenHash = crypto
+      488 |         .createHash('sha256')
+    > 489 |         .update(token1)
+          |          ^
+      490 |         .digest('hex');
+      491 |       await refreshTokenRepository.update(
+      492 |         { token_hash: tokenHash },
+
+      at Object.<anonymous> (auth.e2e-spec.ts:489:10)
+
+  ● Auth (e2e) › POST /auth/reset-password › returns 204 with a valid token and updates the password
+
+    expected 204 "No Content", got 400 "Bad Request"
+
+      609 |         .post('/auth/reset-password')
+      610 |         .send({ token, new_password: 'newpassword' })
+    > 611 |         .expect(204);
+          |          ^
+      612 |
+      613 |       await request(app.getHttpServer())
+      614 |         .post('/auth/login')
+
+      at Object.<anonymous> (auth.e2e-spec.ts:611:10)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Auth (e2e) › POST /auth/reset-password › returns 401 with INVALID_TOKEN on a reused token
+
+    expected 204 "No Content", got 400 "Bad Request"
+
+      661 |         .post('/auth/reset-password')
+      662 |         .send({ token, new_password: 'newpassword' })
+    > 663 |         .expect(204);
+          |          ^
+      664 |
+      665 |       const res = await request(app.getHttpServer())
+      666 |         .post('/auth/reset-password')
+
+      at Object.<anonymous> (auth.e2e-spec.ts:663:10)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Auth (e2e) › POST /auth/reset-password › returns 401 with TOKEN_EXPIRED on an expired token
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (../src/data-source/DataSource.ts:541:20)
+      at cleanAllTables (../src/test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (auth.e2e-spec.ts:79:5)
+
+  ● Auth (e2e) › POST /auth/reset-password › returns 400 with VALIDATION_ERROR on short new_password
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (../src/data-source/DataSource.ts:541:20)
+      at cleanAllTables (../src/test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (auth.e2e-spec.ts:79:5)
+
+  ● Rate Limiting (e2e) › does not rate-limit the non-auth GET / endpoint
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (../src/data-source/DataSource.ts:541:20)
+      at cleanAllTables (../src/test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (auth.e2e-spec.ts:748:5)
+
+FAIL test/videos-upload-resume.e2e-spec.ts
+  ● GET /videos/:id/upload (e2e) › 1.1 should return real streamed parts and preserve identity, session and absolute expiry on replay
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (../src/query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (../src/persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (../src/persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (../src/persistence/EntityPersistExecutor.ts:182:21)
+      at ../src/channels/channels.service.ts:47:18
+      at EntityManager.transaction (../src/entity-manager/EntityManager.ts:156:28)
+      at Object.owner (helpers/videos-http.fixture.ts:52:9)
+      at Object.<anonymous> (videos-upload-resume.e2e-spec.ts:54:13)
+
+  ● GET /videos/:id/upload (e2e) › 1.1 should return real streamed parts and preserve identity, session and absolute expiry on replay
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_23dc7937150c9567d37869313ce" on table "channels"
+
+      at PostgresQueryRunner.query (../src/driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (../src/data-source/DataSource.ts:541:20)
+      at cleanAllTables (../src/test/create-test-data-source.ts:41:3)
+      at Object.clean (helpers/videos-http.fixture.ts:88:5)
+      at Object.<anonymous> (videos-upload-resume.e2e-spec.ts:59:5)
+
+  ● GET /videos/:id/upload (e2e) › 1.3 should require real JWT authentication without returning parts or permissions
+
+    expected 201 "Created", got 409 "Conflict"
+
+      73 |         sizeBytes,
+      74 |       })
+    > 75 |       .expect(201);
+         |        ^
+      76 |     const body = response.body as ResumeBody;
+      77 |     return stored(body.video.id);
+      78 |   }
+
+      at initialize (videos-upload-resume.e2e-spec.ts:75:8)
+      at Object.<anonymous> (videos-upload-resume.e2e-spec.ts:187:23)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● GET /videos/:id/upload (e2e) › 1.4 should return UPLOAD_EXPIRED without renewing the draft or session when no source exists
+
+    expected 201 "Created", got 409 "Conflict"
+
+      73 |         sizeBytes,
+      74 |       })
+    > 75 |       .expect(201);
+         |        ^
+      76 |     const body = response.body as ResumeBody;
+      77 |     return stored(body.video.id);
+      78 |   }
+
+      at initialize (videos-upload-resume.e2e-spec.ts:75:8)
+      at Object.<anonymous> (videos-upload-resume.e2e-spec.ts:201:23)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● GET /videos/:id/upload (e2e) › 1.5 should reject owner ready state with consistent real media fixtures
+
+    expected 201 "Created", got 404 "Not Found"
+
+      73 |         sizeBytes,
+      74 |       })
+    > 75 |       .expect(201);
+         |        ^
+      76 |     const body = response.body as ResumeBody;
+      77 |     return stored(body.video.id);
+      78 |   }
+
+      at initialize (videos-upload-resume.e2e-spec.ts:75:8)
+      at videos-upload-resume.e2e-spec.ts:239:25
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+FAIL test/videos-uploads-create.e2e-spec.ts
+  ● POST /videos/uploads (e2e) › 1.6 should allow ten distinct creations and reject the eleventh through the real throttler
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 10,
+    +   "uploads": 12,
+        "videos": 10,
+      }
+
+      216 |     expect(ids.size).toBe(10);
+      217 |     const before = await resources();
+    > 218 |     expect(before).toEqual({ videos: 10, uploads: 10, outbox: 0 });
+          |                    ^
+      219 |     const response = await post().expect(429);
+      220 |     expect(response.body as ErrorBody).toEqual({
+      221 |       statusCode: 429,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:218:20)
+
+  ● POST /videos/uploads (e2e) › should map an unconfirmed S3 initialization to sanitized 503 without returning success
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 0,
+    +   "uploads": 2,
+        "videos": 1,
+      }
+
+      296 |     expect(rows[0].status).toBe('draft');
+      297 |     expect(rows[0].upload_operation).toBe('initializing');
+    > 298 |     expect(await resources()).toEqual({ videos: 1, uploads: 0, outbox: 0 });
+          |                               ^
+      299 |     expect(response.text).not.toContain(rows[0].source_key);
+      300 |   });
+      301 |
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:298:31)
+
+PASS test/app.e2e-spec.ts
+PASS test/swagger.e2e-spec.ts
+
+Test Suites: 3 failed, 2 passed, 5 total
+Tests:       16 failed, 59 passed, 75 total
+Snapshots:   0 total
+Time:        16.286 s, estimated 22 s
+Ran all test suites.

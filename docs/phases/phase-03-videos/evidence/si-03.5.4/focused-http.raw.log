@@ -1,0 +1,26 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-upload-resume.e2e-spec.ts
+
+(node:109) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/videos-upload-resume.e2e-spec.ts (6.735 s)
+  GET /videos/:id/upload (e2e)
+    ✓ 1.1 should return real streamed parts and preserve identity, session and absolute expiry on replay (786 ms)
+    ✓ 1.2 should hide the owner session from a different channel without storage access or leaks (125 ms)
+    ✓ 1.3 should require real JWT authentication without returning parts or permissions (153 ms)
+    ✓ 1.4 should return UPLOAD_EXPIRED without renewing the draft or session when no source exists (278 ms)
+    ✓ 1.5 should reject malformed UUID through the inherited validation filter before storage (34 ms)
+    ✓ 1.5 should reject owner processing state with consistent real media fixtures (259 ms)
+    ✓ 1.5 should reject owner ready state with consistent real media fixtures (492 ms)
+    ✓ should return VIDEO_NOT_FOUND for an absent UUID or authenticated user without channel (349 ms)
+    ✓ should distinguish an expired but already completed source from a lost upload (296 ms)
+    ✓ should sanitize storage failure as 503 without creating another session or intention (275 ms)
+    ✓ should allow 120 resumes per minute and reject request 121 through the real guard (1464 ms)
+    ✓ should document UUID, JWT, read-only success and all expected error schemas (111 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        6.821 s
+Ran all test suites within paths "test/videos-upload-resume.e2e-spec.ts".

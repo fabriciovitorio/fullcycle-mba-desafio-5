@@ -1,0 +1,134 @@
+{
+  "si": "SI-03.5.2",
+  "status": "passed",
+  "recorded_at": "2026-10-22T01:13:38.526158+00:00",
+  "scope": "Completion, abort and private owner status services only. HTTP controllers and background recovery remain in their planned SIs.",
+  "installed_versions": {
+    "typeorm": "0.3.28",
+    "@nestjs/core": "11.1.16",
+    "@aws-sdk/client-s3": "3.1152.0"
+  },
+  "created_files": [
+    "src/videos/video-upload-completion.service.ts",
+    "src/videos/video-status.mapper.ts",
+    "src/videos/video-upload-completion.service.spec.ts",
+    "src/videos/video-upload-completion.service.integration-spec.ts"
+  ],
+  "modified_files": [
+    "src/storage/storage.port.ts",
+    "src/storage/s3-storage.service.ts",
+    "src/videos/video-uploads.service.ts",
+    "src/videos/videos.constants.ts",
+    "src/videos/videos.exceptions.ts",
+    "src/videos/videos.module.ts",
+    "src/videos/videos.repository.ts"
+  ],
+  "implementation": {
+    "ownership": "Resolve user channel through ChannelsService; owner-qualified repository reads before claims/storage. Foreign or absent videos are VIDEO_NOT_FOUND.",
+    "completion": "Exclusive fenced 180s completion lease; HeadObject recovery before session-expiry decisions; authoritative ListParts validates count/order/each size/total. CompleteMultipartUpload and HeadObject run outside database transactions. Destructive S3 calls require the same live claim with >=60s remaining.",
+    "atomic_commit": "Existing fenced completeUpload transaction writes actual_size_bytes, processing and one outbox intention; safe old diagnostics are cleared. Re-read after ambiguous SQL response recovers committed state. Actual SQL error after outbox insert proves rollback of both video state and outbox; completed source is preserved for retry.",
+    "replays": "Processing/ready completion returns persisted identity/status without storage calls or duplicate outbox. UPLOAD_ABORTED replay preserves terminal state/timestamps. Incompatible states reject.",
+    "abort": "Exclusive abort lease. Head before abort and after confirmed abort/NoSuchUpload detects completed sources, reconciles them into processing and rejects false abortion. Recovered expired abort intent finishes original abort instead of processing remaining parts.",
+    "validation": "Missing parts release only the owned live claim and remain resumable. Size mismatch first persists a durable diagnostic while still draft, aborts the session, deletes any divergent completed source via new storage-port deleteObject, confirms absence, then marks terminal error. Cleanup outage leaves recognizable pending intent and zero outbox; retry after lease expiry resumes cleanup.",
+    "expiry": "Uncompleted expired draft is aborted and persisted as UPLOAD_EXPIRED; a completed valid source is recovered even when upload session has expired.",
+    "status": "Private status uses explicit projection id/slug/status/errorCode/createdAt/updatedAt; allowlisted persisted error codes only. No keys, upload ids, raw messages or storage access. Existing upload-service projections use the same mapper.",
+    "errors": "Typed StorageError maps to sanitized STORAGE_UNAVAILABLE except explicit not-found reconciliation. Unexpected SQL/programming errors propagate. Failed ownership/token/lease predicates never permit stale writes or destructive cleanup.",
+    "wiring": "VideosModule registers/exports VideoUploadCompletionService. No HTTP controller, queue publisher or worker activated.",
+    "schema_changed": false,
+    "dependencies_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/video-upload-completion.service.spec.ts src/videos/video-upload-completion.service.integration-spec.ts",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "focused-tests.raw.log",
+      "suites_passed": 2,
+      "tests_passed": 56
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "suites_passed": 39,
+      "tests_passed": 409
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "suites_passed": 3,
+      "tests_passed": 52
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run build",
+      "execution": "isolated Docker test stack; Jest suites run serially",
+      "exit_code": 0,
+      "log": "build.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "execution": "host Git read-only",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "unit": 35,
+    "integration": 21,
+    "fix_attempts_required": 0,
+    "real_dependencies": [
+      "PostgreSQL",
+      "MinIO"
+    ],
+    "fault_injection": "Spies around actual S3/SQL operations simulate lost replies, real SQL rollback, expired/replaced claims and controlled completion/abort concurrency."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs",
+    "evidence": [
+      "context7-typeorm.json",
+      "context7-aws.json"
+    ],
+    "version_discrepancy": "Returned docs target master/main rather than pinned installed versions; flagged before implementation and cross-checked with installed declarations and real runtime tests."
+  },
+  "lint": {
+    "typescript_files_hashed": 126,
+    "changed_after_global_autofix_and_checks": [],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "read_only_integrity_check": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "limitations": [
+    "No HTTP endpoints are implemented by this SI.",
+    "A persisted outbox intention is verified; queue publication and FFmpeg worker execution remain in later SIs.",
+    "Small real byte fixtures exercise multipart transitions; this does not replace the later full 10GB transfer, content-validation or RSS acceptance proof.",
+    "Automatic background recovery remains in its planned SI; this SI verifies owner-request recovery after expired claims."
+  ],
+  "observations": [
+    "Node emits the pre-existing --localstorage-file warning; all tests pass.",
+    "Initial Docker sandbox denial was retried with escalation; there were no failing test runs."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

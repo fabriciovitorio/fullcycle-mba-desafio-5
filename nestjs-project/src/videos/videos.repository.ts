@@ -266,6 +266,8 @@ export class VideosRepository {
         .andWhere('declared_size_bytes = :actualSizeBytes', { actualSizeBytes })
         .set({
           status: 'processing',
+          error_code: null,
+          error_message: null,
           actual_size_bytes: actualSizeBytes,
           upload_operation: null,
           operation_token: null,
@@ -299,6 +301,41 @@ export class VideosRepository {
         operation_token: null,
         operation_expires_at: null,
       })
+      .execute();
+    return result.affected === 1;
+  }
+
+  async changeUploadOperation(
+    id: string,
+    channelId: string,
+    token: string,
+    operation: VideoUploadOperation,
+  ): Promise<boolean> {
+    const result = await this.uploadUpdate(
+      this.dataSource.manager,
+      id,
+      channelId,
+      token,
+    )
+      .set({ upload_operation: operation })
+      .execute();
+    return result.affected === 1;
+  }
+
+  async rememberUploadFailure(
+    id: string,
+    channelId: string,
+    token: string,
+    code: string,
+    message: string,
+  ): Promise<boolean> {
+    const result = await this.uploadUpdate(
+      this.dataSource.manager,
+      id,
+      channelId,
+      token,
+    )
+      .set({ error_code: code, error_message: message })
       .execute();
     return result.affected === 1;
   }

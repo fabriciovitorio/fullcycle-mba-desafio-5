@@ -1,0 +1,196 @@
+{
+  "status": "passed",
+  "artifact": "nestjs-project/openapi.json",
+  "sha256": "6421e221d7538f0c45dfef1f2ce6dd4b3cc5442ef05701704a43eeb1905a2a0e",
+  "request": {
+    "type": "object",
+    "properties": {
+      "sizeBytes": {
+        "type": "integer",
+        "description": "Declared file size in bytes; maximum 10GB (decimal).",
+        "minimum": 1,
+        "maximum": 10000000000
+      },
+      "title": {
+        "type": "string",
+        "description": "Video title, trimmed before validation (1–200 characters).",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "fileName": {
+        "type": "string",
+        "description": "Original file name; no NUL, slash, backslash, CR or LF (1–255 characters).",
+        "minLength": 1,
+        "maxLength": 255,
+        "pattern": "^[^/\\\\\\r\\n]+$"
+      },
+      "contentType": {
+        "type": "string",
+        "description": "Declared MIME type. Actual video content is validated during processing.",
+        "enum": [
+          "video/mp4"
+        ]
+      }
+    },
+    "required": [
+      "sizeBytes",
+      "title",
+      "fileName",
+      "contentType"
+    ]
+  },
+  "operation": {
+    "description": "Creates a draft in the authenticated user channel and persists a direct multipart upload session. Accepts JSON control data only; video bytes are sent directly to storage.",
+    "operationId": "VideosUploadsController_create",
+    "parameters": [],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/CreateVideoUploadDto"
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "Draft and upload session created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/VideoUploadInitializationDto"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "VALIDATION_ERROR: invalid or unknown input fields",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or invalid access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "CHANNEL_NOT_FOUND: authenticated user has no channel",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "UPLOAD_OPERATION_IN_PROGRESS: initialization ownership could not be confirmed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "413": {
+        "description": "JSON control body exceeds 64KiB",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Creation limit exceeded (10 requests per minute)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "STORAGE_UNAVAILABLE or VIDEO_ID_GENERATION_FAILED",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "access-token": []
+      }
+    ],
+    "summary": "Initialize a video upload",
+    "tags": [
+      "videos"
+    ]
+  },
+  "error_envelope": {
+    "type": "object",
+    "properties": {
+      "statusCode": {
+        "type": "number",
+        "example": 401
+      },
+      "error": {
+        "type": "string",
+        "description": "Domain or validation error code; inherited framework errors may omit this field.",
+        "example": "INVALID_CREDENTIALS"
+      },
+      "message": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "example": "Invalid email or password"
+      },
+      "code": {
+        "type": "string",
+        "nullable": true
+      }
+    },
+    "required": [
+      "statusCode",
+      "message"
+    ]
+  },
+  "checks": [
+    "required four request fields",
+    "integer bytes with exact maximum/minimum",
+    "MP4 MIME enum",
+    "title and filename bounds",
+    "JWT security",
+    "JSON request only",
+    "inherited framework error shape admitted",
+    "safe status projection",
+    "part size",
+    "all documented errors use shared envelope"
+  ]
+}

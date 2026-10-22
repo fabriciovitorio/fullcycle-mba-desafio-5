@@ -1,0 +1,197 @@
+{
+  "status": "passed",
+  "artifact": "nestjs-project/openapi.json",
+  "sha256": "e90ee3cd895bf6426ad15be83209cc27b51e2f12114604ffa4fec60cf9e5adaa",
+  "operation": {
+    "description": "Returns the owner draft and the parts currently present in storage. Preserves the video identity, multipart session and absolute expiry; does not create a session or processing intention.",
+    "operationId": "VideosUploadsController_resume",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "description": "Video owned by the authenticated user channel.",
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Current draft session and authoritative uploaded parts",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/VideoUploadResumeDto"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "VALIDATION_ERROR: id must be a UUID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or invalid access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "VIDEO_NOT_FOUND: absent video or different owner",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "INVALID_VIDEO_STATE or UPLOAD_OPERATION_IN_PROGRESS",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "410": {
+        "description": "UPLOAD_EXPIRED: expired session without a recoverable completed source",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Control limit exceeded (120 requests per minute)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "STORAGE_UNAVAILABLE: storage operation could not be confirmed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "access-token": []
+      }
+    ],
+    "summary": "Resume a video upload",
+    "tags": [
+      "videos"
+    ]
+  },
+  "response_schemas": {
+    "VideoUploadResumeDto": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "$ref": "#/components/schemas/VideoStatusDto"
+        },
+        "upload": {
+          "$ref": "#/components/schemas/VideoUploadResumeSessionDto"
+        }
+      },
+      "required": [
+        "video",
+        "upload"
+      ]
+    },
+    "VideoUploadResumeSessionDto": {
+      "type": "object",
+      "properties": {
+        "partSizeBytes": {
+          "type": "number",
+          "enum": [
+            67108864
+          ]
+        },
+        "partCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 150
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/VideoUploadPartDto"
+          }
+        }
+      },
+      "required": [
+        "partSizeBytes",
+        "partCount",
+        "expiresAt",
+        "parts"
+      ]
+    },
+    "VideoUploadPartDto": {
+      "type": "object",
+      "properties": {
+        "partNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 150
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        },
+        "etag": {
+          "type": "string",
+          "description": "ETag observed by storage, including quotes."
+        }
+      },
+      "required": [
+        "partNumber",
+        "sizeBytes",
+        "etag"
+      ]
+    }
+  },
+  "checks": [
+    "JWT Bearer security",
+    "required UUID path parameter",
+    "no GET request body",
+    "200 typed response",
+    "all seven expected errors use shared envelope",
+    "required inherited session fields",
+    "explicit parts array reference and integer limits",
+    "safe video projection",
+    "previous creation operation unchanged",
+    "existing committed API operations preserved"
+  ]
+}

@@ -4,6 +4,7 @@ import {
   AbortMultipartUploadCommand,
   CompleteMultipartUploadCommand,
   CreateMultipartUploadCommand,
+  DeleteObjectCommand,
   HeadObjectCommand,
   ListPartsCommand,
   S3Client,
@@ -172,6 +173,15 @@ export class S3StorageService implements StoragePort, OnModuleDestroy {
 
   async headObject(key: string): Promise<StorageObject> {
     return this.run((signal) => this.head(key, signal));
+  }
+
+  async deleteObject(key: string): Promise<void> {
+    await this.run(async (signal) => {
+      await this.client.send(
+        new DeleteObjectCommand({ Bucket: this.config.bucket, Key: key }),
+        { abortSignal: signal },
+      );
+    });
   }
 
   private async head(key: string, signal: AbortSignal): Promise<StorageObject> {

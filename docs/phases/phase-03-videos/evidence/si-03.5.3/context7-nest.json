@@ -1,0 +1,27 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/nest\n- Description: A progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications with TypeScript/JavaScript \ud83d\ude80\n- Code Snippets: 2245\n- Source Reputation: High\n- Benchmark Score: 55.18\n- Versions: v11_1_6, v10_4_15, v10_4_6, v11.1.16, v12.0.1, v12.1.2\n----------\n- Title: NestJS\n- Context7-compatible library ID: /websites/nestjs\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 5318\n- Source Reputation: High\n- Benchmark Score: 78.91\n----------\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/docs.nestjs.com\n- Description: NestJS is a progressive Node.js framework for building efficient and scalable server-side applications, utilizing Angular CLI and Dgeni for documentation generation.\n- Code Snippets: 5191\n- Source Reputation: High\n- Benchmark Score: 73.35\n----------\n- Title: NestJS\n- Context7-compatible library ID: /websites/api-references-nestjs_netlify_app_api\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 7495\n- Source Reputation: High\n- Benchmark Score: 59.92\n----------\n- Title: NestJS\n- Context7-compatible library ID: /llmstxt/nestjs_llms_txt\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications with TypeScript.\n- Code Snippets: 5489\n- Source Reputation: High\n- Benchmark Score: 74.8"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "query": "NestJS 11 ValidationPipe whitelist forbidNonWhitelisted transform implicit conversion class-validator Swagger ApiProperty response DTO ApiConsumes JSON express body parser middleware limit 64kb",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Strip non-whitelisted properties with whitelist option\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/validation.md\n\nEnable the whitelist: true option to automatically strip any properties from the incoming request payload that do not have validation decorators in the DTO. You can additionally set forbidNonWhitelisted: true to reject requests containing unknown properties.\n\n```typescript\napp.useGlobalPipes(\n  new ValidationPipe({\n    whitelist: true,\n  }),\n);\n```\n\n--------------------------------\n\n### Enable payload auto-transformation globally\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/validation.md\n\nConfigure ValidationPipe globally with transform: true to automatically instantiate DTO classes and convert primitive parameter types across all endpoints.\n\n```typescript\napp.useGlobalPipes(\n  new ValidationPipe({\n    transform: true,\n  }),\n);\n```\n\n--------------------------------\n\n### Stripping properties\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/validation.md\n\n`ValidationPipe` can also filter out properties that the route handler should not receive. When you **whitelist** the acceptable properties, any property not included in the whitelist is stripped from the resulting object. For example, if the handler expects `email` and `password`, but a request also includes an `age` property, `age` is removed from the resulting DTO. To enable this behavior, set `whitelist` to `true`.\n\nWith this option enabled, properties without any decorator in the validation class are removed.\n\nAlternatively, you can reject requests that contain non-whitelisted properties with an error response. To do so, set `forbidNonWhitelisted` to `true` in addition to `whitelist`.\n\n--------------------------------\n\n### Expose DTO properties with @ApiProperty decorator\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/openapi/types-and-parameters.md\n\nAnnotates class properties so they are visible to SwaggerModule when generating model definitions. Alternatively, the Swagger CLI plugin can generate these annotations automatically.\n\n```typescript\nimport { ApiProperty } from '@nestjs/swagger';\n\nexport class CreateCatDto {\n  @ApiProperty()\n  name: string;\n\n  @ApiProperty()\n  age: number;\n\n  @ApiProperty()\n  breed: string;\n}\n```\n\n--------------------------------\n\n### Convert primitive route parameters with transform enabled\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/application/validation.md\n\nWhen transform: true is active on ValidationPipe, primitive path and query parameters are automatically converted from strings to their declared TypeScript types such as number.\n\n```typescript\n@Get(':id')\nfindOne(@Param('id') id: number) {\n  console.log(typeof id === 'number'); // true\n  return 'This action returns a user';\n}\n```"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

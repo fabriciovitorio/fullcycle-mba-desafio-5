@@ -63,3 +63,23 @@ export class VideoIdGenerationFailedException extends DomainException {
     );
   }
 }
+
+export class UploadIncompleteException extends DomainException {
+  constructor() {
+    super(
+      'UPLOAD_INCOMPLETE',
+      409,
+      'Upload parts are incomplete or out of sequence',
+    );
+  }
+}
+
+export class UploadSizeMismatchException extends DomainException {
+  constructor() {
+    super(
+      'UPLOAD_SIZE_MISMATCH',
+      409,
+      'Uploaded bytes do not match the declared size',
+    );
+  }
+}

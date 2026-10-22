@@ -1,0 +1,73 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-uploads-create.e2e-spec.ts
+
+(node:444) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/videos-uploads-create.e2e-spec.ts
+  POST /videos/uploads (e2e)
+    ✕ 1.1 should create a persisted draft and multipart session in the authenticated channel only (231 ms)
+    ✓ 1.2 should accept the declared 10GB boundary without transferring binary bytes (121 ms)
+    ✓ 1.3 should reject above-limit size with the inherited validation envelope and no side effects (140 ms)
+    ✓ 1.4 should reject a forged channelId rather than creating in either channel (105 ms)
+    ✓ 1.5 should reject missing and invalid JWTs using the real global guard (86 ms)
+    ✕ 1.6 should allow ten distinct creations and reject the eleventh through the real throttler (922 ms)
+    ✓ should return CHANNEL_NOT_FOUND when the authenticated user has no channel (134 ms)
+    ✓ should enforce security-sensitive field constraints before creating any resources (79 ms)
+    ✓ should reject multipart bytes and control JSON above 64KiB without creating sessions (41 ms)
+    ✓ should map an unconfirmed S3 initialization to sanitized 503 without returning success (68 ms)
+    ✓ should document the protected JSON operation and safe response/error schemas (47 ms)
+
+  ● POST /videos/uploads (e2e) › 1.1 should create a persisted draft and multipart session in the authenticated channel only
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 1,
+    +   "uploads": 0,
+        "videos": 1,
+      }
+
+      151 |     expect(sessions).toHaveLength(1);
+      152 |     expect(sessions[0].UploadId).toBe(row.upload_id);
+    > 153 |     expect(await resources()).toEqual({
+          |                               ^
+      154 |       videos: before.videos + 1,
+      155 |       uploads: before.uploads + 1,
+      156 |       outbox: before.outbox,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:153:31)
+
+  ● POST /videos/uploads (e2e) › 1.6 should allow ten distinct creations and reject the eleventh through the real throttler
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 10,
+    +   "uploads": 0,
+        "videos": 10,
+      }
+
+      229 |     expect(ids.size).toBe(10);
+      230 |     const before = await resources();
+    > 231 |     expect(before).toEqual({ videos: 10, uploads: 10, outbox: 0 });
+          |                    ^
+      232 |     const response = await post().expect(429);
+      233 |     expect(response.body as ErrorBody).toEqual({
+      234 |       statusCode: 429,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:231:20)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 9 passed, 11 total
+Snapshots:   0 total
+Time:        3.633 s, estimated 4 s
+Ran all test suites within paths "test/videos-uploads-create.e2e-spec.ts".

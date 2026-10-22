@@ -1,0 +1,65 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand
+
+(node:6860) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/auth.e2e-spec.ts (11.465 s)
+PASS test/videos-upload-resume.e2e-spec.ts (6.293 s)
+FAIL test/videos-uploads-create.e2e-spec.ts
+  ● POST /videos/uploads (e2e) › 1.6 should allow ten distinct creations and reject the eleventh through the real throttler
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 10,
+    +   "uploads": 12,
+        "videos": 10,
+      }
+
+      216 |     expect(ids.size).toBe(10);
+      217 |     const before = await resources();
+    > 218 |     expect(before).toEqual({ videos: 10, uploads: 10, outbox: 0 });
+          |                    ^
+      219 |     const response = await post().expect(429);
+      220 |     expect(response.body as ErrorBody).toEqual({
+      221 |       statusCode: 429,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:218:20)
+
+  ● POST /videos/uploads (e2e) › should map an unconfirmed S3 initialization to sanitized 503 without returning success
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 0,
+    +   "uploads": 2,
+        "videos": 1,
+      }
+
+      296 |     expect(rows[0].status).toBe('draft');
+      297 |     expect(rows[0].upload_operation).toBe('initializing');
+    > 298 |     expect(await resources()).toEqual({ videos: 1, uploads: 0, outbox: 0 });
+          |                               ^
+      299 |     expect(response.text).not.toContain(rows[0].source_key);
+      300 |   });
+      301 |
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:298:31)
+
+PASS test/swagger.e2e-spec.ts
+PASS test/app.e2e-spec.ts
+
+Test Suites: 1 failed, 4 passed, 5 total
+Tests:       2 failed, 73 passed, 75 total
+Snapshots:   0 total
+Time:        22.057 s
+Ran all test suites.

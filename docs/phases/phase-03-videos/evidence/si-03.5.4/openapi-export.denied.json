@@ -1,0 +1,15 @@
+{
+  "action": "npm run openapi:export (build followed by compiled specification export)",
+  "execution": "Docker test stack",
+  "result": "not_executed",
+  "tool_response": "exec_command failed: CreateProcess { message: \"Rejected(\\\"rejected by user\\\")\" }",
+  "reason_provided": null,
+  "retried": false,
+  "pending": "Authorization to run build/export and validate regenerated OpenAPI JSON",
+  "resolution": {
+    "explicit_user_authorization": "sim",
+    "build_and_export_exit_code": 0,
+    "evidence": "openapi-export.raw.log",
+    "contract_evidence": "openapi-contract.json"
+  }
+}

@@ -1,0 +1,15 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/videos/videos.module.integration-spec.ts
+
+(node:574) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/videos/videos.module.integration-spec.ts
+  VideosModule (integration)
+    ✓ should resolve the real upload HTTP composition against the migrated test database (6 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.407 s, estimated 2 s
+Ran all test suites within paths "src/videos/videos.module.integration-spec.ts".

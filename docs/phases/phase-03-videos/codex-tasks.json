@@ -76,21 +76,21 @@
       "subject": "SI-03.5.2 — Concluir ou abortar uploads sem perder processamento",
       "description": "Fechar a fronteira S3/banco e expor consulta privada de estado.",
       "activeForm": "Implementando Concluir ou abortar uploads sem perder processamento",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.3",
       "subject": "SI-03.5.3 — Iniciar upload por HTTP",
       "description": "Criar a fronteira de entrada para rascunho e sessão direta.",
       "activeForm": "Implementando Iniciar upload por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.4",
       "subject": "SI-03.5.4 — Retomar upload por HTTP",
       "description": "Disponibilizar as partes reais da sessão ao seu dono.",
       "activeForm": "Implementando Retomar upload por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.5",

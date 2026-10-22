@@ -1,0 +1,27 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: NestJS Throttler\n- Context7-compatible library ID: /nestjs/throttler\n- Description: NestJS Throttler is a rate-limiting module for NestJS applications, allowing developers to control the number of requests users can make to endpoints within a specified time frame.\n- Code Snippets: 273\n- Source Reputation: High\n- Benchmark Score: 88.98"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "query": "NestJS throttler 6.5.0 @Throttle default limit ttl 60000 ThrottlerStorageService storage clear real global guard",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Global binding example\n\nSource: https://github.com/nestjs/throttler/blob/master/_autodocs/api-reference/ThrottlerGuard.md\n\nShows how to bind ThrottlerGuard globally using APP_GUARD provider in a NestJS module. Configures ThrottlerModule with a single throttler (ttl: 60000, limit: 10).\n\n```typescript\nimport { Module } from '@nestjs/common';\nimport { APP_GUARD } from '@nestjs/core';\nimport { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';\n\n@Module({\n  imports: [ThrottlerModule.forRoot([{ ttl: 60000, limit: 10 }])],\n  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],\n})\nexport class AppModule {}\n```\n\n--------------------------------\n\n### Bind ThrottlerGuard globally with APP_GUARD\n\nSource: https://github.com/nestjs/throttler/blob/master/README.md\n\nProvides ThrottlerGuard as a global guard using the APP_GUARD provider. This applies throttling to all routes by default.\n\n```typescript\n{\n  provide: APP_GUARD,\n  useClass: ThrottlerGuard\n}\n```\n\n--------------------------------\n\n### Usage Examples\n\nSource: https://github.com/nestjs/throttler/blob/master/_autodocs/api-reference/ThrottlerGuard.md\n\nExamples of global binding and per-route binding with skipping and custom throttle limits.\n\n```APIDOC\n## Usage Examples\n\n### Global Binding\n\n```typescript\nimport { Module } from '@nestjs/common';\nimport { APP_GUARD } from '@nestjs/core';\nimport { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';\n\n@Module({\n  imports: [ThrottlerModule.forRoot([{ ttl: 60000, limit: 10 }])],\n  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],\n})\nexport class AppModule {}\n```\n\n### Per-Route Binding and Skipping\n\n```typescript\nimport { Controller, Get, Post, UseGuards } from '@nestjs/common';\nimport { SkipThrottle, Throttle, ThrottlerGuard } from '@nestjs/throttler';\n\n@UseGuards(ThrottlerGuard)\n@Controller('reports')\nexport class ReportsController {\n  @Get()\n  findAll() {\n    return 'throttled by module defaults';\n  }\n\n  @SkipThrottle({ default: true })\n  @Post('login')\n  login() {\n    return 'not throttled';\n  }\n\n  @Throttle({ default: { limit: 3, ttl: 60000 } })\n  @Get('search')\n  search() {\n    return 'custom, tighter limit';\n  }\n}\n```\n```\n\n--------------------------------\n\n### Configure ThrottlerModule with forRoot\n\nSource: https://github.com/nestjs/throttler/blob/master/README.md\n\nImports ThrottlerModule and sets global options for ttl (time to live in milliseconds) and limit (maximum requests within ttl) for all guarded routes.\n\n```typescript\n@Module({\n  imports: [\n    ThrottlerModule.forRoot([{\n      ttl: 60000,\n      limit: 10,\n    }]),\n  ],\n})\nexport class AppModule {}\n```\n\n--------------------------------\n\n### Defaults summary\n\nSource: https://github.com/nestjs/throttler/blob/master/_autodocs/configuration.md\n\n## Defaults summary\n\n| Item | Default |\n|------|---------|\n| Throttler `name` | `\"default\"` |\n| `blockDuration` | `ttl` |\n| `setHeaders` | `true` |\n| `ipv6SubnetPrefix` | `64` |\n| `storage` | `new ThrottlerStorageService()` (in-memory) |\n| 429 message | `'ThrottlerException: Too Many Requests'` |\n| `@SkipThrottle()` argument | `{ default: true }` |\n| `forRoot()` argument | `[]` (no throttlers; guard limits nothing) |\n| `ThrottlerStorageService` sweep interval | `60_000` ms |"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  }
+}

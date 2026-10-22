@@ -1,0 +1,8 @@
+
+> nestjs-project@0.0.1 openapi:export
+> npm run build && node dist/openapi-export.js
+
+
+> nestjs-project@0.0.1 build
+> nest build
+

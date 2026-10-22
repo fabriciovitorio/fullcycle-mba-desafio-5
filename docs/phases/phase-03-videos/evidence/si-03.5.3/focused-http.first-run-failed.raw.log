@@ -1,0 +1,96 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-uploads-create.e2e-spec.ts
+
+(node:241) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/videos-uploads-create.e2e-spec.ts
+  POST /videos/uploads (e2e)
+    ✕ 1.1 should create a persisted draft and multipart session in the authenticated channel only (273 ms)
+    ✓ 1.2 should accept the declared 10GB boundary without transferring binary bytes (182 ms)
+    ✓ 1.3 should reject above-limit size with the inherited validation envelope and no side effects (137 ms)
+    ✓ 1.4 should reject a forged channelId rather than creating in either channel (63 ms)
+    ✕ 1.5 should reject missing and invalid JWTs using the real global guard (127 ms)
+    ✕ 1.6 should allow ten distinct creations and reject the eleventh through the real throttler (779 ms)
+    ✓ should return CHANNEL_NOT_FOUND when the authenticated user has no channel (63 ms)
+    ✓ should enforce security-sensitive field constraints before creating any resources (88 ms)
+    ✓ should reject multipart bytes and control JSON above 64KiB without creating sessions (121 ms)
+    ✓ should map an unconfirmed S3 initialization to sanitized 503 without returning success (69 ms)
+    ✓ should document the protected JSON operation and safe response/error schemas (62 ms)
+
+  ● POST /videos/uploads (e2e) › 1.1 should create a persisted draft and multipart session in the authenticated channel only
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 1,
+    +   "uploads": 0,
+        "videos": 1,
+      }
+
+      135 |     expect(sessions).toHaveLength(1);
+      136 |     expect(sessions[0].UploadId).toBe(row.upload_id);
+    > 137 |     expect(await resources()).toEqual({
+          |                               ^
+      138 |       videos: before.videos + 1,
+      139 |       uploads: before.uploads + 1,
+      140 |       outbox: before.outbox,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:137:31)
+
+  ● POST /videos/uploads (e2e) › 1.5 should reject missing and invalid JWTs using the real global guard
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+      Object {
+    -   "error": "Unauthorized",
+        "message": "Unauthorized",
+        "statusCode": 401,
+      }
+
+      198 |     const invalid = await post(input, 'invalid.jwt').expect(401);
+      199 |     for (const response of [missing, invalid])
+    > 200 |       expect(response.body as ErrorBody).toEqual({
+          |                                          ^
+      201 |         statusCode: 401,
+      202 |         error: 'Unauthorized',
+      203 |         message: 'Unauthorized',
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:200:42)
+
+  ● POST /videos/uploads (e2e) › 1.6 should allow ten distinct creations and reject the eleventh through the real throttler
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "outbox": 0,
+    -   "uploads": 10,
+    +   "uploads": 0,
+        "videos": 10,
+      }
+
+      214 |     expect(ids.size).toBe(10);
+      215 |     const before = await resources();
+    > 216 |     expect(before).toEqual({ videos: 10, uploads: 10, outbox: 0 });
+          |                    ^
+      217 |     const response = await post().expect(429);
+      218 |     expect(response.body as ErrorBody).toEqual({
+      219 |       statusCode: 429,
+
+      at Object.<anonymous> (videos-uploads-create.e2e-spec.ts:216:20)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 8 passed, 11 total
+Snapshots:   0 total
+Time:        3.872 s
+Ran all test suites within paths "test/videos-uploads-create.e2e-spec.ts".

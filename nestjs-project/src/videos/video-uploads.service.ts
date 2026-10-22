@@ -8,6 +8,7 @@ import {
   type StorageSigningPort,
 } from '../storage/storage-signing.port';
 import { StorageError } from '../storage/storage.error';
+import { videoStatus } from './video-status.mapper';
 import type { Video } from './entities/video.entity';
 import { VideosRepository, type UploadClaim } from './videos.repository';
 import { VIDEO_LIMITS, VIDEO_UPLOAD } from './videos.constants';
@@ -324,14 +325,7 @@ export class VideoUploadsService {
   }
 
   private status(video: Video): VideoUploadStatus {
-    return {
-      id: video.id,
-      slug: video.slug,
-      status: video.status,
-      errorCode: video.error_code,
-      createdAt: video.created_at,
-      updatedAt: video.updated_at,
-    };
+    return videoStatus(video);
   }
 
   private validateInput(input: CreateVideoUpload): void {

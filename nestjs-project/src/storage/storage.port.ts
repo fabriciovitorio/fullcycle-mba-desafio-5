@@ -32,4 +32,5 @@ export interface StoragePort {
   ): Promise<StorageObject>;
   abortMultipartUpload(key: string, uploadId: string): Promise<void>;
   headObject(key: string): Promise<StorageObject>;
+  deleteObject(key: string): Promise<void>;
 }

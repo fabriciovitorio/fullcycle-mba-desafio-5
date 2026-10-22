@@ -1,0 +1,162 @@
+{
+  "si": "SI-03.5.3",
+  "status": "passed",
+  "recorded_at": "2026-10-22T01:40:34.025533+00:00",
+  "scope": "POST /videos/uploads only, request/response DTOs, real HTTP fixture, module integration and inherited OpenAPI export. No other video HTTP operation or worker enabled.",
+  "installed_versions": {
+    "@nestjs/core": "11.1.16",
+    "@nestjs/swagger": "11.4.2",
+    "@nestjs/throttler": "6.5.0",
+    "class-validator": "0.14.4",
+    "class-transformer": "0.5.1"
+  },
+  "created_files": [
+    "src/common/http.constants.ts",
+    "src/common/configure-http-body.ts",
+    "src/videos/dto/create-video-upload.dto.ts",
+    "src/videos/dto/video-status.dto.ts",
+    "src/videos/dto/video-upload-initialization.dto.ts",
+    "src/videos/videos-uploads.controller.ts",
+    "src/videos/videos.module.integration-spec.ts",
+    "test/helpers/videos-http.fixture.ts",
+    "test/videos-uploads-create.e2e-spec.ts",
+    "test/fixtures/upload-small.mp4"
+  ],
+  "modified_files": [
+    "src/main.ts",
+    "src/videos/videos.module.ts",
+    "src/common/openapi/api-error-envelope.dto.ts",
+    "package.json",
+    "openapi.json"
+  ],
+  "implementation": {
+    "controller": "Protected by inherited global JWT guard. CurrentUser.sub delegated to existing VideoUploadsService.initialize, no channel selector, repository access or business catch in controller. Explicit 201 and real route throttle 10 per 60000ms. JSON request only, no file interceptor or binary upload endpoint.",
+    "validation": "Request DTO trims title and validates 1..200; fileName 1..255 excludes NUL/slashes/backslash/CR/LF; contentType is video/mp4; sizeBytes is integer 1..10000000000 without string coercion. Global whitelist/forbidNonWhitelisted rejects forged channelId and any unrecognized control fields.",
+    "response": "Explicit response DTOs match safe service projections and dates serialize ISO8601. Draft/session are confirmed in PostgreSQL and ListMultipartUploads; no outbox or completed source appears during initialization. Max declared boundary returns 150 parts without uploading bytes.",
+    "body_limit": "Shared configureHttpBody installs 65536-byte JSON parser in main and HTTP fixture. Oversize control JSON becomes PayloadTooLargeException with inherited envelope; multipart input is rejected by validation. Other unexpected parser errors propagate.",
+    "errors": "400/401/404/429/503 use shared ApiErrorEnvelope references. 409 documents the existing service claim failure path; 413 documents the required JSON limit. Real inherited 401 and 429 omit error; shared DTO metadata marks it optional, without changing guards or runtime auth responses. Domain/validation responses continue including error.",
+    "openapi": "CLI plugin cannot infer integer type from IsInt, so sizeBytes has explicit type-only ApiProperty; all other request metadata comes from validators/JSDoc/literal type. Response fields have explicit ApiProperty. Export command now builds then runs compiled existing export entry, ensuring plugin metadata is present. Regenerated tracked openapi.json; existing operations are preserved and request schemas enriched by the already configured plugin.",
+    "fixture": "Real AppModule, inherited pipes/filters/JWT/throttler, confirmed user/channel DB fixtures and configured JwtService tokens. PostgreSQL/MinIO are real and isolated. Cleanups abort exact known source-key sessions and delete owned objects before FK cleanup; throttler state cleared between cases, retained across 10+1 test. No worker or development HTTP server started.",
+    "schema_changed": false,
+    "dependencies_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/videos.module.integration-spec.ts",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "focused-module.raw.log",
+      "tests_passed": 1,
+      "suites_passed": 1
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-uploads-create.e2e-spec.ts",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "tests_passed": 11,
+      "suites_passed": 1
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 410,
+      "suites_passed": 40
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 63,
+      "suites_passed": 4
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (runs npm run build && node dist/openapi-export.js)",
+      "execution": "isolated Docker stack; Jest database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "execution": "host Python JSON inspection",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "git diff --check",
+      "execution": "host Git read-only",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "module": 1,
+    "http": 11,
+    "spec_scenarios": "All six scenarios from specs/videos-uploads-create.plan.md plus missing channel, security-sensitive validation, JSON size/multipart rejection, sanitized storage failure and Swagger operation/schema checks.",
+    "fix_attempts_required": 2,
+    "failures_preserved": [
+      "focused-http.first-run-failed.raw.log",
+      "focused-http.fix-1-failed.raw.log"
+    ],
+    "diagnosis": "Initial fixture incorrectly counted directory-prefix ListMultipartUploads responses and assumed error fields in framework 401/429 bodies. First fix aligned auth expectations but recursive prefixes still returned empty. Direct temporary-session diagnostic established the MinIO listing behavior; second fix lists real bucket uploads and filters namespace client-side. Exact assertions of one/ten sessions and zero outbox retained."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id precedes query-docs",
+    "evidence": [
+      "context7-nest.json",
+      "context7-throttler.json",
+      "context7-validator.json"
+    ],
+    "version_discrepancy": "Results point to current master/develop branches rather than pinned releases; flagged before implementation, APIs checked against installed typings/runtime."
+  },
+  "openapi_contract_evidence": "openapi-contract.json",
+  "lint": {
+    "typescript_files_hashed": 135,
+    "changed_by_global_autofix": [],
+    "evidence": "source-hashes.json"
+  },
+  "fixture_media": {
+    "path": "test/fixtures/upload-small.mp4",
+    "bytes": 1706,
+    "sha256": "0c812eadeb68e460da20bf8a32def835ea93c2633fa79586e7ed14399a3425c3",
+    "generation": "Existing worker-tools FFmpeg container; lavfi black 32x32, 10fps, 0.2s, libx264, no audio, fragmented MP4. No bytes sent through API in creation tests."
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "follow_ups": [
+    "SI-03.7.4 orphan enumeration must account for actual MinIO ListMultipartUploads behavior: directory Prefix returns empty, while no Prefix or exact key lists sessions. Use real pagination and filter namespace; reproduce before relying on directory-prefix listing. Diagnostic evidence: multipart-list-diagnostic.raw.log."
+  ],
+  "limitations": [
+    "Declared 10GB acceptance is not a full-volume transfer/RSS/processing proof; that belongs to SI-03.9.2.",
+    "Other private/public video routes, queue dispatch and worker remain in their planned SIs.",
+    "One HTTP error-path test injects typed createMultipartUpload failure at the collaborator boundary; successful initialization/session/count tests use real S3 and DB."
+  ],
+  "observations": [
+    "Existing Node --localstorage-file warning and pg client.query deprecation warning appeared without test failure.",
+    "Initial Docker sandbox denials were retried with required escalation and saved as separate logs."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "previous_si_work_preserved": true,
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

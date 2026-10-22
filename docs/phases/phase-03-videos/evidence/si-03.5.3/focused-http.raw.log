@@ -1,0 +1,25 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-uploads-create.e2e-spec.ts
+
+(node:604) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/videos-uploads-create.e2e-spec.ts
+  POST /videos/uploads (e2e)
+    ✓ 1.1 should create a persisted draft and multipart session in the authenticated channel only (286 ms)
+    ✓ 1.2 should accept the declared 10GB boundary without transferring binary bytes (174 ms)
+    ✓ 1.3 should reject above-limit size with the inherited validation envelope and no side effects (58 ms)
+    ✓ 1.4 should reject a forged channelId rather than creating in either channel (101 ms)
+    ✓ 1.5 should reject missing and invalid JWTs using the real global guard (44 ms)
+    ✓ 1.6 should allow ten distinct creations and reject the eleventh through the real throttler (1466 ms)
+    ✓ should return CHANNEL_NOT_FOUND when the authenticated user has no channel (126 ms)
+    ✓ should enforce security-sensitive field constraints before creating any resources (80 ms)
+    ✓ should reject multipart bytes and control JSON above 64KiB without creating sessions (45 ms)
+    ✓ should map an unconfirmed S3 initialization to sanitized 503 without returning success (143 ms)
+    ✓ should document the protected JSON operation and safe response/error schemas (212 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        4.336 s
+Ran all test suites within paths "test/videos-uploads-create.e2e-spec.ts".

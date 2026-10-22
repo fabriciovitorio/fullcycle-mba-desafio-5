@@ -1,0 +1,335 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand
+
+(node:194) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/auth/auth.service.integration-spec.ts (8.994 s)
+PASS src/videos/video-upload-completion.service.integration-spec.ts (9.499 s)
+PASS src/videos/video-uploads.service.integration-spec.ts
+PASS src/storage/storage-signing.integration-spec.ts
+PASS src/storage/storage-file-transfer.integration-spec.ts
+PASS src/videos/videos.repository.integration-spec.ts
+(node:194) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/database/migrations.integration-spec.ts
+PASS src/mail/mail.service.integration-spec.ts
+PASS src/videos/video-processing-outbox.repository.integration-spec.ts
+FAIL src/videos/entities/video.entity.integration-spec.ts
+  ● Video entity (integration) › should enforce duration_seconds invariant for NaN
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+
+  ● Video entity (integration) › should persist processing and error states with their operational timestamps
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at Object.<anonymous> (videos/entities/video.entity.integration-spec.ts:127:19)
+
+  ● Video entity (integration) › should reject error state without a nonempty code ()
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+
+  ● Video entity (integration) › should reject metadata outside the limited shape ({"container":"mp4"})
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at videos/entities/video.entity.integration-spec.ts:211:21
+
+  ● Video entity (integration) › should reject metadata outside the limited shape (null)
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at videos/entities/video.entity.integration-spec.ts:211:21
+
+PASS src/auth/auth.service.spec.ts
+PASS src/auth/entities/refresh-token.entity.integration-spec.ts
+PASS src/storage/s3-storage.service.integration-spec.ts
+PASS src/storage/storage.module.integration-spec.ts
+FAIL src/videos/entities/video-processing-outbox.entity.integration-spec.ts
+  ● VideoProcessingOutbox entity (integration) › should reject invalid dispatch_attempts
+
+    QueryFailedError: insert or update on table "videos" violates foreign key constraint "FK_videos_channel"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at videos/entities/video-processing-outbox.entity.integration-spec.ts:100:19
+
+PASS src/openapi-export.integration-spec.ts
+FAIL src/users/users.service.integration-spec.ts
+  ● UsersService (integration) › createUserWithChannel › handles nickname collision by appending a random suffix
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at channels/channels.service.ts:47:18
+      at EntityManager.transaction (entity-manager/EntityManager.ts:156:28)
+      at UsersService.createUserWithChannel (users/users.service.ts:25:23)
+      at Object.<anonymous> (users/users.service.integration-spec.ts:64:7)
+
+  ● UsersService (integration) › findByEmail › returns null when user does not exist
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (users/users.service.integration-spec.ts:33:5)
+
+PASS src/videos/videos.module.integration-spec.ts
+PASS src/auth/entities/verification-token.entity.integration-spec.ts
+FAIL src/channels/entities/channel.entity.integration-spec.ts
+  ● Channel entity (integration) › should allow null description
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (channels/entities/channel.entity.integration-spec.ts:81:21)
+
+PASS src/auth/auth.module.integration-spec.ts
+FAIL src/users/entities/user.entity.integration-spec.ts
+  ● User entity (integration) › should default is_confirmed to false
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_23dc7937150c9567d37869313ce" on table "channels"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (users/entities/user.entity.integration-spec.ts:25:5)
+
+  ● User entity (integration) › should enforce unique email constraint
+
+    QueryFailedError: update or delete on table "channels" violates foreign key constraint "FK_videos_channel" on table "videos"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:40:3)
+      at Object.<anonymous> (users/entities/user.entity.integration-spec.ts:25:5)
+
+PASS src/videos/video-uploads.service.spec.ts
+FAIL src/channels/channels.service.integration-spec.ts
+  ● ChannelsService (integration) › createChannel › derives nickname from email prefix
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at channels/channels.service.ts:47:18
+      at EntityManager.transaction (entity-manager/EntityManager.ts:156:28)
+      at Object.<anonymous> (channels/channels.service.integration-spec.ts:66:23)
+
+  ● ChannelsService (integration) › createChannel › resolves nickname collision by appending a suffix
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_23dc7937150c9567d37869313ce" on table "channels"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (channels/channels.service.integration-spec.ts:31:5)
+
+PASS src/storage/s3-storage.service.spec.ts
+PASS src/mail/mail.module.spec.ts
+PASS src/videos/video-upload-completion.service.spec.ts
+PASS src/auth/guards/jwt-auth.guard.spec.ts
+PASS src/config/env.validation.integration-spec.ts
+PASS src/channels/channels.module.integration-spec.ts
+PASS src/users/users.module.integration-spec.ts
+PASS src/videos/videos-persistence.module.integration-spec.ts
+PASS src/channels/channels.service.spec.ts
+PASS src/config/videos.config.spec.ts
+PASS src/config/swagger.config.spec.ts
+PASS src/config/storage.config.spec.ts
+PASS src/channels/nickname.util.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/common/filters/validation-exception.filter.spec.ts
+PASS src/common/filters/domain-exception.filter.spec.ts
+
+Summary of all failing tests
+FAIL videos/entities/video.entity.integration-spec.ts
+  ● Video entity (integration) › should enforce duration_seconds invariant for NaN
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+
+  ● Video entity (integration) › should persist processing and error states with their operational timestamps
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at Object.<anonymous> (videos/entities/video.entity.integration-spec.ts:127:19)
+
+  ● Video entity (integration) › should reject error state without a nonempty code ()
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+
+  ● Video entity (integration) › should reject metadata outside the limited shape ({"container":"mp4"})
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at videos/entities/video.entity.integration-spec.ts:211:21
+
+  ● Video entity (integration) › should reject metadata outside the limited shape (null)
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at createVideoFixture (test/video-persistence.fixture.ts:48:19)
+      at videos/entities/video.entity.integration-spec.ts:211:21
+
+FAIL videos/entities/video-processing-outbox.entity.integration-spec.ts
+  ● VideoProcessingOutbox entity (integration) › should reject invalid dispatch_attempts
+
+    QueryFailedError: insert or update on table "videos" violates foreign key constraint "FK_videos_channel"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at videos/entities/video-processing-outbox.entity.integration-spec.ts:100:19
+
+FAIL users/users.service.integration-spec.ts
+  ● UsersService (integration) › createUserWithChannel › handles nickname collision by appending a random suffix
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at channels/channels.service.ts:47:18
+      at EntityManager.transaction (entity-manager/EntityManager.ts:156:28)
+      at UsersService.createUserWithChannel (users/users.service.ts:25:23)
+      at Object.<anonymous> (users/users.service.integration-spec.ts:64:7)
+
+  ● UsersService (integration) › findByEmail › returns null when user does not exist
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_31d2079dc4079b80517d31cf4f2" on table "verification_tokens"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (users/users.service.integration-spec.ts:33:5)
+
+FAIL channels/entities/channel.entity.integration-spec.ts
+  ● Channel entity (integration) › should allow null description
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at Object.<anonymous> (channels/entities/channel.entity.integration-spec.ts:81:21)
+
+FAIL users/entities/user.entity.integration-spec.ts
+  ● User entity (integration) › should default is_confirmed to false
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_23dc7937150c9567d37869313ce" on table "channels"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (users/entities/user.entity.integration-spec.ts:25:5)
+
+  ● User entity (integration) › should enforce unique email constraint
+
+    QueryFailedError: update or delete on table "channels" violates foreign key constraint "FK_videos_channel" on table "videos"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:40:3)
+      at Object.<anonymous> (users/entities/user.entity.integration-spec.ts:25:5)
+
+FAIL channels/channels.service.integration-spec.ts
+  ● ChannelsService (integration) › createChannel › derives nickname from email prefix
+
+    QueryFailedError: insert or update on table "channels" violates foreign key constraint "FK_23dc7937150c9567d37869313ce"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at InsertQueryBuilder.execute (query-builder/InsertQueryBuilder.ts:164:33)
+      at SubjectExecutor.executeInsertOperations (persistence/SubjectExecutor.ts:435:42)
+      at SubjectExecutor.execute (persistence/SubjectExecutor.ts:137:9)
+      at EntityPersistExecutor.execute (persistence/EntityPersistExecutor.ts:182:21)
+      at channels/channels.service.ts:47:18
+      at EntityManager.transaction (entity-manager/EntityManager.ts:156:28)
+      at Object.<anonymous> (channels/channels.service.integration-spec.ts:66:23)
+
+  ● ChannelsService (integration) › createChannel › resolves nickname collision by appending a suffix
+
+    QueryFailedError: update or delete on table "users" violates foreign key constraint "FK_23dc7937150c9567d37869313ce" on table "channels"
+
+      at PostgresQueryRunner.query (driver/postgres/PostgresQueryRunner.ts:325:19)
+      at DataSource.query (data-source/DataSource.ts:541:20)
+      at cleanAllTables (test/create-test-data-source.ts:41:3)
+      at Object.<anonymous> (channels/channels.service.integration-spec.ts:31:5)
+
+
+Test Suites: 6 failed, 34 passed, 40 total
+Tests:       13 failed, 397 passed, 410 total
+Snapshots:   0 total
+Time:        44.094 s
+Ran all test suites.

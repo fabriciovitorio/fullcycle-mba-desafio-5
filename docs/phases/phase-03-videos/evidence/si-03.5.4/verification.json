@@ -1,0 +1,136 @@
+{
+  "si": "SI-03.5.4",
+  "status": "passed",
+  "recorded_at": "2026-10-22T02:16:06.219637+00:00",
+  "scope": "GET /videos/:id/upload only; no other new video endpoint, worker or domain-service change.",
+  "created_files": [
+    "src/videos/dto/video-upload-resume.dto.ts",
+    "test/videos-upload-resume.e2e-spec.ts",
+    "test/fixtures/upload-thumbnail.jpg"
+  ],
+  "modified_files": [
+    "src/videos/videos-uploads.controller.ts",
+    "src/videos/videos.constants.ts",
+    "openapi.json"
+  ],
+  "implementation": {
+    "handler": "CurrentUser.sub + ParseUUIDPipe id delegate to existing VideoUploadsService.resume; global JWT required, no client upload id authority or business logic in controller.",
+    "response": "200 video safe projection and upload parts {partNumber,sizeBytes,etag}; typed response DTO reuses session fields and documents array/item schemas.",
+    "documentation": "Compiled OpenAPI exported and validated: UUID path, Bearer security, 200 response with inherited session fields and nested parts, all expected error envelopes. Prior POST creation operation unchanged; all committed API operations preserved.",
+    "rate_limit": "120/min with real inherited throttler; creation stays 10/min. Both use new central VIDEO_HTTP_RATE_LIMITS constants.",
+    "real_partial_upload": "Part 1 is 67108864 bytes streamed directly to MinIO from a reused 64KiB buffer; part 2 remains absent. GET parts match real S3 size/ETag, replays preserve id/slug/session/expiry and zero outbox.",
+    "security_and_state": "Other owner/no channel/absent resource 404; missing/invalid JWT401; invalid UUID400; expired missing source410; completed expired source409; processing/ready409. Query does not mutate session, video or outbox.",
+    "media_fixtures": "Processing uses a real completed small MP4 through existing completion service. Ready state is seeded explicitly with real MP4/JPEG objects and matching metadata; it does not pretend that a worker ran. Auxiliary fixture tracks and cleans derivative objects on suite close.",
+    "schema_changed": false,
+    "dependencies_changed": false
+  },
+  "checks": [
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-upload-resume.e2e-spec.ts",
+      "execution": "Docker isolated test stack; final Jest suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "suites_passed": 1,
+      "tests_passed": 12
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; final Jest suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "suites_passed": 40,
+      "tests_passed": 410
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; final Jest suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "suites_passed": 5,
+      "tests_passed": 75
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; final Jest suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; final Jest suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run openapi:export",
+      "includes": "npm run build && node dist/openapi-export.js",
+      "execution": "Docker isolated test stack; explicit user authorization after previous denial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "execution": "host Python JSON inspection",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "Verify TypeScript source hashes unchanged since passing test/typecheck/lint runs",
+      "exit_code": 0,
+      "files_checked": 137
+    }
+  ],
+  "pending_checks": [],
+  "test_execution_incident": {
+    "description": "Main agent inadvertently started full E2E before unit/integration suite exited, contaminating shared test DB. Both invalid runs ended and their logs were preserved. Unit/integration suite was rerun alone successfully. Two orphaned test multipart sessions remained, confirmed against zero persisted video rows, and were aborted in dedicated bucket. Final E2E rerun alone passed all 75 tests. No test expectations weakened or source changed to hide failures.",
+    "invalid_logs": [
+      "full-tests.overlap-invalid.raw.log",
+      "e2e.overlap-invalid.raw.log",
+      "e2e.residual-orphans.raw.log"
+    ],
+    "cleanup_evidence": "test-orphan-cleanup.raw.log"
+  },
+  "documentation_lookup": {
+    "provider": "Context7; resolve before query",
+    "evidence": "context7-http.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/swagger": "11.4.2",
+      "@nestjs/throttler": "6.5.0"
+    },
+    "discrepancy": "Docs master include Nest12 UUID options unavailable in Nest11; flagged before implementation. Installed ParseUUIDPipe declaration checked; default no-version constructor used."
+  },
+  "source_hashes": {
+    "files": 137,
+    "changed_by_lint": [],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "unchanged": true,
+    "migrations_or_writes": false,
+    "stopped_state_restored": true
+  },
+  "limits": [
+    "64MiB streamed part does not replace later full10GB transfer/RSS proof.",
+    "No queue dispatch or media processing worker is started."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "commit_created": false,
+    "push_attempted": false
+  },
+  "progress": "13/31 completed after marking SI-03.5.4 completed.",
+  "authorization_resolution": {
+    "previous_denial": "openapi-export.denied.json",
+    "explicit_user_response": "sim",
+    "authorized_action": "Complete build/export and OpenAPI verification for SI-03.5.4",
+    "result": "passed",
+    "no_application_source_changes_in_resume": true,
+    "test_reexecution": "Not repeated: all 137 TypeScript hashes match the successful serial runs; only generated specification and evidence/progress changed."
+  }
+}
