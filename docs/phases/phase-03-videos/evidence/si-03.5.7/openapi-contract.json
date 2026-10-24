@@ -1,0 +1,113 @@
+{
+  "status": "passed",
+  "artifact": "nestjs-project/openapi.json",
+  "sha256": "041bd8fd4f4c5767285397860c6ce7ea57fa8226f9976a22dd712d9f7cea8135",
+  "operation": {
+    "description": "Aborts the owner draft multipart session and retains the video with UPLOAD_ABORTED. Repeated abort returns the same empty 204. Accepts no request body; does not delete a video. Already completed source objects are reconciled instead of incorrectly confirming abort.",
+    "operationId": "VideosUploadsController_abort",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "description": "Video owned by the authenticated user channel.",
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "204": {
+        "description": "Upload aborted, or already aborted; no response body"
+      },
+      "400": {
+        "description": "VALIDATION_ERROR: invalid UUID or request body supplied",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or invalid access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "VIDEO_NOT_FOUND: absent video or different owner",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "INVALID_VIDEO_STATE or UPLOAD_OPERATION_IN_PROGRESS",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "413": {
+        "description": "JSON control body exceeds 64KiB",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Abort limit exceeded (10 requests per minute)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "STORAGE_UNAVAILABLE: storage operation could not be confirmed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "access-token": []
+      }
+    ],
+    "summary": "Abort a video upload",
+    "tags": [
+      "videos"
+    ]
+  },
+  "checks": [
+    "204 without body/schema/content",
+    "no requestBody",
+    "JWT and required UUID",
+    "all shared errors",
+    "all previous operations including SI03.5.5/6 unchanged",
+    "all component schemas unchanged"
+  ]
+}

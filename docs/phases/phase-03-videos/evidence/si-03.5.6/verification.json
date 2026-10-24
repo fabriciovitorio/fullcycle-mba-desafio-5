@@ -1,0 +1,130 @@
+{
+  "si": "SI-03.5.6",
+  "status": "passed",
+  "recorded_at": "2026-10-23T02:12:02.873158+00:00",
+  "scope": "POST /videos/:id/upload/completion, response DTO, external-spec HTTP tests and compiled OpenAPI only",
+  "created_files": [
+    "src/videos/dto/video-upload-completion.dto.ts",
+    "test/videos-upload-completion.e2e-spec.ts"
+  ],
+  "modified_files": [
+    "src/videos/videos-uploads.controller.ts",
+    "openapi.json"
+  ],
+  "implementation": {
+    "handler": "Inherited JWT, CurrentUser.sub, ParseUUIDPipe, body absence validation including unparsed content, existing completion service delegation. Res passthrough preserves serialization and filters while mapping processing to202 and ready to200.",
+    "output": "Explicit VideoUploadCompletionDto wraps safe existing VideoStatusDto; no storage keys or upload IDs exposed.",
+    "security": "Owner-only completion; foreign/absent/no-channel404; missing/invalidJWT401; UUID/body400; incomplete/mismatched/in-progress409; expired410; real throttle120/min then429; typed storage unavailable503.",
+    "idempotency": "Processing replay202 and ready replay200 preserve full video/outbox snapshots, identity and one processing intention. Ready fixture uses real MP4/JPEG objects and already-completed outbox, without pretending worker processing.",
+    "storage": "Normal paths upload real bytes through returned signed MinIO permissions; HeadObject and GetObject prove exact original. Missing-part session remains resumable. Actual mismatched stored bytes injected using authenticated S3 UploadPart are rejected and aborted with no processing intention.",
+    "redis_outage": "All17 focused tests passed with test Redis deliberately stopped, PostgreSQL/MinIO active, no worker/reconciler. Redis restored before full suites. Outbox persisted exactly once despite offline queue.",
+    "openapi": "Both200/202, UUID/JWT, no requestBody, shared errors400/401/404/409/410/413/429/503; committed operations and prior uncommitted SI03.5.5 parts operation preserved.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "domain_service_changed": false,
+    "worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-upload-completion.e2e-spec.ts",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "tests_passed": 17,
+      "suites_passed": 1
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 410,
+      "suites_passed": 40
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 116,
+      "suites_passed": 7
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "passed": 17,
+    "fix_attempts_required": 0,
+    "real_systems": [
+      "PostgreSQL",
+      "MinIO",
+      "JWT configuration",
+      "throttler"
+    ],
+    "fault_injection": "Only503 test substitutes typed HeadObject StorageError; normal scenarios use real storage and database."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs",
+    "evidence": "context7-http.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/swagger": "11.4.2",
+      "@nestjs/throttler": "6.5.0"
+    },
+    "discrepancy": "Master docs include Nest12 SSE examples; discrepancy flagged before implementation, those examples unused. Stable Res passthrough API cross-checked against installed Nest11 and real HTTP tests."
+  },
+  "source_hashes": {
+    "files": 142,
+    "changed_after_global_lint_and_checks": [],
+    "prior_si_files_changed": [
+      "nestjs-project/src/videos/videos-uploads.controller.ts"
+    ],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "limitations": [
+    "Small real media transfer does not replace SI03.9.2 full10GB/RSS proof.",
+    "Ready fixture is not end-to-end FFmpeg processing; dispatch/worker and full pipeline remain in planned SIs.",
+    "Abort/status routes remain in subsequent SIs."
+  ],
+  "observations": [
+    "Initial Docker sandbox denial retried with escalation; no test failures.",
+    "Existing Node --localstorage-file warning did not cause failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "c6fae53",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

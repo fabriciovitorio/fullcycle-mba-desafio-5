@@ -1,0 +1,61 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand
+
+(node:289) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/videos/video-upload-completion.service.integration-spec.ts (8.563 s)
+PASS src/auth/auth.service.integration-spec.ts (7.044 s)
+[31m[Nest] 289  - [39m10/24/2026, 2:24:48 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 289  - [39m10/24/2026, 2:24:49 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 289  - [39m10/24/2026, 2:24:49 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 289  - [39m10/24/2026, 2:24:50 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+PASS src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts
+PASS src/storage/storage-signing.integration-spec.ts
+PASS src/videos/video-uploads.service.integration-spec.ts
+(node:289) DeprecationWarning: Calling client.query() when the client is already executing a query is deprecated and will be removed in pg@9.0. Use async/await or an external async flow control mechanism instead.
+PASS src/database/migrations.integration-spec.ts
+PASS src/videos/videos.repository.integration-spec.ts
+PASS src/storage/storage-file-transfer.integration-spec.ts
+PASS src/mail/mail.service.integration-spec.ts
+PASS src/videos/entities/video.entity.integration-spec.ts
+PASS src/videos/video-processing-outbox.repository.integration-spec.ts
+PASS src/videos/queue/video-outbox-dispatcher.service.spec.ts
+PASS src/auth/auth.service.spec.ts
+PASS src/videos/entities/video-processing-outbox.entity.integration-spec.ts
+PASS src/storage/s3-storage.service.integration-spec.ts
+PASS src/channels/entities/channel.entity.integration-spec.ts
+PASS src/auth/entities/refresh-token.entity.integration-spec.ts
+PASS src/openapi-export.integration-spec.ts
+PASS src/users/users.service.integration-spec.ts
+PASS src/users/entities/user.entity.integration-spec.ts
+PASS src/videos/videos.module.integration-spec.ts
+PASS src/auth/entities/verification-token.entity.integration-spec.ts
+PASS src/storage/storage.module.integration-spec.ts
+PASS src/auth/auth.module.integration-spec.ts
+PASS src/channels/channels.module.integration-spec.ts
+PASS src/storage/s3-storage.service.spec.ts
+PASS src/videos/video-upload-completion.service.spec.ts
+PASS src/videos/queue/video-queue.module.integration-spec.ts
+PASS src/videos/video-uploads.service.spec.ts
+PASS src/channels/channels.service.integration-spec.ts
+PASS src/mail/mail.module.spec.ts
+PASS src/config/env.validation.integration-spec.ts
+PASS src/videos/videos-persistence.module.integration-spec.ts
+PASS src/users/users.module.integration-spec.ts
+PASS src/channels/channels.service.spec.ts
+PASS src/auth/guards/jwt-auth.guard.spec.ts
+PASS src/config/storage.config.spec.ts
+PASS src/config/videos.config.spec.ts
+PASS src/config/swagger.config.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/channels/nickname.util.spec.ts
+PASS src/common/filters/domain-exception.filter.spec.ts
+PASS src/common/filters/validation-exception.filter.spec.ts
+
+Test Suites: 43 passed, 43 total
+Tests:       430 passed, 430 total
+Snapshots:   0 total
+Time:        38.136 s, estimated 47 s
+Ran all test suites.
+

@@ -1,0 +1,58 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-upload-abort.e2e-spec.ts
+
+(node:192) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL test/videos-upload-abort.e2e-spec.ts (11.093 s)
+  DELETE /videos/:id/upload (e2e)
+    ✓ 1.1 should return empty204, retain the video as aborted and revoke an issued part URL (880 ms)
+    ✓ 1.2 should replay empty204 without changing identity, timestamps or terminal error (299 ms)
+    ✓ 1.3 should reject processing with409 and preserve the original and processing intention (404 ms)
+    ✓ 1.3 should reject ready with409 and preserve all published bytes and processing budget (506 ms)
+    ✕ 1.4 should hide another channel video and leave its existing upload permission usable (236 ms)
+    ✓ 1.5 should require a valid JWT without touching the draft session (191 ms)
+    ✓ 1.5 should reject a malformed UUID through the inherited validation filter (233 ms)
+    ✓ should reject a supplied JSON body {} before aborting (168 ms)
+    ✓ should reject a supplied JSON body {"uploadId":"untrusted"} before aborting (257 ms)
+    ✓ should reject an unparsed binary request body instead of ignoring it (236 ms)
+    ✓ should hide an absent video and an authenticated user without a channel (237 ms)
+    ✓ should reject an active completion claim without changing the session (240 ms)
+    ✓ should return503 without falsely confirming abort when storage is unavailable (390 ms)
+    ✓ should reconcile an already completed original instead of confirming a false abort (410 ms)
+    ✓ should allow10 abort calls and reject call11 through the real route throttler (298 ms)
+    ✓ should document204 without content/schema, JWT, UUID and shared errors (76 ms)
+
+  ● DELETE /videos/:id/upload (e2e) › 1.4 should hide another channel video and leave its existing upload permission usable
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 3
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+    +     "etag": "\"245d57d0664ae29df34183f751ecd583\"",
+          "partNumber": 1,
+    -     "sizeBytes": 1706,
+    +     "size": 1706,
+        },
+      ]
+
+      241 |     expect(
+      242 |       await fixture.storage.storage.listParts(row.source_key, row.upload_id!),
+    > 243 |     ).toEqual([
+          |       ^
+      244 |       expect.objectContaining({ partNumber: 1, sizeBytes: media.length }),
+      245 |     ]);
+      246 |     expect(await intentions(row.id)).toEqual([]);
+
+      at Object.<anonymous> (videos-upload-abort.e2e-spec.ts:243:7)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 15 passed, 16 total
+Snapshots:   0 total
+Time:        11.297 s
+Ran all test suites within paths "test/videos-upload-abort.e2e-spec.ts".
+

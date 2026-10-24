@@ -1,0 +1,32 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-status.e2e-spec.ts
+
+(node:174) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/videos-status.e2e-spec.ts
+  GET /videos/:id/status (e2e)
+    ✓ 1.1 should return exactly the owner projection in draft without changing persisted state (331 ms)
+    ✓ 1.1 should return exactly the owner projection in processing without changing persisted state (399 ms)
+    ✓ 1.1 should return exactly the owner projection in ready without changing persisted state (427 ms)
+    ✓ 1.1 should return exactly the owner projection in error without changing persisted state (379 ms)
+    ✓ 1.2 should expose only a safe error code without messages, internal keys or diagnostics (187 ms)
+    ✓ should suppress an unrecognized persisted error code without rewriting the record (193 ms)
+    ✓ 1.3 should require a valid JWT without revealing video information (53 ms)
+    ✓ 1.4 should hide another channel private draft status even when media is ready (72 ms)
+    ✓ 1.4 should hide another channel private processing status even when media is ready (156 ms)
+    ✓ 1.4 should hide another channel private ready status even when media is ready (182 ms)
+    ✓ 1.4 should hide another channel private error status even when media is ready (182 ms)
+    ✓ 1.5 should validate the UUID through the inherited validation filter (74 ms)
+    ✓ should hide absent videos and users without a channel (112 ms)
+    ✓ should read an expired draft without expiring or reconciling its upload (84 ms)
+    ✓ should read a draft with an active upload claim without changing or blocking the claim (83 ms)
+    ✓ should allow120 status reads and reject read121 through the real throttler (363 ms)
+    ✓ should document the direct safe DTO with UUID/JWT and shared errors (74 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       17 passed, 17 total
+Snapshots:   0 total
+Time:        4.419 s
+Ran all test suites within paths "test/videos-status.e2e-spec.ts".
+

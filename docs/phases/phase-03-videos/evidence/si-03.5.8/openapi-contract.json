@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "artifact": "nestjs-project/openapi.json",
+  "sha256": "ecff6e81266d5dd805c0c637160137658dba530a13fb8d89a8eff7f157c20fe6",
+  "operation": {
+    "description": "Returns the private status in any video state, including draft, processing, ready and error. Only the owner can read it. Returns safe error codes without storage keys, upload IDs or processing diagnostics; does not depend on Redis.",
+    "operationId": "VideosUploadsController_status",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "description": "Video owned by the authenticated user channel.",
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Current private video status",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/VideoStatusDto"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "VALIDATION_ERROR: id must be a UUID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or invalid access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "VIDEO_NOT_FOUND: absent video or different owner",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Control limit exceeded (120 requests per minute)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "access-token": []
+      }
+    ],
+    "summary": "Get the owner video status",
+    "tags": [
+      "videos"
+    ]
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "slug": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{24}$"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "processing",
+          "ready",
+          "error"
+        ]
+      },
+      "errorCode": {
+        "type": "string",
+        "nullable": true
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "required": [
+      "id",
+      "slug",
+      "status",
+      "errorCode",
+      "createdAt",
+      "updatedAt"
+    ]
+  },
+  "checks": [
+    "JWT and required UUID",
+    "direct VideoStatusDto200 without wrapper",
+    "no requestBody",
+    "safe nullable errorCode, four statuses and ISO timestamps",
+    "shared400/401/404/429",
+    "all previous operations and component schemas preserved"
+  ]
+}

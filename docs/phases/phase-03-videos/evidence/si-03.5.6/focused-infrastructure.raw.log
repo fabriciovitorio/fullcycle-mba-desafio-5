@@ -1,0 +1,7 @@
+db running healthy
+mailpit running healthy
+minio running healthy
+minio-init exited 
+nestjs-api running 
+redis exited 
+

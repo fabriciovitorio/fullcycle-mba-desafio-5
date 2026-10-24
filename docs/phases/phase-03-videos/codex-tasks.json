@@ -97,35 +97,35 @@
       "subject": "SI-03.5.5 — Emitir permissões de partes por HTTP",
       "description": "Permitir upload direto com validação de sessão e limites.",
       "activeForm": "Implementando Emitir permissões de partes por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.6",
       "subject": "SI-03.5.6 — Confirmar conclusão por HTTP",
       "description": "Expor conclusão idempotente e aceitação assíncrona.",
       "activeForm": "Implementando Confirmar conclusão por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.7",
       "subject": "SI-03.5.7 — Abortar sessão por HTTP",
       "description": "Permitir cancelar upload sem implementar exclusão de vídeo da Fase 04.",
       "activeForm": "Implementando Abortar sessão por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.5.8",
       "subject": "SI-03.5.8 — Consultar estado privado por HTTP",
       "description": "Dar ao dono acompanhamento de processamento e erro seguro.",
       "activeForm": "Implementando Consultar estado privado por HTTP",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.6.1",
       "subject": "SI-03.6.1 — Despachar a outbox para BullMQ",
       "description": "Ligar a intenção transacional à fila real de forma reexecutável.",
       "activeForm": "Implementando Despachar a outbox para BullMQ",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.6.2",

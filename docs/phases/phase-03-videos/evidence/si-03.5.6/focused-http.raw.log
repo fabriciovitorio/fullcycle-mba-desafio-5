@@ -1,0 +1,31 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-upload-completion.e2e-spec.ts
+
+(node:199) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/videos-upload-completion.e2e-spec.ts
+  POST /videos/:id/upload/completion (e2e)
+    ✓ 1.1 should return202 and persist the exact original and one processing intention (884 ms)
+    ✓ 1.2 should replay202 in processing with stable identity, timestamps and exactly one intention (135 ms)
+    ✓ 1.3 should replay200 for a consistent ready fixture without changing published keys or budget (211 ms)
+    ✓ 1.4 should reject a missing part with UPLOAD_INCOMPLETE while leaving the session resumable (291 ms)
+    ✓ 1.5 should reject real divergent bytes and leave no processing intention or published object (95 ms)
+    ✓ 1.6 should hide foreign resources and enforce real JWT authentication without mutating the draft (169 ms)
+    ✓ 1.6 should reject malformed UUID through VALIDATION_ERROR (35 ms)
+    ✓ should reject supplied JSON body 0 before touching a valid upload (359 ms)
+    ✓ should reject supplied JSON body 1 before touching a valid upload (57 ms)
+    ✓ should reject supplied JSON body 2 before touching a valid upload (174 ms)
+    ✓ should reject an unparsed non-JSON body instead of ignoring client payload (83 ms)
+    ✓ should return410 for an expired uncompleted upload without creating outbox (58 ms)
+    ✓ should reject a competing claim and return no false202 (66 ms)
+    ✓ should hide absent videos and authenticated users without channels (62 ms)
+    ✓ should map typed storage failure to503 without accepting processing (103 ms)
+    ✓ should allow120 completion requests and reject request121 through the real throttler (389 ms)
+    ✓ should document both success statuses with UUID/JWT and no request body (39 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       17 passed, 17 total
+Snapshots:   0 total
+Time:        4.287 s
+Ran all test suites within paths "test/videos-upload-completion.e2e-spec.ts".

@@ -670,6 +670,443 @@
         "tags": [
           "videos"
         ]
+      },
+      "delete": {
+        "description": "Aborts the owner draft multipart session and retains the video with UPLOAD_ABORTED. Repeated abort returns the same empty 204. Accepts no request body; does not delete a video. Already completed source objects are reconciled instead of incorrectly confirming abort.",
+        "operationId": "VideosUploadsController_abort",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Video owned by the authenticated user channel.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Upload aborted, or already aborted; no response body"
+          },
+          "400": {
+            "description": "VALIDATION_ERROR: invalid UUID or request body supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VIDEO_NOT_FOUND: absent video or different owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "INVALID_VIDEO_STATE or UPLOAD_OPERATION_IN_PROGRESS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "JSON control body exceeds 64KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Abort limit exceeded (10 requests per minute)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "STORAGE_UNAVAILABLE: storage operation could not be confirmed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Abort a video upload",
+        "tags": [
+          "videos"
+        ]
+      }
+    },
+    "/videos/{id}/status": {
+      "get": {
+        "description": "Returns the private status in any video state, including draft, processing, ready and error. Only the owner can read it. Returns safe error codes without storage keys, upload IDs or processing diagnostics; does not depend on Redis.",
+        "operationId": "VideosUploadsController_status",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Video owned by the authenticated user channel.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current private video status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoStatusDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_ERROR: id must be a UUID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VIDEO_NOT_FOUND: absent video or different owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Control limit exceeded (120 requests per minute)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get the owner video status",
+        "tags": [
+          "videos"
+        ]
+      }
+    },
+    "/videos/{id}/upload/parts": {
+      "post": {
+        "description": "Issues temporary direct-to-storage PUT permissions for 1–50 unique part numbers within the owner draft session. Expected lengths are calculated by the server. URLs expire within 15 minutes and never after the session; send binary bytes directly to storage with the returned headers.",
+        "operationId": "VideosUploadsController_signParts",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Video owned by the authenticated user channel.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignVideoUploadPartsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Temporary upload permissions for the requested parts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoUploadPermissionsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_ERROR: invalid UUID, duplicate/invalid/out-of-range parts or batch outside 1–50",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VIDEO_NOT_FOUND: absent video or different owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "INVALID_VIDEO_STATE or UPLOAD_OPERATION_IN_PROGRESS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "UPLOAD_EXPIRED: expired session without a recoverable completed source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "JSON control body exceeds 64KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Control limit exceeded (120 requests per minute)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "STORAGE_UNAVAILABLE: storage operation or signing could not be confirmed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Authorize video upload parts",
+        "tags": [
+          "videos"
+        ]
+      }
+    },
+    "/videos/{id}/upload/completion": {
+      "post": {
+        "description": "Confirms authoritative storage parts and atomically persists processing with one outbox intention. Accepts no request body or client sizes/ETags. Repeated processing returns 202; an already ready video returns 200 without repeating processing.",
+        "operationId": "VideosUploadsController_complete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Video owned by the authenticated user channel.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Already ready; identity and published data preserved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoUploadCompletionDto"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Upload completed and processing accepted, or processing replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoUploadCompletionDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_ERROR: invalid UUID or request body supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "VIDEO_NOT_FOUND: absent video or different owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "UPLOAD_INCOMPLETE, UPLOAD_SIZE_MISMATCH, UPLOAD_OPERATION_IN_PROGRESS or INVALID_VIDEO_STATE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "UPLOAD_EXPIRED: expired session without a recoverable completed source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "JSON control body exceeds 64KiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Control limit exceeded (120 requests per minute)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "STORAGE_UNAVAILABLE: storage operation could not be confirmed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Complete a video upload",
+        "tags": [
+          "videos"
+        ]
       }
     }
   },
@@ -964,6 +1401,95 @@
         "required": [
           "video",
           "upload"
+        ]
+      },
+      "SignVideoUploadPartsDto": {
+        "type": "object",
+        "properties": {
+          "partNumbers": {
+            "type": "array",
+            "description": "Distinct part numbers (1–50 per request), each within this upload's part count.",
+            "minimum": 1,
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "maxItems": 50
+          }
+        },
+        "required": [
+          "partNumbers"
+        ]
+      },
+      "VideoUploadPartHeadersDto": {
+        "type": "object",
+        "properties": {
+          "Content-Length": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "description": "Exact byte length required by the signed PUT."
+          }
+        },
+        "required": [
+          "Content-Length"
+        ]
+      },
+      "VideoUploadPartPermissionDto": {
+        "type": "object",
+        "properties": {
+          "partNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 150
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Temporary PUT permission at the configured storage origin. Use unchanged."
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expires within 900 seconds and no later than the upload session."
+          },
+          "headers": {
+            "$ref": "#/components/schemas/VideoUploadPartHeadersDto"
+          }
+        },
+        "required": [
+          "partNumber",
+          "url",
+          "expiresAt",
+          "headers"
+        ]
+      },
+      "VideoUploadPermissionsDto": {
+        "type": "object",
+        "properties": {
+          "parts": {
+            "minItems": 1,
+            "maxItems": 50,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoUploadPartPermissionDto"
+            }
+          }
+        },
+        "required": [
+          "parts"
+        ]
+      },
+      "VideoUploadCompletionDto": {
+        "type": "object",
+        "properties": {
+          "video": {
+            "$ref": "#/components/schemas/VideoStatusDto"
+          }
+        },
+        "required": [
+          "video"
         ]
       },
       "ApiErrorEnvelope": {

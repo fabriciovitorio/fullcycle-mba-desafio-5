@@ -18,6 +18,7 @@ export const VIDEO_QUEUE = {
 export const VIDEO_HTTP_RATE_LIMITS = {
   WINDOW_MS: 60_000,
   CREATE: 10,
+  ABORT: 10,
   CONTROL: 120,
 } as const;
 

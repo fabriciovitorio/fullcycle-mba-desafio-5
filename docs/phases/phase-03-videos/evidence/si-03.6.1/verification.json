@@ -1,0 +1,154 @@
+{
+  "si": "SI-03.6.1",
+  "status": "passed",
+  "recorded_at": "2026-10-24T02:26:51.000118+00:00",
+  "scope": "Producer-only BullMQ queue module and standalone-worker outbox dispatcher; no API timer or consumer",
+  "created_files": [
+    "src/videos/queue/video-queue.constants.ts",
+    "src/videos/queue/video-queue.module.ts",
+    "src/videos/queue/video-outbox-dispatcher.module.ts",
+    "src/videos/queue/video-outbox-dispatcher.service.ts",
+    "src/videos/queue/video-outbox-dispatcher.service.spec.ts",
+    "src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts",
+    "src/videos/queue/video-queue.module.integration-spec.ts",
+    "src/test/video-queue.fixture.ts"
+  ],
+  "modified_existing_source_files": [],
+  "implementation": {
+    "architecture": "VideoQueueModule owns configured producer and sanitized queue error listener; exports BullModule. VideoOutboxDispatcherModule imports queue+persistence and exports dispatcher for future standalone worker. AppModule/VideosModule untouched; API never imports queue/dispatcher/processor.",
+    "lifecycle": "Native self-scheduled timeout, single active dispatch promise, duplicate bootstrap guard, no overlapping explicit/timer dispatch. Shutdown clears timer, blocks further claims and awaits active dispatch. Direct dispatch propagates errors; only background timer/shutdown boundaries catch and log sanitized operational failure.",
+    "claims": "Existing transactional claimDispatch uses DB clock, skip_locked, unique token and deadline; no repository/schema changes. Batch1 avoids expiring serially-waiting batch claims. markDispatched/releaseDispatch use existing live-token fencing; false outcome is observable failure, not success.",
+    "publish": "Queue.add process-video into video-processing with exact payload{schemaVersion:1,videoId}, jobId video-<uuid>, attempts3, exponential2000ms backoff, retain completed/failed jobs for deduplication. Only after successful add mark dispatched_at and recheck deadline; completed_at never touched by dispatcher. Processing attempt budget unchanged.",
+    "failure": "Failed publish or post-add DB failure reschedules/release through fenced repository and fixed last_error. Release failure propagates AggregateError preserving both failures and leaves lease recoverable. No new upload needed.",
+    "producer_readiness": "Finite initial readiness wait precedes Queue.add; timed-out wait cannot enqueue deferred work after claim release. enableOfflineQueue:false, maxRetriesPerRequest1, connectTimeout2000 and commandTimeout2000. Default BullMQ ready initialization retained because skipWaitingForReady alone can reject INFO/init irrecoverably when starting offline; actual initial-outage/reconnect tested.",
+    "operational_defaults": {
+      "tick_ms": 1000,
+      "batch_size": 1,
+      "lease_ms": 30000,
+      "retry_ms": 2000,
+      "recheck_ms": 30000,
+      "ready_timeout_ms": 2000,
+      "command_timeout_ms": 2000
+    },
+    "operational_provenance": "Dispatch timing defaults are named implementation constants; plan specifies semantics but no dispatch interval/lease values. Separate from media processing60s lease/10s heartbeat. No throughput/capacity guarantee.",
+    "redis_recovery": "Real TCP fault gate in test API container makes Redis unreachable to producer without mocking Queue/SDK or stopping other services. Both established-connection outage and construction while unreachable recover after restoring actual TCP connectivity; intent remains open/undispatched until confirmed add.",
+    "crash_window": "Real Redis add followed by real SQL division-by-zero failures in mark and release simulates crash gap with existing job and uncommitted dispatch/live claim. Expiring lease and dispatching again yields same single logical job and eventual dispatch mark.",
+    "tests": "12unit cases cover publication ordering, failures, ownership, bounded readiness, nonoverlap and lifecycle shutdown.6integration cases cover exact job/options, deduplication, outage/recovery, crash window, ineligible intents and initial outage.2module integration cases verify real DI/config/export and producer-only queue/no workers.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "api_changed": false,
+    "worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/queue/video-outbox-dispatcher.service.spec.ts src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts src/videos/queue/video-queue.module.integration-spec.ts",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "focused-tests.raw.log",
+      "tests_passed": 20,
+      "suites_passed": 3
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 430,
+      "suites_passed": 43
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 149,
+      "suites_passed": 9
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; Jest/database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "OpenAPI unchanged from SI03.5.8",
+      "exit_code": 0,
+      "evidence": "openapi-preservation.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "passed": 20,
+    "suites": 3,
+    "fix_attempts_required": 0,
+    "fault_injection": "TCP socket severing/reconnect against real Redis; real SQL failures after successful Redis add. Unit collaborators mocked at repository/queue boundaries only.",
+    "configured_libraries_real": [
+      "BullMQ5.81.5",
+      "@nestjs/bullmq11.0.5",
+      "PostgreSQL",
+      "Redis"
+    ]
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs for each library",
+    "evidence": "context7-queue.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/bullmq": "11.0.5",
+      "bullmq": "5.81.5",
+      "typeorm": "0.3.28"
+    },
+    "version_scope": "BullMQ references explicitly v5. Nest Bull docs master unpinned; registerQueueAsync/InjectQueue and shutdown/provider behavior cross-checked in installed sources and real DI tests. No v6-exclusive APIs used."
+  },
+  "source_hashes": {
+    "files": 152,
+    "changed_after_global_lint": [],
+    "existing_files_changed_in_si": [],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "infrastructure": {
+    "isolated_test_stack": "streamtube-test",
+    "queue_prefixes": "Dedicated test prefix plus UUID per fixture; obliterate only own queue, no Redis flush",
+    "all_test_services_stopped_after_checks": true,
+    "dev_server_started": false,
+    "worker_started": false
+  },
+  "limitations": [
+    "TCP partition proves producer Redis unavailability; it does not claim Redis container was stopped or data was erased.",
+    "Missing/failed/completed job reconciliation and persistent processing budget recovery remain SI03.6.2.",
+    "Dispatcher module prepared for future standalone worker; no background dispatcher is activated in HTTP API.",
+    "No media processing or large-file throughput proof in this SI."
+  ],
+  "observations": [
+    "Initial Context7 network sandbox denial retried with escalation.",
+    "Expected sanitized connection-failure logs occurred during real TCP outage tests.",
+    "Existing Node localstorage/pg client-query warnings did not cause failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "c6fae53",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

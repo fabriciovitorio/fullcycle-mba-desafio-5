@@ -1,0 +1,22 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand
+
+(node:2767) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/auth.e2e-spec.ts (8.676 s)
+PASS test/videos-upload-abort.e2e-spec.ts (5.213 s)
+PASS test/videos-upload-parts.e2e-spec.ts (6.625 s)
+PASS test/videos-upload-completion.e2e-spec.ts (5.727 s)
+PASS test/videos-status.e2e-spec.ts (5.667 s)
+PASS test/videos-upload-resume.e2e-spec.ts
+PASS test/videos-uploads-create.e2e-spec.ts
+PASS test/swagger.e2e-spec.ts
+PASS test/app.e2e-spec.ts
+
+Test Suites: 9 passed, 9 total
+Tests:       149 passed, 149 total
+Snapshots:   0 total
+Time:        39.405 s
+Ran all test suites.
+

@@ -1,0 +1,153 @@
+{
+  "status": "passed",
+  "artifact": "nestjs-project/openapi.json",
+  "sha256": "433a530c542a47d53883c238620b3d8b0f0cafa02b41c7e3890696003b3cf8a1",
+  "operation": {
+    "description": "Confirms authoritative storage parts and atomically persists processing with one outbox intention. Accepts no request body or client sizes/ETags. Repeated processing returns 202; an already ready video returns 200 without repeating processing.",
+    "operationId": "VideosUploadsController_complete",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "description": "Video owned by the authenticated user channel.",
+        "schema": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Already ready; identity and published data preserved",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/VideoUploadCompletionDto"
+            }
+          }
+        }
+      },
+      "202": {
+        "description": "Upload completed and processing accepted, or processing replay",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/VideoUploadCompletionDto"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "VALIDATION_ERROR: invalid UUID or request body supplied",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Missing or invalid access token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "VIDEO_NOT_FOUND: absent video or different owner",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "UPLOAD_INCOMPLETE, UPLOAD_SIZE_MISMATCH, UPLOAD_OPERATION_IN_PROGRESS or INVALID_VIDEO_STATE",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "410": {
+        "description": "UPLOAD_EXPIRED: expired session without a recoverable completed source",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "413": {
+        "description": "JSON control body exceeds 64KiB",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Control limit exceeded (120 requests per minute)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "STORAGE_UNAVAILABLE: storage operation could not be confirmed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiErrorEnvelope"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "access-token": []
+      }
+    ],
+    "summary": "Complete a video upload",
+    "tags": [
+      "videos"
+    ]
+  },
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "video": {
+        "$ref": "#/components/schemas/VideoStatusDto"
+      }
+    },
+    "required": [
+      "video"
+    ]
+  },
+  "checks": [
+    "JWT",
+    "UUID",
+    "no requestBody",
+    "200/202 responses",
+    "shared error envelopes",
+    "safe response fields",
+    "all committed operations preserved",
+    "SI-03.5.5 parts operation preserved"
+  ]
+}

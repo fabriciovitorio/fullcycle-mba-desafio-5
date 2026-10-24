@@ -1,0 +1,38 @@
+
+> nestjs-project@0.0.1 test:e2e
+> jest --config ./test/jest-e2e.json --runInBand --runTestsByPath test/videos-upload-parts.e2e-spec.ts
+
+(node:198) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS test/videos-upload-parts.e2e-spec.ts (7.027 s)
+  POST /videos/:id/upload/parts (e2e)
+    ✓ 1.1 should sign requested parts with exact lengths/deadlines and upload directly using the returned URL (774 ms)
+    ✓ 1.2 should reject duplicates without granting permissions or changing the session (183 ms)
+    ✓ 1.2 should reject empty batch without granting permissions or changing the session (161 ms)
+    ✓ 1.2 should reject batch above fifty without granting permissions or changing the session (147 ms)
+    ✓ 1.2 should reject outside actual partCount without granting permissions or changing the session (99 ms)
+    ✓ 1.2 should reject zero without granting permissions or changing the session (87 ms)
+    ✓ 1.2 should reject fraction without granting permissions or changing the session (234 ms)
+    ✓ 1.2 should reject numeric string without granting permissions or changing the session (136 ms)
+    ✓ 1.2 should reject missing array without granting permissions or changing the session (131 ms)
+    ✓ 1.2 should reject forged storage field without granting permissions or changing the session (136 ms)
+    ✓ 1.3 should hide foreign video permissions before invoking the signer (143 ms)
+    ✓ 1.4 should require missing and invalid JWTs to be rejected by the inherited guard (54 ms)
+    ✓ 1.5 should reject a live completing claim without signing a URL (130 ms)
+    ✓ 1.5 should reject a live aborting claim without signing a URL (150 ms)
+    ✓ 1.6 should validate UUID through the inherited validation envelope (25 ms)
+    ✓ 1.6 should reject expired draft without renewing any permission or session (60 ms)
+    ✓ should cap signature lifetime by the remaining absolute session duration (138 ms)
+    ✓ should accept fifty valid distinct permissions and reject fifty-one even with enough parts (140 ms)
+    ✓ should reject a direct PUT whose actual byte length differs from the signed requirement (97 ms)
+    ✓ should hide absent videos and users without a channel (65 ms)
+    ✓ should reject processing and aborted sessions instead of granting fresh permissions (144 ms)
+    ✓ should return sanitized storage failure without exposing partial permissions (73 ms)
+    ✓ should enforce 120 signing requests per minute with the real throttler (983 ms)
+    ✓ should document the protected JSON operation, UUID and shared error envelopes (89 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       24 passed, 24 total
+Snapshots:   0 total
+Time:        7.093 s
+Ran all test suites within paths "test/videos-upload-parts.e2e-spec.ts".

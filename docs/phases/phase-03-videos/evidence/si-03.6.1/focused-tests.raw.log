@@ -1,0 +1,20 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/videos/queue/video-outbox-dispatcher.service.spec.ts src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts src/videos/queue/video-queue.module.integration-spec.ts
+
+(node:177) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/videos/queue/video-outbox-dispatcher.service.spec.ts
+[31m[Nest] 177  - [39m10/24/2026, 2:23:49 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 177  - [39m10/24/2026, 2:23:50 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 177  - [39m10/24/2026, 2:23:50 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 177  - [39m10/24/2026, 2:23:51 AM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+PASS src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts (6.046 s)
+PASS src/videos/queue/video-queue.module.integration-spec.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        7.343 s
+Ran all test suites within paths "src/videos/queue/video-outbox-dispatcher.service.spec.ts", "src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts", "src/videos/queue/video-queue.module.integration-spec.ts".
+

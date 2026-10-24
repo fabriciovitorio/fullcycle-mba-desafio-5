@@ -1,0 +1,136 @@
+{
+  "si": "SI-03.5.8",
+  "status": "passed",
+  "recorded_at": "2026-10-24T02:16:20.302060+00:00",
+  "scope": "GET /videos/:id/status private owner-only HTTP contract",
+  "created_files": [
+    "test/videos-status.e2e-spec.ts"
+  ],
+  "modified_files": [
+    "src/videos/videos-uploads.controller.ts",
+    "openapi.json"
+  ],
+  "implementation": {
+    "handler": "Inherited global JWT, CurrentUser.sub, ParseUUIDPipe and thin delegation to existing completion.getStatus. Explicit200, reused VideoStatusDto directly without video wrapper. No provider/module/DTO/domain changes.",
+    "read_only": "Real draft, processing, ready and error fixtures return exact identity/state/ISO timestamps while full persisted video/outbox snapshots and source/derived media remain unchanged. Expired draft and active completing claim also readable without reconciliation, expiration or claim mutation.",
+    "projection": "Only id/slug/status/errorCode/createdAt/updatedAt. null without failure; PROCESSING_FAILED safely returned for processing failure; unknown persisted diagnostic code suppressed to null without rewriting record. No message, stderr, stack, upload_id, source/derived keys, signed URLs or credentials.",
+    "authorization": "Missing/invalidJWT401 inherited format; foreign owner404 in all four states including ready; missing video and user without channel404; malformedUUID400 VALIDATION_ERROR. No guards/repos/services replaced with mocks.",
+    "rate_limit": "Real inherited throttler permits120 reads/min and rejects121st429, no writes or new intentions. Other route/auth limits preserved.",
+    "redis_outage": "All17 focused tests passed with test Redis stopped, PostgreSQL/MinIO healthy and no worker/reconciler. Redis restored before full suites. See focused-infrastructure.raw.log.",
+    "fixtures": "Processing uses real signed direct MinIO upload and HTTP completion202; ready contains actual MP4/JPEG derivatives and required metadata/completed outbox. Error fixture uses PROCESSING_FAILED and safe message. No claim of worker execution.",
+    "openapi": "GET operation has no requestBody, JWT, required UUID, direct VideoStatusDto200 and shared400/401/404/429. DTO has exactly six required fields, nullable errorCode, four statuses and date-time timestamps. All prior operations including uncommitted SI03.5.5/6/7 and all component schemas unchanged.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "domain_service_changed": false,
+    "worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-status.e2e-spec.ts",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "tests_passed": 17,
+      "suites_passed": 1
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 410,
+      "suites_passed": 40
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 149,
+      "suites_passed": 9
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "tests_passed": 17,
+    "suites_passed": 1,
+    "fix_attempts_required": 0,
+    "mocked_collaborators": []
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs",
+    "evidence": "context7-http.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/swagger": "11.4.2",
+      "@nestjs/throttler": "6.5.0"
+    },
+    "version_scope": "Master docs are not version-pinned; stable Get/HttpCode/ParseUUIDPipe/Throttle/ApiResponse APIs verified with installed versions and real HTTP tests."
+  },
+  "source_hashes": {
+    "files": 144,
+    "changed_after_global_lint": [],
+    "existing_files_changed_in_si": [
+      "nestjs-project/src/videos/videos-uploads.controller.ts"
+    ],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true,
+    "before_after_match": true,
+    "evidence": [
+      "development-db.sha256",
+      "development-db-after.sha256"
+    ]
+  },
+  "infrastructure": {
+    "isolated_test_stack": "streamtube-test",
+    "all_test_services_stopped_after_checks": true,
+    "dev_server_started": false,
+    "worker_started": false
+  },
+  "limitations": [
+    "HTTP status integration does not replace the planned full worker pipeline.",
+    "Small real media fixture does not replace later full10GB/RSS proof."
+  ],
+  "observations": [
+    "Initial Context7 network sandbox denial retried with escalation.",
+    "Existing Node localstorage warning did not cause test failures.",
+    "Existing pg client.query deprecation did not cause test failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "c6fae53",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

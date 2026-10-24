@@ -1,0 +1,129 @@
+{
+  "si": "SI-03.5.5",
+  "status": "passed",
+  "recorded_at": "2026-10-23T01:59:08.228050+00:00",
+  "scope": "POST /videos/:id/upload/parts, request/response DTOs and external-spec HTTP tests only.",
+  "created_files": [
+    "src/videos/dto/sign-video-upload-parts.dto.ts",
+    "src/videos/dto/video-upload-permissions.dto.ts",
+    "test/videos-upload-parts.e2e-spec.ts"
+  ],
+  "modified_files": [
+    "src/videos/videos-uploads.controller.ts",
+    "openapi.json"
+  ],
+  "implementation": {
+    "handler": "Global inherited JWT + CurrentUser.sub + ParseUUIDPipe; thin delegation to existing VideoUploadsService.signParts. Explicit HTTP200, JSON control only, real route throttle120/min.",
+    "input": "DTO requires array of 1..50 unique integers >=1, no coercion. Existing service validates each number against persisted actual partCount, owner, draft, operation claim and expiry. No client key/upload_id/ETag authority; unknown properties rejected by inherited whitelist.",
+    "output": "Typed parts with partNumber, signed consumer-origin url, absolute expiresAt and exact Content-Length string header; 64MiB full part and exact smaller remainder verified. Real signature deadline <=900s and never past session; near-expiry session caps TTL.",
+    "direct_upload": "API issues permissions only. Real signed PUT of small final part arrives directly at MinIO, returns ETag and appears in authoritative ListParts; no complete-file allocation or binary traffic through API. Wrong actual length with matching changed Content-Length is rejected403 by storage signature; no part/outbox created.",
+    "security": "Foreign/missing/no-channel404, missing/invalidJWT401, malformedUUID400, invalid batch400, active completing/aborting409, processing/aborted409, expired410, typed storage failure503. Safe inherited envelopes; tests verify no partial permission returned on failures. Existing creation/auth limits unchanged.",
+    "openapi": "Regenerated through existing compiled export pipeline. JSON assertions prove UUID/JWT, required JSON input, unique integer items, min1/max50, HTTP200, nested Content-Length header, URI/date-time and common errors400/401/404/409/410/413/429/503. All previously committed operations unchanged. Only integer array items and constant maxItems require explicit request metadata because CLI plugin could not infer them; other array constraints come from validators.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "domain_service_changed": false,
+    "worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-upload-parts.e2e-spec.ts",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "suites_passed": 1,
+      "tests_passed": 24
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "suites_passed": 40,
+      "tests_passed": 410
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "suites_passed": 6,
+      "tests_passed": 99
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (npm run build && node dist/openapi-export.js)",
+      "execution": "Docker isolated test stack; Jest suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "passed": 24,
+    "fix_attempts_required": 0,
+    "coverage": "All six external-spec scenarios plus strict numeric/unknown-field validation, max50 acceptance with actual51-part declaration, short session deadline, mismatched signed length, absence/no channel, processing/aborted state, real120/min throttle and Swagger operation. First passing run and repeat after metadata-only adjustment preserved.",
+    "real_systems": [
+      "PostgreSQL",
+      "MinIO",
+      "JWT configuration",
+      "throttler"
+    ],
+    "fault_injection": "Only storage503 error scenario injects typed ListParts failure; normal signing/PUT/state/claims use real collaborators."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs",
+    "evidence": "context7-arrays.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/swagger": "11.4.2",
+      "@nestjs/throttler": "6.5.0",
+      "class-validator": "0.14.4"
+    },
+    "discrepancy": "Context7 returns develop rather than version-pinned docs; flagged before implementation and cross-checked against installed versions and real runtime validation."
+  },
+  "source_hashes": {
+    "files": 140,
+    "changed_after_global_lint_and_checks": [],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "limitations": [
+    "Declared large multipart sizes and a small final-part upload are not the later full10GB transfer/RSS proof.",
+    "Completion/abort/status HTTP handlers, dispatch and worker remain in their planned SIs.",
+    "No manual retry/edit terminal video feature introduced."
+  ],
+  "observations": [
+    "Initial Docker sandbox denial was retried with escalation; no failing test runs.",
+    "Existing Node --localstorage-file warning did not cause failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "c6fae53",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

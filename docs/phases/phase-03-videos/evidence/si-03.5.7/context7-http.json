@@ -1,0 +1,27 @@
+{
+  "resolve": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Available Libraries:\n\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/nest\n- Description: A progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications with TypeScript/JavaScript \ud83d\ude80\n- Code Snippets: 2245\n- Source Reputation: High\n- Benchmark Score: 55.3\n- Versions: v11_1_6, v10_4_15, v10_4_6, v11.1.16, v12.0.1, v12.1.2\n----------\n- Title: NestJS\n- Context7-compatible library ID: /websites/nestjs\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 5318\n- Source Reputation: High\n- Benchmark Score: 77.8\n----------\n- Title: NestJS\n- Context7-compatible library ID: /nestjs/docs.nestjs.com\n- Description: NestJS is a progressive Node.js framework for building efficient and scalable server-side applications, utilizing Angular CLI and Dgeni for documentation generation.\n- Code Snippets: 5312\n- Source Reputation: High\n- Benchmark Score: 76.02\n----------\n- Title: NestJS Throttler\n- Context7-compatible library ID: /nestjs/throttler\n- Description: NestJS Throttler is a rate-limiting module for NestJS applications, allowing developers to control the number of requests users can make to endpoints within a specified time frame.\n- Code Snippets: 273\n- Source Reputation: High\n- Benchmark Score: 87.81\n----------\n- Title: NestJS\n- Context7-compatible library ID: /websites/api-references-nestjs_netlify_app_api\n- Description: NestJS is a progressive Node.js framework for building efficient, reliable, and scalable server-side applications.\n- Code Snippets: 7495\n- Source Reputation: High\n- Benchmark Score: 59.92"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "query": "NestJS 11 controllers @Delete @HttpCode 204 NO_CONTENT async Promise<void> standard response; Swagger @ApiResponse status204 no type or content; Throttle named default ttl milliseconds route override",
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Set custom HTTP status code with @HttpCode\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/controllers.md\n\nOverrides the default status code (200 for GET, 201 for POST) at the handler level. Import HttpCode from @nestjs/common.\n\n```typescript\n@Post()\n@HttpCode(204)\ncreate() {\n  return 'This action adds a new cat';\n}\n```\n\n--------------------------------\n\n### Override rate limiting options with @Throttle()\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/security/rate-limiting.md\n\nThe @Throttle() decorator overrides the limit and ttl set in the root module. It takes an object whose keys are throttler set names and values are objects with limit and ttl keys. Use the key 'default' if no name was set in the root options.\n\n```typescript\n// Override default configuration for Rate limiting and duration.\n@Throttle({ default: { limit: 3, ttl: 60000 } })\n@Get()\nfindAll() {\n  return \"List users works with custom rate limiting.\";\n}\n```\n\n--------------------------------\n\n### Rate Limiting > Customization\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/security/rate-limiting.md\n\nThe `@Throttle()` decorator overrides the `limit` and `ttl` set in the root module, to give tighter or looser security options. You can apply it to a class or a method. Since version 5, the decorator takes an object whose keys are throttler set names and whose values are objects with `limit` and `ttl` keys (and, optionally, `blockDuration`), similar to the options passed to the root module. If you didn't set a name in the root options, use the key `default`:\n\n--------------------------------\n\n### Controllers > Status code\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/controllers.md\n\nAs mentioned, the default response **status code** is **200**, except for POST requests, which default to **201**. You can change this behavior with the `@HttpCode(...)` decorator at the handler level.\n\n--------------------------------\n\n### Rate Limiting > Migration Guide\n\nSource: https://github.com/nestjs/docs.nestjs.com/blob/master/content/security/rate-limiting.md\n\n#### Migration Guide\n\nWhen migrating to version 5 or later, wrapping your options in an array is enough for most applications.\n\nIf you use a custom storage, wrap your `ttl` and `limit` in an array and assign it to the `throttlers` property of the options object.\n\nThe `@SkipThrottle()` decorator now takes an optional object with string keys (the throttler names) and boolean values, which defaults to `{{ '{' }} default: true {{ '}' }}`.\n\nThe `@Throttle()` decorator now takes an object with string keys, the names of the throttler sets (again, `'default'` if no name is set), and values that are objects with `limit` and `ttl` keys.\n\n> warning **Warning** The `ttl` is now in **milliseconds**. To keep your `ttl` in seconds for readability, use the `seconds` helper from this package, which multiplies the value by 1000.\n\nFor more information, see the [5.0 changelog entry](https://github.com/nestjs/throttler/blob/master/CHANGELOG.md#501)."
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 2
+  }
+}

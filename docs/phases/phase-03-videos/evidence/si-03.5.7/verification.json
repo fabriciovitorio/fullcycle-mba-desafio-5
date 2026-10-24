@@ -1,0 +1,148 @@
+{
+  "si": "SI-03.5.7",
+  "status": "passed",
+  "recorded_at": "2026-10-24T02:01:07.866667+00:00",
+  "scope": "DELETE /videos/:id/upload HTTP contract only; no video deletion feature",
+  "created_files": [
+    "test/videos-upload-abort.e2e-spec.ts"
+  ],
+  "modified_files": [
+    "src/videos/videos-uploads.controller.ts",
+    "src/videos/videos.constants.ts",
+    "openapi.json"
+  ],
+  "implementation": {
+    "handler": "Inherited JWT, CurrentUser.sub, ParseUUIDPipe; body absence validation including unparsed content. Thin delegation to existing completion.abort; explicit HttpCode204 and Promise<void>.",
+    "rate_limit": "Dedicated ABORT10/min constant, real inherited guard. First10 requests accepted204 including replays, request11 rejected429; no auth/control limits changed.",
+    "idempotency": "Draft becomes error/UPLOAD_ABORTED; record retained, no outbox. Replay204 returns no body and preserves full row, identity and timestamps.",
+    "storage_revocation": "Real smallMP4 signedPUT before abort; after204 the same unexpired URL fails with NoSuchUpload, ListParts reports upload_not_found, no source object nor active MPU remains. Foreign owner404 leaves identical row and same signedURL still accepts PUT200.",
+    "state_protection": "Processing and ready return409 with unchanged full video/outbox snapshots and exact original/playback/thumbnail bytes. Ready uses consistent real-media fixture, not worker execution.",
+    "recovery": "Real completed S3 object with DB draft reconciles to processing+oneoutbox, returns409 INVALID_VIDEO_STATE instead of false204. Active completing claim returns409 unchanged.",
+    "unavailable": "Typed abortMultipartUpload StorageError gives503, retains draft+aborting lease and usable storage session with no terminal error/outbox. Only fault injection scenario; normal storage/DB real.",
+    "security": "Missing/invalidJWT401; foreign/absent/no-channel404; malformedUUID/body400; real route429. Shared inherited filters, no try/catch domain logic in controller.",
+    "openapi": "204 has description only, no content/schema; no requestBody. UUID/JWT and shared400/401/404/409/413/429/503. All previous operations including uncommitted SI03.5.5/6 and all component schemas unchanged.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "domain_service_changed": false,
+    "worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm run test:e2e -- --runInBand --runTestsByPath test/videos-upload-abort.e2e-spec.ts",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "focused-http.raw.log",
+      "tests_passed": 16,
+      "suites_passed": 1
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 410,
+      "suites_passed": 40
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 132,
+      "suites_passed": 8
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Compiled OpenAPI contract assertions",
+      "exit_code": 0,
+      "evidence": "openapi-contract.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "passed": 16,
+    "fix_attempts_required": 1,
+    "initial_run": {
+      "tests_passed": 15,
+      "tests_failed": 1,
+      "exit_code": 1,
+      "log": "focused-http.attempt-1.raw.log",
+      "cause": "Test expected HTTP-facing sizeBytes for internal StoragePort.ListParts result; actual internal field is size. Corrected assertion, no production logic or expected byte count weakened."
+    },
+    "final_run": {
+      "tests_passed": 16,
+      "tests_failed": 0,
+      "exit_code": 0,
+      "log": "focused-http.raw.log"
+    }
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs",
+    "evidence": "context7-http.json",
+    "versions": {
+      "@nestjs/core": "11.1.16",
+      "@nestjs/swagger": "11.4.2",
+      "@nestjs/throttler": "6.5.0"
+    },
+    "discrepancy": "Master docs unpinned to installed version; flagged before implementation, stable HttpCode/Throttle API cross-checked with installed packages and real HTTP tests."
+  },
+  "source_hashes": {
+    "files": 143,
+    "changed_after_global_lint": [
+      "nestjs-project/test/videos-upload-abort.e2e-spec.ts"
+    ],
+    "explanation": "Global lint reformatted the corrected assertion into one line; semantics unchanged. Full suites validate final files.",
+    "existing_files_changed_in_si": [
+      "nestjs-project/src/videos/videos-uploads.controller.ts",
+      "nestjs-project/src/videos/videos.constants.ts"
+    ],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true
+  },
+  "infrastructure": {
+    "isolated_test_stack": "streamtube-test",
+    "all_test_services_stopped_after_checks": true,
+    "dev_server_started": false,
+    "worker_started": false
+  },
+  "limitations": [
+    "State verified via real database; private status HTTP route remains SI03.5.8.",
+    "Ready fixture does not replace FFmpeg pipeline proof.",
+    "Small media transfer does not replace full10GB/RSS proof in SI03.9.2."
+  ],
+  "observations": [
+    "Initial Context7 network sandbox denial retried with escalation.",
+    "Existing Node localstorage warning and pg client-query deprecation did not cause test failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "c6fae53",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}
