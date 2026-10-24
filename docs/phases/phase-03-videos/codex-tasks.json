@@ -132,14 +132,14 @@
       "subject": "SI-03.6.2 — Reconciliar jobs ausentes e falhas terminais",
       "description": "Fechar as janelas de perda do Redis e de persistência do resultado.",
       "activeForm": "Implementando Reconciliar jobs ausentes e falhas terminais",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.7.1",
       "subject": "SI-03.7.1 — Extrair metadados e preparar mídia progressiva",
       "description": "Isolar ffprobe/FFmpeg em serviço de arquivos com limites explícitos.",
       "activeForm": "Implementando Extrair metadados e preparar mídia progressiva",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": "SI-03.7.2",

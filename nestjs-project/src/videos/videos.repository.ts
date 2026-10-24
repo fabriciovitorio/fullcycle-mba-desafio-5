@@ -17,6 +17,12 @@ import {
   type VideoSlugFactory,
 } from './videos.constants';
 import { VideoIdGenerationFailedException } from './videos.exceptions';
+import { VideoProcessingOutbox } from './entities/video-processing-outbox.entity';
+
+export interface ProcessingRecoveryState {
+  video: Video;
+  leaseActive: boolean;
+}
 
 export interface CreateVideoDraft {
   channelId: string;
@@ -338,6 +344,94 @@ export class VideosRepository {
       .set({ error_code: code, error_message: message })
       .execute();
     return result.affected === 1;
+  }
+
+  async findProcessingRecovery(
+    id: string,
+    outboxId: string,
+    claimToken: string,
+  ): Promise<ProcessingRecoveryState | null> {
+    return this.dataSource.transaction((manager) =>
+      this.lockProcessingRecovery(manager, id, outboxId, claimToken),
+    );
+  }
+
+  async failProcessingRecovery(
+    id: string,
+    outboxId: string,
+    claimToken: string,
+    reason: 'budget' | 'failed',
+  ): Promise<boolean> {
+    return this.dataSource.transaction(async (manager) => {
+      const state = await this.lockProcessingRecovery(
+        manager,
+        id,
+        outboxId,
+        claimToken,
+      );
+      if (!state || state.leaseActive) return false;
+      if (
+        reason === 'budget' &&
+        state.video.processing_attempts < VIDEO_QUEUE.MAX_ATTEMPTS
+      )
+        return false;
+      const result = await manager
+        .getRepository(Video)
+        .createQueryBuilder()
+        .update()
+        .set({
+          status: 'error',
+          error_code: 'PROCESSING_FAILED',
+          error_message: 'Video processing failed',
+          processing_token: null,
+          processing_lease_until: null,
+        })
+        .where({ id, status: 'processing' })
+        .andWhere(
+          '(processing_token IS NULL OR processing_lease_until <= clock_timestamp())',
+        )
+        .andWhere(
+          `EXISTS (SELECT 1 FROM video_processing_outbox o WHERE o.id = :outboxId AND o.video_id = :id AND o.lock_token = :claimToken AND o.locked_until > clock_timestamp() AND o.completed_at IS NULL)`,
+          { id, outboxId, claimToken },
+        )
+        .execute();
+      if (result.affected !== 1) return false;
+      await this.outbox.completeForVideo(manager, id);
+      return true;
+    });
+  }
+
+  private async lockProcessingRecovery(
+    manager: EntityManager,
+    id: string,
+    outboxId: string,
+    claimToken: string,
+  ): Promise<ProcessingRecoveryState | null> {
+    // Match finalization lock order. Check the DB clock after both locks.
+    const video = await manager
+      .getRepository(Video)
+      .createQueryBuilder('video')
+      .where({ id, status: 'processing' })
+      .setLock('pessimistic_write')
+      .getOne();
+    if (!video) return null;
+    const intent = await manager
+      .getRepository(VideoProcessingOutbox)
+      .createQueryBuilder('outbox')
+      .where({ id: outboxId, video_id: id })
+      .setLock('pessimistic_write')
+      .getOne();
+    if (!intent) return null;
+    const [clock] = await manager.query<
+      { claimValid: boolean; leaseActive: boolean }[]
+    >(
+      `SELECT (o.lock_token = $1::uuid AND o.locked_until > clock_timestamp() AND o.completed_at IS NULL) AS "claimValid",
+       (v.processing_token IS NOT NULL AND v.processing_lease_until > clock_timestamp()) AS "leaseActive"
+       FROM videos v JOIN video_processing_outbox o ON o.video_id = v.id WHERE v.id = $2::uuid AND o.id = $3::uuid`,
+      [claimToken, id, outboxId],
+    );
+    if (!clock?.claimValid) return null;
+    return { video, leaseActive: clock.leaseActive };
   }
 
   async claimProcessing(id: string, leaseMs: number): Promise<Video | null> {

@@ -11,6 +11,7 @@ import {
   type VideoProcessingJob,
 } from './video-queue.constants';
 import { VideoOutboxDispatcher } from './video-outbox-dispatcher.service';
+import { VideoProcessingReconciler } from './video-processing-reconciler.service';
 
 describe('VideoOutboxDispatcher', () => {
   let module: TestingModule;
@@ -21,6 +22,7 @@ describe('VideoOutboxDispatcher', () => {
       jest.fn<VideoProcessingOutboxRepository['markDispatched']>(),
     releaseDispatch:
       jest.fn<VideoProcessingOutboxRepository['releaseDispatch']>(),
+    deferDispatch: jest.fn<VideoProcessingOutboxRepository['deferDispatch']>(),
   };
   const queue = {
     waitUntilReady: jest.fn<() => Promise<{ status: string }>>(),
@@ -33,6 +35,9 @@ describe('VideoOutboxDispatcher', () => {
     >(),
   };
   const logError = jest.fn();
+  const reconciler = {
+    reconcileClaim: jest.fn<VideoProcessingReconciler['reconcileClaim']>(),
+  };
   let row: VideoProcessingOutbox;
   beforeEach(async () => {
     jest.useFakeTimers();
@@ -46,11 +51,17 @@ describe('VideoOutboxDispatcher', () => {
     outbox.claimDispatch.mockResolvedValue([row]);
     outbox.markDispatched.mockResolvedValue(true);
     outbox.releaseDispatch.mockResolvedValue(true);
+    outbox.deferDispatch.mockResolvedValue(true);
     queue.waitUntilReady.mockResolvedValue({ status: 'ready' });
     queue.add.mockResolvedValue(undefined);
+    reconciler.reconcileClaim.mockResolvedValue({
+      action: 'publish',
+      attempts: 3,
+    });
     module = await Test.createTestingModule({
       providers: [
         VideoOutboxDispatcher,
+        { provide: VideoProcessingReconciler, useValue: reconciler },
         { provide: VideoProcessingOutboxRepository, useValue: outbox },
         { provide: getQueueToken(VIDEO_QUEUE.NAME), useValue: queue },
       ],
@@ -97,6 +108,36 @@ describe('VideoOutboxDispatcher', () => {
       new Date(Date.now() + VIDEO_DISPATCH.RECHECK_MS),
     );
     expect(outbox.releaseDispatch).not.toHaveBeenCalled();
+  });
+  it('should defer a valid processing lease without claiming a publication', async () => {
+    reconciler.reconcileClaim.mockResolvedValueOnce({ action: 'defer' });
+    await service.dispatch();
+    expect(outbox.deferDispatch).toHaveBeenCalledWith(
+      row.id,
+      row.lock_token!,
+      new Date(Date.now() + VIDEO_DISPATCH.RECHECK_MS),
+    );
+    expect(queue.add).not.toHaveBeenCalled();
+    expect(outbox.markDispatched).not.toHaveBeenCalled();
+  });
+  it('should leave an atomically closed recovery intent without marking or releasing it again', async () => {
+    reconciler.reconcileClaim.mockResolvedValueOnce({ action: 'terminal' });
+    await service.dispatch();
+    expect(queue.add).not.toHaveBeenCalled();
+    expect(outbox.markDispatched).not.toHaveBeenCalled();
+    expect(outbox.releaseDispatch).not.toHaveBeenCalled();
+  });
+  it('should publish only the recovered persistent remaining attempts', async () => {
+    reconciler.reconcileClaim.mockResolvedValueOnce({
+      action: 'publish',
+      attempts: 1,
+    });
+    await service.dispatch();
+    expect(queue.add).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.anything(),
+      expect.objectContaining({ attempts: 1 }),
+    );
   });
   it('should leave an empty outbox alone', async () => {
     outbox.claimDispatch.mockResolvedValue([]);

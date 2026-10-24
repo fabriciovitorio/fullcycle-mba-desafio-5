@@ -1,0 +1,14 @@
+{
+  "node": "25.6.0",
+  "ffmpeg": "5.1.9-0+deb12u1",
+  "ffprobe": "5.1.9-0+deb12u1",
+  "ffprobe_nostdin_supported": false,
+  "ffprobe_stdin": "ignored via spawn stdio",
+  "ffmpeg_nostdin": true,
+  "protocol_whitelist": "file,pipe",
+  "input_demuxer": "mov forced",
+  "enable_drefs": false,
+  "use_absolute_path": false,
+  "ffprobe_threads_supported": true,
+  "normal_runtime_container": "isolated nestjs-api; Dockerfile.dev already includes FFmpeg; no image change"
+}

@@ -1,0 +1,155 @@
+{
+  "si": "SI-03.6.2",
+  "status": "passed",
+  "recorded_at": "2026-10-24T14:15:14.929550+00:00",
+  "scope": "Processing job recovery driven by existing fenced outbox dispatcher; no media worker activation",
+  "created_files": [
+    "src/videos/queue/video-processing-reconciler.service.ts",
+    "src/videos/queue/video-processing-reconciler.service.spec.ts",
+    "src/videos/queue/video-processing-reconciler.service.integration-spec.ts"
+  ],
+  "modified_files": [
+    "src/videos/videos.repository.ts",
+    "src/videos/video-processing-outbox.repository.ts",
+    "src/videos/queue/video-outbox-dispatcher.service.spec.ts",
+    "src/videos/queue/video-outbox-dispatcher.module.ts",
+    "src/videos/queue/video-outbox-dispatcher.service.ts"
+  ],
+  "implementation": {
+    "coordination": "One lifecycle/claim-owning dispatcher loop calls reconciler before publishing. Decisions publish/defer/terminal avoid two timers competing for due intents. Module exports reconciler for future standalone worker; no API imports it.",
+    "lost_job": "Queue.getJob missing reconstructs exact stable job ID/payload with attempts MAX3 minus persisted processing_attempts. Dispatcher never increments/resets processing budget. Real integration removes waiting job, preserves DB attempts2 and recreates with attempts1.",
+    "lease_protection": "Repository snapshot locks Video then Outbox, matching finalization order; DB clock verifies live outbox claim after locks. Live processing lease defers without publishing/terminal mutation. Healthy defer clears claim and reschedules without falsely recording delivery or failure. Expired processing lease is reclaimable through existing claimProcessing which replaces token/increments DB budget; old token cannot finalize.",
+    "terminal_jobs": "Failed jobs with no active DB lease persist sanitized PROCESSING_FAILED. Completed+DBprocessing is never trusted as ready; retry(completed, resetAttemptsMade:false, resetAttemptsStarted:false) atomically moves only expected completed job back to wait, then idempotent add confirms publication. No remove-by-stable-ID race. Active/unknown jobs defer to avoid disrupting a locked queue job.",
+    "bounded_recovery": "Exhausted DB budget closes error without a fourth DB attempt. Completed jobs that repeatedly finish without recording a DB claim also stop at queue attempt limit, preventing an infinite completed-without-persistence loop. Queue counters and DB attempts never reset.",
+    "atomic_failure": "VideosRepository.failProcessingRecovery locks Video then Outbox; rejects active DB lease, stale/expired outbox claim and ineligible budget reason. SQL update additionally checks live outbox token/deadline via EXISTS at transition time. Error transition clears stale processing ownership and completeForVideo closes intent in same transaction.",
+    "rollback": "Real SQL failure after terminal mutation+outbox completion rolls transaction back together; dispatcher releases/reschedules open claim and next pass completes recovery. DB inspection failures propagate for safe retry.",
+    "privacy": "Persist only fixed error code/message and existing sanitized dispatch diagnostic; raw job failedReason/returnvalue, stderr, keys or credentials do not become API/DB recovery data.",
+    "tests": "18 new unit cases and12 new integration cases plus3 new dispatcher unit cases.76 affected tests include prior dispatcher/queue/repository suites. Real test-only BullMQ Workers generate completed and exhausted failed states; they close before cleanup. No production consumer or FFmpeg process is run.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "http_contract_changed": false,
+    "production_worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/queue/video-processing-reconciler.service.spec.ts src/videos/queue/video-processing-reconciler.service.integration-spec.ts src/videos/queue/video-outbox-dispatcher.service.spec.ts src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts src/videos/queue/video-queue.module.integration-spec.ts src/videos/videos.repository.integration-spec.ts src/videos/video-processing-outbox.repository.integration-spec.ts",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "focused-tests.raw.log",
+      "tests_passed": 76,
+      "suites_passed": 7
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 463,
+      "suites_passed": 45
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 149,
+      "suites_passed": 9
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "OpenAPI byte-for-byte unchanged from HEAD",
+      "exit_code": 0,
+      "evidence": "openapi-preservation.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "tests_passed": 76,
+    "suites_passed": 7,
+    "failed_runs": 0,
+    "initial_run": {
+      "tests_passed": 74,
+      "log": "focused-tests.initial.raw.log"
+    },
+    "final_run": "focused-tests.raw.log",
+    "review_extension": "Added bounded repeated completed-without-DB-claim recovery plus two tests; initial430base+31 tests=461 full run and149 E2E also passed before extension; final checks rerun afterward.",
+    "injected_faults": "Real SQL division-by-zero faults for lookup/transaction rollback, outbox deadline expiration under a real held row lock; real queue job removal/worker completion/failure. Unit collaborators mocked only at queue/repository boundaries."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id precedes query-docs for each library",
+    "evidence": "context7-recovery.json",
+    "versions": {
+      "bullmq": "5.81.5",
+      "@nestjs/bullmq": "11.0.5",
+      "typeorm": "0.3.28",
+      "@nestjs/core": "11.1.16"
+    },
+    "version_scope": "BullMQ docs explicitly v5; RetryOptions flags verified in installed5.81.5. TypeORM docs main not pinned; transaction/query typing verified against installed0.3.28 and real PostgreSQL locking/rollback tests."
+  },
+  "source_hashes": {
+    "files": 155,
+    "changed_after_global_lint": [],
+    "existing_files_changed_in_si": [
+      "nestjs-project/src/videos/videos.repository.ts",
+      "nestjs-project/src/videos/video-processing-outbox.repository.ts",
+      "nestjs-project/src/videos/queue/video-outbox-dispatcher.service.spec.ts",
+      "nestjs-project/src/videos/queue/video-outbox-dispatcher.module.ts",
+      "nestjs-project/src/videos/queue/video-outbox-dispatcher.service.ts"
+    ],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true,
+    "evidence": [
+      "development-db.sha256",
+      "development-db-after.sha256"
+    ]
+  },
+  "infrastructure": {
+    "isolated_test_stack": "streamtube-test",
+    "queue_cleanup": "Dedicated test prefix+UUID, own queue obliteration only, no Redis flush",
+    "test_workers_closed": true,
+    "all_test_services_stopped_after_checks": true,
+    "dev_server_started": false,
+    "production_worker_started": false
+  },
+  "limitations": [
+    "No media verification/FFmpeg processing in this SI; completed Redis returnvalue cannot synthesize ready.",
+    "Active BullMQ locks are left to native stalled-job recovery; reconciler does not remove an active job.",
+    "Standalone worker/bootstrap and upload cleanup remain their planned SIs."
+  ],
+  "observations": [
+    "Initial Context7 sandbox network denial retried with escalation.",
+    "Expected sanitized connection failure logs during inherited TCP outage tests.",
+    "Existing Node localstorage/pg client-query warnings did not cause failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "b6e6977",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}

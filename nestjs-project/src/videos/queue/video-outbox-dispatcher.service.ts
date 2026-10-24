@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import type { Queue } from 'bullmq';
+import { VideoProcessingReconciler } from './video-processing-reconciler.service';
 import { VideoProcessingOutboxRepository } from '../video-processing-outbox.repository';
 import { VIDEO_QUEUE } from '../videos.constants';
 import {
@@ -27,6 +28,7 @@ export class VideoOutboxDispatcher
     private readonly outbox: VideoProcessingOutboxRepository,
     @InjectQueue(VIDEO_QUEUE.NAME)
     private readonly queue: Queue<VideoProcessingJob>,
+    private readonly reconciler: VideoProcessingReconciler,
   ) {}
 
   onApplicationBootstrap(): void {
@@ -84,6 +86,19 @@ export class VideoOutboxDispatcher
       if (!row.lock_token) throw new Error('Dispatch claim has no token');
       try {
         await this.waitForProducer();
+        const recovery = await this.reconciler.reconcileClaim(row);
+        if (recovery.action === 'terminal') continue;
+        if (recovery.action === 'defer') {
+          if (
+            !(await this.outbox.deferDispatch(
+              row.id,
+              row.lock_token,
+              new Date(Date.now() + VIDEO_DISPATCH.RECHECK_MS),
+            ))
+          )
+            throw new Error('Dispatch claim could not be deferred');
+          continue;
+        }
         await this.queue.add(
           VIDEO_QUEUE.JOB_NAME,
           {
@@ -92,7 +107,7 @@ export class VideoOutboxDispatcher
           },
           {
             jobId: `video-${row.video_id}`,
-            attempts: VIDEO_QUEUE.MAX_ATTEMPTS,
+            attempts: recovery.attempts,
             backoff: {
               type: 'exponential',
               delay: VIDEO_QUEUE.BACKOFF_DELAY_MS,

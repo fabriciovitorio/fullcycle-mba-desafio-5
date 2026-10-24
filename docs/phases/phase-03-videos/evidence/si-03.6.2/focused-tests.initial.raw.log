@@ -1,0 +1,24 @@
+
+> nestjs-project@0.0.1 test
+> jest --runInBand --runTestsByPath src/videos/queue/video-processing-reconciler.service.spec.ts src/videos/queue/video-processing-reconciler.service.integration-spec.ts src/videos/queue/video-outbox-dispatcher.service.spec.ts src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts src/videos/queue/video-queue.module.integration-spec.ts src/videos/videos.repository.integration-spec.ts src/videos/video-processing-outbox.repository.integration-spec.ts
+
+(node:152) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/videos/queue/video-processing-reconciler.service.integration-spec.ts (13.51 s)
+PASS src/videos/queue/video-processing-reconciler.service.spec.ts
+[31m[Nest] 152  - [39m10/24/2026, 2:07:19 PM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 152  - [39m10/24/2026, 2:07:20 PM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 152  - [39m10/24/2026, 2:07:20 PM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+[31m[Nest] 152  - [39m10/24/2026, 2:07:21 PM [31m  ERROR[39m [38;5;3m[VideoQueueModule] [39m[31mVideo queue connection failed[39m
+PASS src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts (6.991 s)
+PASS src/videos/videos.repository.integration-spec.ts
+PASS src/videos/video-processing-outbox.repository.integration-spec.ts
+PASS src/videos/queue/video-outbox-dispatcher.service.spec.ts
+PASS src/videos/queue/video-queue.module.integration-spec.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       74 passed, 74 total
+Snapshots:   0 total
+Time:        25.909 s
+Ran all test suites within paths "src/videos/queue/video-processing-reconciler.service.spec.ts", "src/videos/queue/video-processing-reconciler.service.integration-spec.ts", "src/videos/queue/video-outbox-dispatcher.service.spec.ts", "src/videos/queue/video-outbox-dispatcher.service.integration-spec.ts", "src/videos/queue/video-queue.module.integration-spec.ts", "src/videos/videos.repository.integration-spec.ts", "src/videos/video-processing-outbox.repository.integration-spec.ts".
+

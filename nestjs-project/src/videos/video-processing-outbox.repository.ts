@@ -135,6 +135,27 @@ export class VideoProcessingOutboxRepository {
     return result.affected === 1;
   }
 
+  async deferDispatch(
+    id: string,
+    token: string,
+    nextAttemptAt: Date,
+  ): Promise<boolean> {
+    const result = await this.dataSource
+      .getRepository(VideoProcessingOutbox)
+      .createQueryBuilder()
+      .update()
+      .set({
+        next_attempt_at: nextAttemptAt,
+        lock_token: null,
+        locked_until: null,
+        last_error: null,
+      })
+      .where({ id, lock_token: token, completed_at: IsNull() })
+      .andWhere('locked_until > clock_timestamp()')
+      .execute();
+    return result.affected === 1;
+  }
+
   async releaseDispatch(
     id: string,
     token: string,

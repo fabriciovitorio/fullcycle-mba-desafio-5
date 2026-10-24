@@ -1,0 +1,168 @@
+{
+  "si": "SI-03.7.1",
+  "status": "passed",
+  "recorded_at": "2026-10-24T14:43:26.763419+00:00",
+  "scope": "Owned filesystem media preparation only; no queue/storage/DB orchestration or ready transition",
+  "created_files": [
+    "src/videos/processing/video-media-files.ts",
+    "src/videos/processing/video-media-probe.ts",
+    "src/videos/processing/video-media-process.ts",
+    "src/videos/processing/video-media.constants.ts",
+    "src/videos/processing/video-media.error.ts",
+    "src/videos/processing/video-media.module.ts",
+    "src/videos/processing/video-media.service.integration-spec.ts",
+    "src/videos/processing/video-media.service.spec.ts",
+    "src/videos/processing/video-media.service.ts"
+  ],
+  "modified_existing_source_files": [],
+  "implementation": {
+    "architecture": "VideoMediaModule exports VideoMediaService with typed config. Separate native filesystem adapter, subprocess adapter and pure unknown-input probe normalization. No HTTP/API module or production worker activation. No packages or container definitions changed.",
+    "workspace": "Exclusive mkdtemp attempt directories under configured absolute temp root; fixed original.mp4/playback.mp4/thumbnail.jpg. Immutable object identity ownership prevents forged paths; lstat rejects symlink input/directory. Cleanup removes only owned directory and is idempotent. Active preparation blocks concurrent cleanup/reprepare. Success retains files for later upload; caller explicitly cleans in finally. Failure/cancellation cleans after awaiting child close.",
+    "disk": "statfs bigint compares actual free bytes against original+remux plus named16MiB reserve before download; source byte count checked before preparation and space rechecked for remux+reserve. Expected bytes integer1..10GB only. Checks do not reserve disk or prove full10GB performance.",
+    "subprocess": "spawn fixed ffmpeg/ffprobe names, shell:false, stdin ignored. FFmpeg additionally -nostdin; installed ffprobe5.1 rejects that flag so uses ignored stdin only. File/pipe protocol whitelist, forced mov demuxer, enable_drefs0/use_absolute_path0, fixed owned paths, no user filename arguments. Configured thread limit applied to probe/input/output and JPEG filter threads.",
+    "bounds": "JSON stdout capped by configured max1MiB; FFmpeg file-only commands cap stdout at1byte. Stderr drained with zero retention/no logs, so no unbounded buffer or diagnostic exposure. Probe timeout and total-operation deadline; signal listener/timers cleared. Cancellation sends SIGTERM, escalates SIGKILL after250ms and waits close before settlement/cleanup.",
+    "metadata": "Unknown JSON validated structurally; accepts ISO MP4 brands with one H264 video and optional AAC audio, positive finite duration/integer dimensions, optional finite rational frameRate. Returns only container/videoCodec/audioCodec/width/height/frameRate plus separate duration. Unknown metadata/tags never persist. QuickTime and codecs outside support rejected.",
+    "outputs": "Remux maps video plus optional AAC, -c copy -movflags +faststart without recoding/HLS. One JPEG from first valid frame, explicit mjpeg/image2. Verify regular nonempty output files. Integration proves trailing-moov input becomes moov-before-mdat and identical encoded video packet hash, and JPEG really decodes.",
+    "errors": "Typed INVALID_VIDEO_CONTENT, UNSUPPORTED_VIDEO_FORMAT, PROCESSING_TIMEOUT and safe PROCESSING_FAILED. Distinct VideoMediaCancelledError for lease-loss/caller cancellation, not a terminal media error. Unknown operational error sanitized; raw stdout/stderr/paths not in public error messages. No ready transition here.",
+    "schema_changed": false,
+    "dependencies_changed": false,
+    "http_contract_changed": false,
+    "production_worker_activated": false
+  },
+  "checks": [
+    {
+      "command": "npm test -- --runInBand --runTestsByPath src/videos/processing/video-media.service.spec.ts src/videos/processing/video-media.service.integration-spec.ts",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "focused-tests.raw.log",
+      "tests_passed": 53,
+      "suites_passed": 2
+    },
+    {
+      "command": "npm test -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "full-tests.raw.log",
+      "tests_passed": 516,
+      "suites_passed": 47
+    },
+    {
+      "command": "npm run test:e2e -- --runInBand",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "e2e.raw.log",
+      "tests_passed": 149,
+      "suites_passed": 9
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "typecheck.raw.log"
+    },
+    {
+      "command": "npm run lint",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "global-lint.raw.log"
+    },
+    {
+      "command": "npm run openapi:export (includes build)",
+      "execution": "Docker isolated test stack; database suites serial",
+      "exit_code": 0,
+      "log": "openapi-export.raw.log"
+    },
+    {
+      "command": "Binary options verified with installed FFmpeg/ffprobe",
+      "exit_code": 0,
+      "evidence": "binary-compatibility.json"
+    },
+    {
+      "command": "OpenAPI byte-for-byte unchanged",
+      "exit_code": 0,
+      "evidence": "openapi-preservation.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "focused_tests": {
+    "tests_passed": 53,
+    "suites_passed": 2,
+    "unit_tests": 39,
+    "integration_tests": 14,
+    "failed_runs": 0,
+    "initial_and_final_passed": true,
+    "review_adjustment": "Naming-only move of new constants/interfaces bundle to video-media.constants.ts; all gates rerun afterward; initial focused/full passing logs retained.",
+    "real_systems": [
+      "FFmpeg5.1.9",
+      "ffprobe5.1.9",
+      "Node25.6",
+      "local owned filesystem"
+    ],
+    "real_media": "Existing small fragmented H264 MP4 plus runtime-generated64x48 H264/AAC MP4, MPEG4-codec MP4, MP3-audio MP4 and QuickTime MOV; fixtures and outputs are small and deleted after tests.",
+    "coverage": "Safe allowlist/unknown shapes/duration/dimensions/codecs/frameRate, exact bigint capacity limits, typed failure/cancellation cleanup, no concurrent workspace mutation; real metadata/remux packet preservation/moov/JPEG decoding, unsupported/invalid data, forged path, symlink, concat rejection, actual probe abort, overall deadline, stdout cap, native long-running timeout, SIGSTOP\u2192SIGKILL child reaping/ESRCH.",
+    "mocked_collaborators": "Unit native file/process adapter boundaries only. Integration uses actual native binaries/files; passive spawn spies observe real child PIDs/closed state."
+  },
+  "documentation": {
+    "provider": "Context7 MCP JSON-RPC; resolve-library-id before query-docs for each library",
+    "evidence": "context7-media.json",
+    "versions": {
+      "node": "25.6.0",
+      "ffmpeg": "5.1.9-0+deb12u1",
+      "ffprobe": "5.1.9-0+deb12u1",
+      "ffprobe_nostdin_supported": false,
+      "ffprobe_stdin": "ignored via spawn stdio",
+      "ffmpeg_nostdin": true,
+      "protocol_whitelist": "file,pipe",
+      "input_demuxer": "mov forced",
+      "enable_drefs": false,
+      "use_absolute_path": false,
+      "ffprobe_threads_supported": true,
+      "normal_runtime_container": "isolated nestjs-api; Dockerfile.dev already includes FFmpeg; no image change"
+    },
+    "version_scope": "Context7 FFmpeg/Node docs current/main not pinned; discrepancy explained before implementation and options verified against installed FFmpeg/ffprobe5.1.9 and Node25.6. Modern multiview examples not used; ffprobe -nostdin explicitly rejected by native probe and not used."
+  },
+  "source_hashes": {
+    "files": 164,
+    "changed_after_global_lint": [],
+    "existing_files_changed_in_si": [],
+    "evidence": "source-hashes.json"
+  },
+  "development_database": {
+    "normalized_dump_sha256": "e3a587e843b5b81c8156642d5c92ec0156b47f28da7f64b3118f6c114021a5e1",
+    "matches_previous_si": true,
+    "migrations_or_writes_applied": false,
+    "previous_stopped_state_restored": true,
+    "evidence": [
+      "development-db.sha256",
+      "development-db-after.sha256"
+    ]
+  },
+  "infrastructure": {
+    "isolated_test_stack": "streamtube-test",
+    "all_test_services_stopped_after_checks": true,
+    "native_test_children_reaped": true,
+    "dev_server_started": false,
+    "production_worker_started": false
+  },
+  "limitations": [
+    "No storage transfer, database finalization or BullMQ consumer in media service; SI03.7.2 owns orchestration and ready transition.",
+    "Success workspace intentionally retained until explicit cleanup by caller after output upload.",
+    "Free-space check is a snapshot, not a disk reservation.",
+    "Small native media tests do not replace full10GB/RSS proof in SI03.9.2."
+  ],
+  "observations": [
+    "Initial Context7 sandbox network denial retried with escalation.",
+    "Expected ffprobe -nostdin compatibility failure was investigated before implementation, not a failing test.",
+    "Existing Node localstorage/pg client-query warnings did not cause failures."
+  ],
+  "git": {
+    "branch": "feature/phase-03-videos",
+    "baseline_commit": "b6e6977",
+    "prior_uncommitted_si_preserved": "SI-03.6.2",
+    "commit_created": false,
+    "push_attempted": false
+  }
+}
